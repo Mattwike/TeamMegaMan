@@ -6,6 +6,11 @@ public class KeyboardController : IController
 
     private Game1 game;
 
+    public KeyboardController(Game1 gameInstance)
+    {
+        game = gameInstance;
+    }
+
     public int Update(int lastoutput)
 	{
         var kstate = Keyboard.GetState();

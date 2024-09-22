@@ -8,9 +8,11 @@
     <File>Z:/3902/Megaman/Content/File.fx</File>
     <File>Z:/3902/Megaman/Content/File.spritefont</File>
     <File>Z:/3902/Megaman/Content/link.png</File>
+    <File>Z:/3902/Megaman/Content/MegaMan.png</File>
     <File>Z:/3902/Megaman/Content/Text.spritefont</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

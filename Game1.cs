@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace Project1
 {
@@ -9,11 +10,8 @@ namespace Project1
     {
         private KeyboardController _keyboardController;
         private MouseController _mouseController;
-        private sprite1Controller _sprite1Controller;
-        private sprite2Controller _sprite2Controller;
-        private sprite3Controller _sprite3Controller;
-        private sprite4Controller _sprite4Controller;
-        private SpriteFont Text;
+        private List<ISprite> sprites;
+
 
 
         Texture2D spriteTexture;
@@ -49,19 +47,24 @@ namespace Project1
             width = _graphics.PreferredBackBufferWidth / 2;
             height = _graphics.PreferredBackBufferHeight / 2;
 
-            _keyboardController = new KeyboardController();
+            _keyboardController = new KeyboardController(this);
             _mouseController = new MouseController();
 
-            _sprite1Controller = new sprite1Controller();
-            _sprite2Controller = new sprite2Controller();
-            _sprite3Controller = new sprite3Controller();
-            _sprite4Controller = new sprite4Controller();
+            sprites = new List<ISprite>
+            {
+                new idleMegaman(spriteTexture),
+                new runningMegaman(spriteTexture),
+                new runningShootingMegaman(spriteTexture),
+                new damagedMegaman(spriteTexture),
+                new climbingMegaman(spriteTexture),
+                new climbingShootingMegaman(spriteTexture),
+                new climbingReachedTopMegaman(spriteTexture)
+            };
 
-            _sprite1Controller.Initialize(_graphics, movementSpeed);
-            _sprite2Controller.Initialize(_graphics, movementSpeed);
-            _sprite3Controller.Initialize(_graphics, movementSpeed);
-            _sprite4Controller.Initialize(_graphics, movementSpeed);
-            
+            foreach (var obj in sprites)
+            {
+                obj.Initialize(_graphics, movementSpeed, 40);
+            }
             _mouseController.Initialize(height, width);
 
             base.Initialize();
@@ -72,8 +75,8 @@ namespace Project1
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            spriteTexture = Content.Load<Texture2D>("link");
-            Text = Content.Load<SpriteFont>("Text");
+            spriteTexture = Content.Load<Texture2D>("MegaMan");
+            megaManSpriteFactory.Instance.LoadAllTextures(Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -96,13 +99,11 @@ namespace Project1
                 lastInput = lastOutput;
                 lastMouseQuad = lastInput;
             }
-            
 
-            _sprite1Controller.Update(gameTime);
-            _sprite2Controller.Update(gameTime);
-            _sprite3Controller.Update(gameTime);
-            _sprite4Controller.Update(gameTime);
-
+            foreach(var obj in sprites)
+            {
+                obj.Update(gameTime);
+            }
             base.Update(gameTime);
         }
 
@@ -111,33 +112,11 @@ namespace Project1
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            if (lastInput == 1)
-            {
-                _sprite1Controller.Draw(spriteTexture, _spriteBatch, movementSpeed);
-            }
-
-            if (lastInput == 2)
-            {
-                _sprite2Controller.Draw(spriteTexture, _spriteBatch, movementSpeed);
-            }
-
-            if (lastOutput == 3 || lastMouseQuad == 3)
-            {
-                lastOutput = 3;
-                lastMouseQuad = 3;
-                _sprite3Controller.Draw(spriteTexture, _spriteBatch, movementSpeed);
-            }
-
-            if (lastOutput == 4 || lastMouseQuad == 4)
-            {
-                lastOutput = 4;
-                lastMouseQuad = 4;
-                _sprite4Controller.Draw(spriteTexture, _spriteBatch, movementSpeed);
-            }
             
-            _spriteBatch.Begin();
-            _spriteBatch.DrawString(Text, "Credits: \nProgram Made By: Matthew Weikel\nSprites from: https://www.spriters-resource.com/nes/legendof\nzelda/sheet/8366/\nRipped by: Mister Mike", new Vector2(10, 300), Color.Black);
-            _spriteBatch.End();
+            foreach(var obj in sprites)
+            {
+                obj.Draw(spriteTexture, _spriteBatch, movementSpeed, false, false);
+            }
 
             base.Draw(gameTime);
         }
