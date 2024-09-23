@@ -59,4 +59,6 @@ public class megaManSpriteFactory
         return new climbingReachedTopMegaman(megaManSheet);
     }
 
+   
+
 }

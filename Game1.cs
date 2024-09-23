@@ -12,12 +12,14 @@ namespace Project1
         private MouseController _mouseController;
         private List<ISprite> sprites;
 
-
-
         Texture2D spriteTexture;
         float movementSpeed;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        // Enemy factory and enemy sprite
+        private EnemySpriteFactory enemyFactory;
+        private ISprite enemySprite;
 
         int height;
         int width;
@@ -67,6 +69,9 @@ namespace Project1
             }
             _mouseController.Initialize(height, width);
 
+            // Initialize the enemy factory
+            enemyFactory = EnemySpriteFactory.Instance;
+
             base.Initialize();
         }
 
@@ -77,6 +82,10 @@ namespace Project1
             // TODO: use this.Content to load your game content here
             spriteTexture = Content.Load<Texture2D>("MegaMan");
             megaManSpriteFactory.Instance.LoadAllTextures(Content);
+
+            // Load enemy textures and create an enemy
+            enemyFactory.LoadEnemyTextures(Content);
+            enemySprite = enemyFactory.CreateEnemy("enemy_sprites");
         }
 
         protected override void Update(GameTime gameTime)
@@ -84,7 +93,7 @@ namespace Project1
 
             // Use the keyboard controller to get input and update the ball position
             mouseQuad = _mouseController.Update(lastMouseQuad);
-            if(lastMouseQuad != mouseQuad)
+            if (lastMouseQuad != mouseQuad)
             {
                 lastMouseQuad = mouseQuad;
                 lastInput = mouseQuad;
@@ -100,10 +109,14 @@ namespace Project1
                 lastMouseQuad = lastInput;
             }
 
-            foreach(var obj in sprites)
+            foreach (var obj in sprites)
             {
                 obj.Update(gameTime);
             }
+
+            // Update the enemy sprite
+            enemySprite.Update(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -112,11 +125,14 @@ namespace Project1
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            
-            foreach(var obj in sprites)
+
+            foreach (var obj in sprites)
             {
                 obj.Draw(spriteTexture, _spriteBatch, movementSpeed, false, false);
             }
+
+            // Draw the enemy sprite
+            enemySprite.Draw(_spriteBatch, new Vector2(300, 100)); // Adjust position as needed
 
             base.Draw(gameTime);
         }

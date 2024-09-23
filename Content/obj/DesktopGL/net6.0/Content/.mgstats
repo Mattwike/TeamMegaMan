@@ -1,6 +1,7 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/shiva/Source/Repos/TeamMegaMan/Content/ball.png","C:/Users/shiva/Source/Repos/TeamMegaMan/Content/bin/DesktopGL/Content/ball.xnb","TextureProcessor","Texture2DContent",8368,16469,0.1448732
-"C:/Users/shiva/Source/Repos/TeamMegaMan/Content/File.spritefont","C:/Users/shiva/Source/Repos/TeamMegaMan/Content/bin/DesktopGL/Content/File.xnb","FontDescriptionProcessor","SpriteFontContent",2068,21535,0.1366508
-"C:/Users/shiva/Source/Repos/TeamMegaMan/Content/link.png","C:/Users/shiva/Source/Repos/TeamMegaMan/Content/bin/DesktopGL/Content/link.xnb","TextureProcessor","Texture2DContent",19462,460125,0.0489296
-"C:/Users/shiva/Source/Repos/TeamMegaMan/Content/MegaMan.png","C:/Users/shiva/Source/Repos/TeamMegaMan/Content/bin/DesktopGL/Content/MegaMan.xnb","TextureProcessor","Texture2DContent",16689,521725,0.0459362
-"C:/Users/shiva/Source/Repos/TeamMegaMan/Content/Text.spritefont","C:/Users/shiva/Source/Repos/TeamMegaMan/Content/bin/DesktopGL/Content/Text.xnb","FontDescriptionProcessor","SpriteFontContent",2068,37919,0.0271921
+"C:/Users/shiva/source/repos/TeamMegaMan/Content/ball.png","C:/Users/shiva/source/repos/TeamMegaMan/Content/bin/DesktopGL/Content/ball.xnb","TextureProcessor","Texture2DContent",8368,16469,0.1541148
+"C:/Users/shiva/source/repos/TeamMegaMan/Content/enemy_sprites.png","C:/Users/shiva/source/repos/TeamMegaMan/Content/bin/DesktopGL/Content/enemy_sprites.xnb","TextureProcessor","Texture2DContent",201409,843933,0.2080532
+"C:/Users/shiva/source/repos/TeamMegaMan/Content/File.spritefont","C:/Users/shiva/source/repos/TeamMegaMan/Content/bin/DesktopGL/Content/File.xnb","FontDescriptionProcessor","SpriteFontContent",2068,21535,0.129641
+"C:/Users/shiva/source/repos/TeamMegaMan/Content/link.png","C:/Users/shiva/source/repos/TeamMegaMan/Content/bin/DesktopGL/Content/link.xnb","TextureProcessor","Texture2DContent",19462,460125,0.0477077
+"C:/Users/shiva/source/repos/TeamMegaMan/Content/MegaMan.png","C:/Users/shiva/source/repos/TeamMegaMan/Content/bin/DesktopGL/Content/MegaMan.xnb","TextureProcessor","Texture2DContent",16689,521725,0.0430883
+"C:/Users/shiva/source/repos/TeamMegaMan/Content/Text.spritefont","C:/Users/shiva/source/repos/TeamMegaMan/Content/bin/DesktopGL/Content/Text.xnb","FontDescriptionProcessor","SpriteFontContent",2068,37919,0.0300822

@@ -4,13 +4,15 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/shiva/Source/Repos/TeamMegaMan/Content/ball.png</File>
-    <File>C:/Users/shiva/Source/Repos/TeamMegaMan/Content/File.spritefont</File>
-    <File>C:/Users/shiva/Source/Repos/TeamMegaMan/Content/link.png</File>
-    <File>C:/Users/shiva/Source/Repos/TeamMegaMan/Content/MegaMan.png</File>
-    <File>C:/Users/shiva/Source/Repos/TeamMegaMan/Content/Text.spritefont</File>
+    <File>C:/Users/shiva/source/repos/TeamMegaMan/Content/ball.png</File>
+    <File>C:/Users/shiva/source/repos/TeamMegaMan/Content/enemy_sprites.png</File>
+    <File>C:/Users/shiva/source/repos/TeamMegaMan/Content/File.spritefont</File>
+    <File>C:/Users/shiva/source/repos/TeamMegaMan/Content/link.png</File>
+    <File>C:/Users/shiva/source/repos/TeamMegaMan/Content/MegaMan.png</File>
+    <File>C:/Users/shiva/source/repos/TeamMegaMan/Content/Text.spritefont</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
