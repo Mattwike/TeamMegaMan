@@ -13,7 +13,7 @@ namespace Project1.Interfaces
 
 		public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize);
 
-		void Draw(Texture2D spriteTexture, SpriteBatch _spriteBatch, float movementSpeed);
+		void Draw(SpriteBatch _spriteBatch, float movementSpeed);
 
 	}
 }
