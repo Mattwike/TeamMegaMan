@@ -40,9 +40,9 @@ namespace Project1.GameObjects
             State.Initialize(_graphics, movementSpeed, megamanSize);
         }
 
-        public void Draw(Texture2D spriteTexture, SpriteBatch _spriteBatch, float movementSpeed)
+        public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
         {
-            State.Draw(spriteTexture, _spriteBatch, movementSpeed);
+            State.Draw(_spriteBatch, movementSpeed);
         }
 
     }

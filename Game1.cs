@@ -17,7 +17,6 @@ namespace Project1
         private List<ISprite> sprites;
         private Megaman megaman;
 
-        Texture2D spriteTexture;
         float movementSpeed;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -68,7 +67,7 @@ namespace Project1
 
             foreach (var obj in sprites)
             {
-                //obj.Initialize(_graphics, movementSpeed, 40);
+                obj.Initialize(_graphics, movementSpeed, 40);
             }
             _mouseController.Initialize(height, width);
 
@@ -118,15 +117,13 @@ namespace Project1
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+        //TODO: Add your drawing code here
 
             foreach (var obj in sprites)
             {
                 obj.Draw(_spriteBatch, movementSpeed, false, false);
             }
-
-       
-
+            
             base.Draw(gameTime);
         }
     }

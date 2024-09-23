@@ -39,10 +39,10 @@ namespace Project1.States.MegamanState
             Sprite.Initialize(_graphics, movementSpeed, megamanSize);
         }
 
-        public void Draw(Texture2D spriteTexture, SpriteBatch _spriteBatch, float movementSpeed)
+        public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
         {
             // Implement draw logic here
-            Sprite.Draw(spriteTexture, _spriteBatch, movementSpeed, megaman.isfacingLeft, false);
+            Sprite.Draw(_spriteBatch, movementSpeed, megaman.isfacingLeft, false);
         }
     }
 }
