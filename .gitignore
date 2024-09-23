@@ -1,2 +1,4 @@
 .vs
-.config
+# Ignore build artifacts
+bin/
+obj/
