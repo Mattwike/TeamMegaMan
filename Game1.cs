@@ -53,6 +53,9 @@ namespace Project1
             _keyboardController = new KeyboardController(this);
             _mouseController = new MouseController();
 
+            megaManSpriteFactory.Instance.LoadAllTextures(Content);
+            EnemySpriteFactory.Instance.LoadAllTextures(Content);
+
             sprites = new List<ISprite>
             {
                 megaManSpriteFactory.Instance.CreateIdleMegaman(),
@@ -71,8 +74,6 @@ namespace Project1
                 obj.Initialize(_graphics, movementSpeed, 40);
             }
             _mouseController.Initialize(height, width);
-
-      
 
             base.Initialize();
         }
@@ -118,7 +119,7 @@ namespace Project1
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        //TODO: Add your drawing code here
+            //TODO: Add your drawing code here
 
             foreach (var obj in sprites)
             {

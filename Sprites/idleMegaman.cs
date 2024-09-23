@@ -14,6 +14,7 @@ namespace Project1.Sprites
         private Texture2D megaManSheet;
         int megamanSizeX;
         int megamanSizeY;
+
         public idleMegaman(Texture2D texture)
         {
             megaManSheet = texture;
