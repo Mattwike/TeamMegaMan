@@ -3,3 +3,7 @@
 bin/
 obj/
 .content
+# Ignore MonoGame generated content
+Content/obj/
+Content/*.mgcontent
+Content/*.mgstats
