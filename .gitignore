@@ -2,3 +2,7 @@
 # Ignore build artifacts
 bin/
 obj/
+# Ignore MonoGame generated content
+Content/obj/
+Content/*.mgcontent
+Content/*.mgstats
