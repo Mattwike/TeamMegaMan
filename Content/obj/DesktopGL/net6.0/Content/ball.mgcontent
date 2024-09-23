@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>Z:/3902/Megaman/Content/ball.png</SourceFile>
-  <SourceTime>2024-08-16T21:19:48.506493-04:00</SourceTime>
-  <DestFile>Z:/3902/Megaman/Content/bin/DesktopGL/Content/ball.xnb</DestFile>
-  <DestTime>2024-09-20T12:40:15.6179343-04:00</DestTime>
+  <SourceFile>C:/Users/shiva/Source/Repos/TeamMegaMan/Content/ball.png</SourceFile>
+  <SourceTime>2024-09-22T21:35:00.7898813-04:00</SourceTime>
+  <DestFile>C:/Users/shiva/Source/Repos/TeamMegaMan/Content/bin/DesktopGL/Content/ball.xnb</DestFile>
+  <DestTime>2024-09-22T21:40:06.2310642-04:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T07:44:56-04:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
