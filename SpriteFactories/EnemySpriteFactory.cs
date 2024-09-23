@@ -1,7 +1,11 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
+
 public class EnemySpriteFactory
 {
-    private Texture2D enemySheet;
     private static EnemySpriteFactory instance = new EnemySpriteFactory();
+    private Texture2D enemySheet;
 
     public static EnemySpriteFactory Instance
     {
@@ -11,17 +15,17 @@ public class EnemySpriteFactory
         }
     }
 
-    private EnemySpriteFactory() { }
-
-    public void LoadEnemyTextures(ContentManager content)
+    private EnemySpriteFactory()
     {
-        enemySheet = content.Load<Texture2D>("enemy_sprites"); // Load the enemy sprite sheet
     }
 
-    public ISprite CreateEnemy(string enemyType)
+    public void LoadAllTextures(ContentManager content)
     {
+        enemySheet = content.Load<Texture2D>("enemy");
+    }
 
-        return new EnemySprite(enemySheet, new Rectangle(32, 32, 32, 32), 4);
-        
+    public ISprite CreateJumpingFlea()
+    {
+        return new jumpingFlea(enemySheet);
     }
 }
