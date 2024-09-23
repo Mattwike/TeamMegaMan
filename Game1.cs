@@ -3,6 +3,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using Project1.SpriteFactories;
+using Project1.Sprites;
+using Project1.States.MegamanState;
+using Project1.GameObjects;
 
 namespace Project1
 {
@@ -11,8 +15,7 @@ namespace Project1
         private KeyboardController _keyboardController;
         private MouseController _mouseController;
         private List<ISprite> sprites;
-
-
+        private Megaman megaman;
 
         Texture2D spriteTexture;
         float movementSpeed;
@@ -49,24 +52,24 @@ namespace Project1
 
             _keyboardController = new KeyboardController(this);
             _mouseController = new MouseController();
-
+            megaman = new Megaman();
             sprites = new List<ISprite>
             {
-                new idleMegaman(spriteTexture),
+                new Sprites.idleMegaman(spriteTexture),
                 new runningMegaman(spriteTexture),
                 new runningShootingMegaman(spriteTexture),
                 new damagedMegaman(spriteTexture),
                 new climbingMegaman(spriteTexture),
                 new climbingShootingMegaman(spriteTexture),
-                new climbingReachedTopMegaman(spriteTexture)
+                new climbingReachedTopMegaman(spriteTexture),
             };
 
             foreach (var obj in sprites)
             {
-                obj.Initialize(_graphics, movementSpeed, 40);
+                //obj.Initialize(_graphics, movementSpeed, 40);
             }
             _mouseController.Initialize(height, width);
-
+            megaman.Initialize(_graphics, movementSpeed, 40);
             base.Initialize();
         }
 
@@ -104,6 +107,7 @@ namespace Project1
             {
                 obj.Update(gameTime);
             }
+            megaman.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -111,9 +115,9 @@ namespace Project1
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
-            
-            foreach(var obj in sprites)
+            //TODO: Add your drawing code here
+
+            foreach (var obj in sprites)
             {
                 obj.Draw(spriteTexture, _spriteBatch, movementSpeed, false, false);
             }
