@@ -48,7 +48,7 @@ public class damagedMegaman : ISprite
         delaycounter++;
     }
 
-    public void Draw(Texture2D spriteTexture, SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically)
+    public void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically)
     {
 
         SpriteEffects spriteEffects = SpriteEffects.None;
@@ -83,7 +83,7 @@ public class damagedMegaman : ISprite
         }
 
         _spriteBatch.Begin();
-        _spriteBatch.Draw(spriteTexture, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
+        _spriteBatch.Draw(megaManSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
         _spriteBatch.End();
     }
 }

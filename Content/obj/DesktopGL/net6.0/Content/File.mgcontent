@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>Z:/3902/Megaman/Content/File.spritefont</SourceFile>
-  <SourceTime>2022-07-26T07:44:10-04:00</SourceTime>
-  <DestFile>Z:/3902/Megaman/Content/bin/DesktopGL/Content/File.xnb</DestFile>
-  <DestTime>2024-09-22T18:14:42.2909849-04:00</DestTime>
+  <SourceFile>C:/Users/User/Documents/GitHub/TeamMegaMan/Content/File.spritefont</SourceFile>
+  <SourceTime>2024-09-22T23:24:38.0005719-04:00</SourceTime>
+  <DestFile>C:/Users/User/Documents/GitHub/TeamMegaMan/Content/bin/DesktopGL/Content/File.xnb</DestFile>
+  <DestTime>2024-09-23T13:37:30.0839784-04:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2022-07-26T07:44:56-04:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

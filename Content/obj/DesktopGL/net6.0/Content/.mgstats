@@ -1,6 +1,8 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"Z:/3902/Megaman/Content/ball.png","Z:/3902/Megaman/Content/bin/DesktopGL/Content/ball.xnb","TextureProcessor","Texture2DContent",8368,16469,0.0821372
-"Z:/3902/Megaman/Content/File.fx","Z:/3902/Megaman/Content/bin/DesktopGL/Content/File.xnb","EffectProcessor","CompiledEffectContent",888,1295,0.2274851
-"Z:/3902/Megaman/Content/File.spritefont","Z:/3902/Megaman/Content/bin/DesktopGL/Content/File.xnb","FontDescriptionProcessor","SpriteFontContent",2068,21535,0.0747737
-"Z:/3902/Megaman/Content/MegaMan.png","Z:/3902/Megaman/Content/bin/DesktopGL/Content/MegaMan.xnb","TextureProcessor","Texture2DContent",16689,521725,0.0293062
-"Z:/3902/Megaman/Content/Text.spritefont","Z:/3902/Megaman/Content/bin/DesktopGL/Content/Text.xnb","FontDescriptionProcessor","SpriteFontContent",2068,37919,0.0141431
+"C:/Users/User/Documents/GitHub/TeamMegaMan/Content/ball.png","C:/Users/User/Documents/GitHub/TeamMegaMan/Content/bin/DesktopGL/Content/ball.xnb","TextureProcessor","Texture2DContent",8368,16469,0.0940374
+"C:/Users/User/Documents/GitHub/TeamMegaMan/Content/enemy.png","C:/Users/User/Documents/GitHub/TeamMegaMan/Content/bin/DesktopGL/Content/enemy.xnb","TextureProcessor","Texture2DContent",33565,843933,0.1112024
+"C:/Users/User/Documents/GitHub/TeamMegaMan/Content/File.fx","C:/Users/User/Documents/GitHub/TeamMegaMan/Content/bin/DesktopGL/Content/File.xnb","EffectProcessor","CompiledEffectContent",888,1295,0.2522582
+"C:/Users/User/Documents/GitHub/TeamMegaMan/Content/File.spritefont","C:/Users/User/Documents/GitHub/TeamMegaMan/Content/bin/DesktopGL/Content/File.xnb","FontDescriptionProcessor","SpriteFontContent",2068,21535,0.0814166
+"C:/Users/User/Documents/GitHub/TeamMegaMan/Content/link.png","C:/Users/User/Documents/GitHub/TeamMegaMan/Content/bin/DesktopGL/Content/link.xnb","TextureProcessor","Texture2DContent",19462,460125,0.0176249
+"C:/Users/User/Documents/GitHub/TeamMegaMan/Content/MegaMan.png","C:/Users/User/Documents/GitHub/TeamMegaMan/Content/bin/DesktopGL/Content/MegaMan.xnb","TextureProcessor","Texture2DContent",16689,521725,0.0139887
+"C:/Users/User/Documents/GitHub/TeamMegaMan/Content/Text.spritefont","C:/Users/User/Documents/GitHub/TeamMegaMan/Content/bin/DesktopGL/Content/Text.xnb","FontDescriptionProcessor","SpriteFontContent",2068,37919,0.0151843

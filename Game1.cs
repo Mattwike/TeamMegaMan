@@ -12,12 +12,11 @@ namespace Project1
         private MouseController _mouseController;
         private List<ISprite> sprites;
 
-
-
         Texture2D spriteTexture;
         float movementSpeed;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
 
         int height;
         int width;
@@ -49,16 +48,19 @@ namespace Project1
 
             _keyboardController = new KeyboardController(this);
             _mouseController = new MouseController();
+            megaManSpriteFactory.Instance.LoadAllTextures(Content);
+            EnemySpriteFactory.Instance.LoadAllTextures(Content);
 
             sprites = new List<ISprite>
             {
-                new idleMegaman(spriteTexture),
-                new runningMegaman(spriteTexture),
-                new runningShootingMegaman(spriteTexture),
-                new damagedMegaman(spriteTexture),
-                new climbingMegaman(spriteTexture),
-                new climbingShootingMegaman(spriteTexture),
-                new climbingReachedTopMegaman(spriteTexture)
+                megaManSpriteFactory.Instance.CreateIdleMegaman(),
+                megaManSpriteFactory.Instance.CreateRunningMegaman(),
+                megaManSpriteFactory.Instance.CreateRunningShootingMegaman(),
+                megaManSpriteFactory.Instance.CreateClimbingShootingMegaman(),
+                megaManSpriteFactory.Instance.CreateDamagedMegaman(),
+                megaManSpriteFactory.Instance.CreateClimbingMegaman(),
+                EnemySpriteFactory.Instance.CreateJumpingFlea(),
+                megaManSpriteFactory.Instance.CreateClimbingReachedTopMegaman(),
             };
 
             foreach (var obj in sprites)
@@ -67,6 +69,8 @@ namespace Project1
             }
             _mouseController.Initialize(height, width);
 
+      
+
             base.Initialize();
         }
 
@@ -74,9 +78,6 @@ namespace Project1
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
-            spriteTexture = Content.Load<Texture2D>("MegaMan");
-            megaManSpriteFactory.Instance.LoadAllTextures(Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -84,7 +85,7 @@ namespace Project1
 
             // Use the keyboard controller to get input and update the ball position
             mouseQuad = _mouseController.Update(lastMouseQuad);
-            if(lastMouseQuad != mouseQuad)
+            if (lastMouseQuad != mouseQuad)
             {
                 lastMouseQuad = mouseQuad;
                 lastInput = mouseQuad;
@@ -100,10 +101,13 @@ namespace Project1
                 lastMouseQuad = lastInput;
             }
 
-            foreach(var obj in sprites)
+            foreach (var obj in sprites)
             {
                 obj.Update(gameTime);
             }
+
+         
+
             base.Update(gameTime);
         }
 
@@ -112,11 +116,13 @@ namespace Project1
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            
-            foreach(var obj in sprites)
+
+            foreach (var obj in sprites)
             {
-                obj.Draw(spriteTexture, _spriteBatch, movementSpeed, false, false);
+                obj.Draw(_spriteBatch, movementSpeed, false, false);
             }
+
+       
 
             base.Draw(gameTime);
         }
