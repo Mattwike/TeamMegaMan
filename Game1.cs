@@ -3,6 +3,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using Project1.SpriteFactories;
+using Project1.Sprites;
+using Project1.States.MegamanState;
+using Project1.GameObjects;
 
 namespace Project1
 {
@@ -11,6 +15,7 @@ namespace Project1
         private KeyboardController _keyboardController;
         private MouseController _mouseController;
         private List<ISprite> sprites;
+        private Megaman megaman;
 
         Texture2D spriteTexture;
         float movementSpeed;
@@ -48,8 +53,6 @@ namespace Project1
 
             _keyboardController = new KeyboardController(this);
             _mouseController = new MouseController();
-            megaManSpriteFactory.Instance.LoadAllTextures(Content);
-            EnemySpriteFactory.Instance.LoadAllTextures(Content);
 
             sprites = new List<ISprite>
             {
@@ -65,7 +68,7 @@ namespace Project1
 
             foreach (var obj in sprites)
             {
-                obj.Initialize(_graphics, movementSpeed, 40);
+                //obj.Initialize(_graphics, movementSpeed, 40);
             }
             _mouseController.Initialize(height, width);
 
