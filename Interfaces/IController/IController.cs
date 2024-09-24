@@ -1,4 +1,8 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+
 public interface IController
 {
-	int Update(int lastoutput);
+    void Update(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, GameTime gameTime);
 }

@@ -27,7 +27,7 @@ namespace Project1.GameObjects
 
         public void ChangeDirection()
         {
-
+            State.ChangeDirection();
         }
 
         public void Update(GameTime gameTime)
