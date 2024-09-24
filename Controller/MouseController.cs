@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-public class MouseController : IController
+public class MouseController
 {
 
     int height;
@@ -14,27 +14,8 @@ public class MouseController : IController
         width = screenWidth;
     }
 
-    public int Update(int lastmouse)
+    public void Update()
     {
-        var mState = Mouse.GetState();
-
-        if (mState.X < width && mState.Y < height && mState.LeftButton == ButtonState.Pressed)
-        {
-            return 1;
-        }
-        else if (mState.X > width && mState.Y < height && mState.LeftButton == ButtonState.Pressed)
-        {
-            return 2;
-        }
-        else if (mState.X < width && mState.Y > height && mState.LeftButton == ButtonState.Pressed)
-        {
-            return 3;
-        }
-        if (mState.X > width && mState.Y > height && mState.LeftButton == ButtonState.Pressed)
-        {
-            return 4;
-        }
-
-        return lastmouse;
+        
     }
 }

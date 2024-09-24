@@ -19,9 +19,54 @@ namespace Project1.States.MegamanState
             Sprite = megaManSpriteFactory.Instance.CreateRunningMegaman();
         }
 
+        public void BeClimbingMegamanState()
+        {
+            megaman.State = new ClimbingMegamanState(megaman);
+        }
+
         public void BeIdleMegamanState()
         {
             megaman.State = new IdleMegamanState(megaman);
+        }
+
+        public void BeRunningRightMegamanState()
+        {
+            megaman.State = new RunningRightMegamanState(megaman);
+        }
+
+        public void BeRunningLeftMegamanState()
+        {
+            megaman.State = new RunningLeftMegamanState(megaman);
+        }
+
+        public void BeDamagedMegamanState()
+        {
+            megaman.State = new DamagedMegamanState(megaman);
+        }
+
+        public void BeClimbingShootingLeftMegamanState()
+        {
+            megaman.State = new ClimbingShootingLeftMegamanState(megaman);
+        }
+
+        public void BeClimbingShootingRightMegamanState()
+        {
+            megaman.State = new ClimbingShootingRightMegamanState(megaman);
+        }
+
+        public void BeClimbingReachedTopMegaman()
+        {
+            megaman.State = new ClimbingReachedTopMegamanState(megaman);
+        }
+
+        public void BeRunningShootingRightMegamanState()
+        {
+            megaman.State = new RunningShootingRightMegamanState(megaman);
+        }
+
+        public void BeRunningShootingLeftMegamanState()
+        {
+            megaman.State = new RunningShootingLeftMegamanState(megaman);
         }
 
         public void ChangeDirection()
