@@ -65,7 +65,8 @@ namespace Project1
                 megaManSpriteFactory.Instance.CreateDamagedMegaman(),
                 megaManSpriteFactory.Instance.CreateClimbingMegaman(),
                 EnemySpriteFactory.Instance.CreateJumpingFlea(),
-                EnemySpriteFactory.Instance.CreateBombMan(),
+                EnemySpriteFactory.Instance.CreateBombManIdle(),
+                EnemySpriteFactory.Instance.CreateBombManThrowing(),
                 megaManSpriteFactory.Instance.CreateClimbingReachedTopMegaman(),
             };
 
