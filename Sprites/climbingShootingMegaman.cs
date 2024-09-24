@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Project1.GameObjects;
 
 namespace Project1.Sprites
 {
@@ -11,6 +12,7 @@ namespace Project1.Sprites
         int megamanSizeX;
         int megamanSizeY;
         private Texture2D megaManSheet;
+        private Megaman megaman;
 
         public climbingShootingMegaman(Texture2D texture)
         {
@@ -19,10 +21,11 @@ namespace Project1.Sprites
             y = 15;
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman)
         {
             megamanSizeX = megamanSize + 3;
             megamanSizeY = megamanSize;
+            this.megaman = Megaman;
         }
 
         public void Update(GameTime gameTime)
@@ -48,7 +51,7 @@ namespace Project1.Sprites
             Rectangle sourceRectangle;
             Rectangle destinationRectangle;
 
-            destinationRectangle = new Rectangle((int)x, (int)y, megamanSizeX, megamanSizeY);
+            destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
             sourceRectangle = new Rectangle(60, 81, 24, 29);
 
             _spriteBatch.Begin();

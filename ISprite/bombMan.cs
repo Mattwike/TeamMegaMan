@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Project1.GameObjects;
 
 public class bombMan : ISprite
 {
@@ -12,6 +13,8 @@ public class bombMan : ISprite
     private Texture2D enemySheet;
     int enemySizeX;
     int enemySizeY;
+    private Megaman megaman;
+
     public bombMan(Texture2D texture)
     {
         enemySheet = texture;
@@ -19,7 +22,7 @@ public class bombMan : ISprite
         y = 15;
     }
 
-    public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
+    public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman)
     {
         currentFrame = 0;
         totalFrame = 20;
@@ -27,6 +30,7 @@ public class bombMan : ISprite
         delayMax = 10;
         enemySizeX = megamanSize;
         enemySizeY = megamanSize;
+        this.megaman = Megaman;
     }
 
     public void Update(GameTime gameTime)

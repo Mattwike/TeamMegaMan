@@ -39,20 +39,19 @@ public class KeyboardController : IController
         }
 
         // Check for key presses and execute the corresponding commands
-        if (pressedKeys.Contains(Keys.A))
+        if (pressedKeys.Contains(Keys.A) && priorKeys != null)
         {
             commandDict[Keys.A].Execute(_graphics, movementSpeed, megamanSize);
+            megaman.x -= 3;
         }
-        else if (pressedKeys.Contains(Keys.D))
+        else if (pressedKeys.Contains(Keys.D) && priorKeys != null)
         {
             commandDict[Keys.D].Execute(_graphics, movementSpeed, megamanSize);
+            megaman.x += 3;
         }
-        else
-        {
-            // Execute idle command if no keys are pressed
-            ICommand idleCommand = new IdleMegamanCommand(megaman);
-            idleCommand.Execute(_graphics, movementSpeed, megamanSize);
-        }
+
+        priorKeys = pressedKeys;
+        pressedKeys = new Keys[0];
         megaman.Update(gameTime);
     }
 }

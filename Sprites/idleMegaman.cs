@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Project1.GameObjects;
 
 namespace Project1.Sprites
 {
@@ -14,6 +15,7 @@ namespace Project1.Sprites
         private Texture2D megaManSheet;
         int megamanSizeX;
         int megamanSizeY;
+        private Megaman megaman;
 
         public idleMegaman(Texture2D texture)
         {
@@ -22,7 +24,7 @@ namespace Project1.Sprites
             y = 15;
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman)
         {
             currentFrame = 0;
             totalFrame = 3;
@@ -30,6 +32,7 @@ namespace Project1.Sprites
             delayMax = 10;
             megamanSizeX = megamanSize;
             megamanSizeY = megamanSize;
+            this.megaman = Megaman;
         }
 
         public void Update(GameTime gameTime)
@@ -67,17 +70,17 @@ namespace Project1.Sprites
 
             if (currentFrame == 0)
             {
-                destinationRectangle = new Rectangle((int)x, (int)y, megamanSizeX, megamanSizeY);
+                destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
                 sourceRectangle = new Rectangle(103, 10, 21, 24);
             }
             else if (currentFrame == 1)
             {
-                destinationRectangle = new Rectangle((int)x, (int)y, megamanSizeX, megamanSizeY);
+                destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
                 sourceRectangle = new Rectangle(133, 10, 21, 24);
             }
             else
             {
-                destinationRectangle = new Rectangle((int)x, (int)y, megamanSizeX - 1, megamanSizeY);
+                destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX - 1, megamanSizeY);
                 sourceRectangle = new Rectangle(160, 10, 20, 24);
             }
 

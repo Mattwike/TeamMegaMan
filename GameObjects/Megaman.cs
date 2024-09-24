@@ -10,8 +10,8 @@ namespace Project1.GameObjects
 
         public IMegamanState State;
 
-        int x {  get; set; }
-        int y { get; set; }
+        public float x {  get; set; }
+        public float y { get; set; }
 
         public bool isfacingLeft { get; set; }
 

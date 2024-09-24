@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Project1.GameObjects;
 
 namespace Project1.Sprites
 {
@@ -15,6 +16,7 @@ namespace Project1.Sprites
         int megamanSizeX;
         int megamanSizeY;
         private Texture2D megaManSheet;
+        private Megaman megaman;
 
         public damagedMegaman(Texture2D texture)
         {
@@ -22,7 +24,7 @@ namespace Project1.Sprites
 
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman)
         {
             currentframe = 0;
             totalframe = 3;
@@ -32,6 +34,7 @@ namespace Project1.Sprites
             y = 15;
             megamanSizeX = megamanSize + 7;
             megamanSizeY = megamanSize;
+            this.megaman = Megaman;
         }
 
         public void Update(GameTime gameTime)
@@ -70,17 +73,17 @@ namespace Project1.Sprites
 
             if (currentframe == 0)
             {
-                destinationRectangle = new Rectangle((int)x, (int)y, megamanSizeX, megamanSizeY);
+                destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
                 sourceRectangle = new Rectangle(213, 40, 28, 30);
             }
             else if (currentframe == 1)
             {
-                destinationRectangle = new Rectangle((int)x, (int)y + 2, megamanSizeX - 2, megamanSizeY - 2);
+                destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y + 2, megamanSizeX - 2, megamanSizeY - 2);
                 sourceRectangle = new Rectangle(248, 42, 26, 28);
             }
             else
             {
-                destinationRectangle = new Rectangle((int)x, (int)y + 8, megamanSizeX, megamanSizeY - 8);
+                destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y + 8, megamanSizeX, megamanSizeY - 8);
                 sourceRectangle = new Rectangle(280, 48, 28, 22);
             }
 

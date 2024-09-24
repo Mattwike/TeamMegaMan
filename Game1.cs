@@ -71,9 +71,12 @@ namespace Project1
             megaman = new Megaman();
             megaman.Initialize(_graphics, movementSpeed, 40);
 
+            megaman.x = width;
+            megaman.y = height;
+
             foreach (var obj in sprites)
             {
-                obj.Initialize(_graphics, movementSpeed, 40);
+                obj.Initialize(_graphics, movementSpeed, 40, megaman);
             }
             _keyboardController = new KeyboardController(this,  megaman);
 

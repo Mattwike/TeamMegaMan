@@ -81,7 +81,7 @@ namespace Project1.States.MegamanState
 
 		public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
 		{
-			Sprite.Initialize(_graphics, movementSpeed, megamanSize);
+			Sprite.Initialize(_graphics, movementSpeed, megamanSize, megaman);
 		}
 
 		public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
