@@ -4,13 +4,13 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/User/Documents/GitHub/TeamMegaMan/Content/ball.png</File>
-    <File>C:/Users/User/Documents/GitHub/TeamMegaMan/Content/enemy.png</File>
-    <File>C:/Users/User/Documents/GitHub/TeamMegaMan/Content/File.fx</File>
-    <File>C:/Users/User/Documents/GitHub/TeamMegaMan/Content/File.spritefont</File>
-    <File>C:/Users/User/Documents/GitHub/TeamMegaMan/Content/link.png</File>
-    <File>C:/Users/User/Documents/GitHub/TeamMegaMan/Content/MegaMan.png</File>
-    <File>C:/Users/User/Documents/GitHub/TeamMegaMan/Content/Text.spritefont</File>
+    <File>D:/CSE 3902/TeamMegaMan/TeamMegaMan/Content/ball.png</File>
+    <File>D:/CSE 3902/TeamMegaMan/TeamMegaMan/Content/enemy.png</File>
+    <File>D:/CSE 3902/TeamMegaMan/TeamMegaMan/Content/File.fx</File>
+    <File>D:/CSE 3902/TeamMegaMan/TeamMegaMan/Content/File.spritefont</File>
+    <File>D:/CSE 3902/TeamMegaMan/TeamMegaMan/Content/link.png</File>
+    <File>D:/CSE 3902/TeamMegaMan/TeamMegaMan/Content/MegaMan.png</File>
+    <File>D:/CSE 3902/TeamMegaMan/TeamMegaMan/Content/Text.spritefont</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

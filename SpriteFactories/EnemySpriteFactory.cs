@@ -28,4 +28,9 @@ public class EnemySpriteFactory
     {
         return new jumpingFlea(enemySheet);
     }
+
+    public ISprite CreateScrewDriver()
+    {
+        return new screwDriver(enemySheet);
+    }
 }

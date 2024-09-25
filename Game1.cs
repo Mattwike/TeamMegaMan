@@ -61,6 +61,7 @@ namespace Project1
                 megaManSpriteFactory.Instance.CreateClimbingMegaman(),
                 EnemySpriteFactory.Instance.CreateJumpingFlea(),
                 megaManSpriteFactory.Instance.CreateClimbingReachedTopMegaman(),
+                EnemySpriteFactory.Instance.CreateScrewDriver(),
             };
 
             foreach (var obj in sprites)
