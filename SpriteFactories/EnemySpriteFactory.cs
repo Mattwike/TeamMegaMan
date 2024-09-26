@@ -35,4 +35,14 @@ public class EnemySpriteFactory
     {
         return new bombMan(bossSheet);
     }
+
+    public ISprite CreateRedBlaster()
+    {
+        return new RedBlaster(enemySheet);
+    }
+
+    public ISprite CreateRedBlasterProjectile()
+    {
+        return new RedBlasterProjectile(enemySheet, 650, 100, 0);
+    }
 }

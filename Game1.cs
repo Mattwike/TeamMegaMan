@@ -66,6 +66,8 @@ namespace Project1
                 megaManSpriteFactory.Instance.CreateClimbingMegaman(),
                 EnemySpriteFactory.Instance.CreateJumpingFlea(),
                 EnemySpriteFactory.Instance.CreateBombMan(),
+                EnemySpriteFactory.Instance.CreateRedBlaster(),
+                //EnemySpriteFactory.Instance.CreateRedBlasterProjectile(),
                 megaManSpriteFactory.Instance.CreateClimbingReachedTopMegaman(),
             };
 
