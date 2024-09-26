@@ -5,7 +5,7 @@ namespace Project1.Sprites
 {
     public class idleMegaman : ISprite
     {
-        int currentFrame;    // Make sure to use camelCase consistently
+        int currentFrame;
         int totalFrame;
         int delayCounter;
         int delayMax;

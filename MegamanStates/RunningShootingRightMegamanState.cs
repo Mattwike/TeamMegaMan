@@ -3,20 +3,21 @@ using Microsoft.Xna.Framework.Graphics;
 using Project1.SpriteFactories;
 using Project1.Interfaces;
 using Project1.GameObjects;
+using Project1.States.MegamanState;
 
 namespace Project1.States.MegamanState
 {
-	public class IdleMegamanState : IMegamanState
-	{
-		private Megaman megaman;
-		public ISprite Sprite;
+    public class RunningShootingRightMegamanState : IMegamanState
+    {
+        private Megaman megaman;
+        public ISprite Sprite;
 
-		public IdleMegamanState(Megaman megaman)
-		{
-			this.megaman = megaman;
+        public RunningShootingRightMegamanState(Megaman Megaman)
+        {
+            megaman = Megaman;
             megaman.SetDirection(false);
-            Sprite = megaManSpriteFactory.Instance.CreateIdleMegaman(); 
-		}
+            Sprite = megaManSpriteFactory.Instance.CreateRunningShootingMegaman();
+        }
 
         public void BeClimbingMegamanState()
         {
@@ -69,25 +70,24 @@ namespace Project1.States.MegamanState
         }
 
         public void ChangeDirection()
-		{
+        {
+            megaman.State = new RunningShootingLeftMegamanState(megaman);
+        }
 
-		}
+        public void Update(GameTime gameTime)
+        {
+            Sprite.Update(gameTime);
+        }
 
-		public void Update(GameTime gameTime)
-		{
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
+        {
+            Sprite.Initialize(_graphics, movementSpeed, megamanSize);
+        }
 
-			Sprite.Update(gameTime);
-		}
-
-		public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
-		{
-			Sprite.Initialize(_graphics, movementSpeed, megamanSize);
-		}
-
-		public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
-		{
-
-			Sprite.Draw(_spriteBatch, movementSpeed, megaman.isfacingLeft, false);
-		}
-	}
+        public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
+        {
+            // Implement draw logic here
+            Sprite.Draw(_spriteBatch, movementSpeed, megaman.isfacingLeft, false);
+        }
+    }
 }
