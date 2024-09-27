@@ -1,8 +1,0 @@
-Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"D:/CSE 3902/TeamMegaMan/TeamMegaMan/Content/ball.png","D:/CSE 3902/TeamMegaMan/TeamMegaMan/Content/bin/DesktopGL/Content/ball.xnb","TextureProcessor","Texture2DContent",8368,16469,0.1442048
-"D:/CSE 3902/TeamMegaMan/TeamMegaMan/Content/enemy.png","D:/CSE 3902/TeamMegaMan/TeamMegaMan/Content/bin/DesktopGL/Content/enemy.xnb","TextureProcessor","Texture2DContent",33765,843933,0.1223619
-"D:/CSE 3902/TeamMegaMan/TeamMegaMan/Content/File.fx","D:/CSE 3902/TeamMegaMan/TeamMegaMan/Content/bin/DesktopGL/Content/File.xnb","EffectProcessor","CompiledEffectContent",888,1295,0.2967125
-"D:/CSE 3902/TeamMegaMan/TeamMegaMan/Content/File.spritefont","D:/CSE 3902/TeamMegaMan/TeamMegaMan/Content/bin/DesktopGL/Content/File.xnb","FontDescriptionProcessor","SpriteFontContent",2068,21535,0.0759428
-"D:/CSE 3902/TeamMegaMan/TeamMegaMan/Content/link.png","D:/CSE 3902/TeamMegaMan/TeamMegaMan/Content/bin/DesktopGL/Content/link.xnb","TextureProcessor","Texture2DContent",19462,460125,0.0314362
-"D:/CSE 3902/TeamMegaMan/TeamMegaMan/Content/MegaMan.png","D:/CSE 3902/TeamMegaMan/TeamMegaMan/Content/bin/DesktopGL/Content/MegaMan.xnb","TextureProcessor","Texture2DContent",16689,521725,0.0202139
-"D:/CSE 3902/TeamMegaMan/TeamMegaMan/Content/Text.spritefont","D:/CSE 3902/TeamMegaMan/TeamMegaMan/Content/bin/DesktopGL/Content/Text.xnb","FontDescriptionProcessor","SpriteFontContent",2068,37919,0.0129488
