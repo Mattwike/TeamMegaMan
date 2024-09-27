@@ -1,7 +1,7 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class climbingMegaman : ISprite
+public class bombManIdle : ISprite
 {
     int currentFrame;    // Make sure to use camelCase consistently
     int totalFrame;
@@ -9,25 +9,24 @@ public class climbingMegaman : ISprite
     int delayMax;
     float x;
     float y;
-    int megamanSizeX;
-    int megamanSizeY;
-    private Texture2D megaManSheet;
-
-    public climbingMegaman(Texture2D texture)
+    private Texture2D enemySheet;
+    int enemySizeX;
+    int enemySizeY;
+    public bombManIdle(Texture2D texture)
     {
-        megaManSheet = texture;
-        x = 200;
-        y = 15;
+        enemySheet = texture;
+        x = 400;
+        y = 40;
     }
 
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
     {
         currentFrame = 0;
-        totalFrame = 2;
+        totalFrame = 20;
         delayCounter = 0;
         delayMax = 10;
-        megamanSizeX = megamanSize - 5;
-        megamanSizeY = megamanSize;
+        enemySizeX = 50;
+        enemySizeY = 50;
     }
 
     public void Update(GameTime gameTime)
@@ -59,23 +58,28 @@ public class climbingMegaman : ISprite
         {
             spriteEffects |= SpriteEffects.FlipVertically;
         }
-        
+
         Rectangle sourceRectangle;
         Rectangle destinationRectangle;
 
-        if(currentFrame == 0)
+        if (currentFrame < 10)
         {
-            destinationRectangle = new Rectangle((int)x, (int)y, megamanSizeX, megamanSizeY);
-            sourceRectangle = new Rectangle(5, 81, 16, 29);
+            destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
+            sourceRectangle = new Rectangle(60, 36, 25, 25);
+        }
+        else if (currentFrame == 10)
+        {
+            destinationRectangle = new Rectangle((int)x-8, (int)y-10, enemySizeX+8, enemySizeY+10);
+            sourceRectangle = new Rectangle(31, 30, 29, 31);
         }
         else
         {
-            destinationRectangle = new Rectangle((int)x, (int)y, megamanSizeX, megamanSizeY);
-            sourceRectangle = new Rectangle(32, 81, 16, 29);
+            destinationRectangle = new Rectangle((int)x-6, (int)y-30, enemySizeX+6, enemySizeY+30);
+            sourceRectangle = new Rectangle(0, 21, 28, 41);
         }
 
         _spriteBatch.Begin();
-        _spriteBatch.Draw(megaManSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
+        _spriteBatch.Draw(enemySheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
         _spriteBatch.End();
     }
 }

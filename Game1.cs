@@ -3,6 +3,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using Project1.SpriteFactories;
+using Project1.Sprites;
+using Project1.States.MegamanState;
+using Project1.GameObjects;
 
 namespace Project1
 {
@@ -11,8 +15,8 @@ namespace Project1
         private KeyboardController _keyboardController;
         private MouseController _mouseController;
         private List<ISprite> sprites;
+        private Megaman megaman;
 
-        Texture2D spriteTexture;
         float movementSpeed;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -46,8 +50,8 @@ namespace Project1
             width = _graphics.PreferredBackBufferWidth / 2;
             height = _graphics.PreferredBackBufferHeight / 2;
 
-            _keyboardController = new KeyboardController(this);
             _mouseController = new MouseController();
+
             megaManSpriteFactory.Instance.LoadAllTextures(Content);
             EnemySpriteFactory.Instance.LoadAllTextures(Content);
 
@@ -60,18 +64,24 @@ namespace Project1
                 megaManSpriteFactory.Instance.CreateDamagedMegaman(),
                 megaManSpriteFactory.Instance.CreateClimbingMegaman(),
                 EnemySpriteFactory.Instance.CreateJumpingFlea(),
+                EnemySpriteFactory.Instance.CreateBombManIdle(),
+                EnemySpriteFactory.Instance.CreateBombManThrowing(),
                 megaManSpriteFactory.Instance.CreateClimbingReachedTopMegaman(),
                 EnemySpriteFactory.Instance.CreateScrewDriver(),
             };
+
+            megaman = new Megaman();
+            megaman.Initialize(_graphics, movementSpeed, 40);
 
             foreach (var obj in sprites)
             {
                 obj.Initialize(_graphics, movementSpeed, 40);
             }
+            _keyboardController = new KeyboardController(this,  megaman);
+
             _mouseController.Initialize(height, width);
-
-      
-
+            _keyboardController.Initialize();
+            
             base.Initialize();
         }
 
@@ -85,29 +95,16 @@ namespace Project1
         {
 
             // Use the keyboard controller to get input and update the ball position
-            mouseQuad = _mouseController.Update(lastMouseQuad);
-            if (lastMouseQuad != mouseQuad)
-            {
-                lastMouseQuad = mouseQuad;
-                lastInput = mouseQuad;
-                lastOutput = lastInput;
-            }
-
-            output = _keyboardController.Update(lastOutput);
-
-            if (lastOutput != output)
-            {
-                lastOutput = output;
-                lastInput = lastOutput;
-                lastMouseQuad = lastInput;
-            }
 
             foreach (var obj in sprites)
             {
                 obj.Update(gameTime);
             }
 
-         
+            megaman.Update(gameTime);
+
+            _keyboardController.Update(_graphics, movementSpeed, 40, gameTime);
+
 
             base.Update(gameTime);
         }
@@ -116,14 +113,13 @@ namespace Project1
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            //TODO: Add your drawing code here
 
-            foreach (var obj in sprites)
-            {
-                obj.Draw(_spriteBatch, movementSpeed, false, false);
-            }
-
-       
+            //foreach (var obj in sprites)
+            //{
+            //    obj.Draw(_spriteBatch, movementSpeed, false, false);
+            //}
+            megaman.Draw(_spriteBatch, movementSpeed);
 
             base.Draw(gameTime);
         }
