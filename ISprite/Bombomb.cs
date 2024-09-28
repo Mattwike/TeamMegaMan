@@ -8,12 +8,16 @@ public class Bombomb : ISprite
     int totalFrame;
     int delayCounter;
     int delayMax;
-    float x;  // x-coordinate
-    float y;  // y-coordinate
-    float initialY; // Initial y position to track jumping
+    float x;  // x-coordinate of Bombomb
+    float y;  // y-coordinate of Bombomb
+    float initialX;  // Store the initial x position
+    float initialY;  // Store the initial y position
     float jumpHeight;  // Height of the jump
     bool isJumping;
     bool hasExploded;
+    bool isVisible;  // Added: Visibility flag to hide the Bombomb sprite
+
+    private int screenHeight;  // Screen height for boundary detection
 
     private Texture2D bombombSheet;
     List<BombombProjectile> projectiles; // List of projectiles spawned after explosion
@@ -25,10 +29,14 @@ public class Bombomb : ISprite
         bombombSheet = texture;
         x = startX;
         y = startY;
+        initialX = startX;  // Save the initial position for resetting
         initialY = startY;
-        jumpHeight = 20;  // 20px jump height
+        jumpHeight = 100;  // 20px jump height
         isJumping = true; // Start with a jumping behavior
         hasExploded = false;
+        isVisible = true; // Start by making Bombomb visible
+
+        screenHeight = 600;  // Default screen height (set to match your game screen size)
 
         // Define animation frames for Bombomb (adjust according to your sprite sheet)
         bombombFrames = new Rectangle[]
@@ -43,18 +51,16 @@ public class Bombomb : ISprite
         projectiles = new List<BombombProjectile>();
     }
 
-    // Implement the missing Initialize method
     public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int size)
     {
-        // Initialization logic, if needed
         currentFrame = 0;
         delayCounter = 0;
         isJumping = true;
         hasExploded = false;
+        isVisible = true; // Make Bombomb visible when initialized
         projectiles.Clear();  // Clear any existing projectiles
     }
 
-    // Implement the missing Draw method matching the interface
     public void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically)
     {
         SpriteEffects spriteEffects = SpriteEffects.None;
@@ -69,15 +75,18 @@ public class Bombomb : ISprite
             spriteEffects |= SpriteEffects.FlipVertically;
         }
 
-        // Draw Bombomb
-        Rectangle destinationRectangle = new Rectangle((int)x, (int)y, bombombFrames[currentFrame].Width, bombombFrames[currentFrame].Height);
-        Rectangle sourceRectangle = bombombFrames[currentFrame];
+        // Only draw Bombomb if it is visible
+        if (isVisible)
+        {
+            Rectangle destinationRectangle = new Rectangle((int)x, (int)y, bombombFrames[currentFrame].Width, bombombFrames[currentFrame].Height);
+            Rectangle sourceRectangle = bombombFrames[currentFrame];
 
-        _spriteBatch.Begin();
-        _spriteBatch.Draw(bombombSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
-        _spriteBatch.End();
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(bombombSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
+            _spriteBatch.End();
+        }
 
-        // Draw all projectiles
+        // Draw all projectiles regardless of Bombomb's visibility
         foreach (var projectile in projectiles)
         {
             projectile.Draw(_spriteBatch, flipHorizontally, flipVertically);
@@ -108,6 +117,7 @@ public class Bombomb : ISprite
                 // Stop jumping and explode
                 isJumping = false;
                 hasExploded = true;
+                isVisible = false;  // Hide Bombomb when it explodes
                 Explode();  // Spawn projectiles
             }
         }
@@ -116,6 +126,12 @@ public class Bombomb : ISprite
         foreach (var projectile in projectiles)
         {
             projectile.Update(gameTime);
+        }
+
+        // Check if all projectiles are off the screen
+        if (projectiles.Count > 0 && projectiles.TrueForAll(p => p.IsOffScreen()))
+        {
+            ResetBombomb();  // Reset Bombomb position and restart animation
         }
 
         // Remove projectiles that go off-screen or disappear after some time
@@ -129,9 +145,24 @@ public class Bombomb : ISprite
         float projectileY = y - bombombFrames[currentFrame].Height / 2;  // Center of explosion
 
         // Create projectiles (4 in total)
-        projectiles.Add(new BombombProjectile(bombombSheet, projectileX - 20, projectileY, 800, -5, 0));  // Left projectile
-        projectiles.Add(new BombombProjectile(bombombSheet, projectileX + 20, projectileY, 800, 5, 0));   // Right projectile
-        projectiles.Add(new BombombProjectile(bombombSheet, projectileX - 40, projectileY, 800, -10, 0)); // Far left projectile
-        projectiles.Add(new BombombProjectile(bombombSheet, projectileX + 40, projectileY, 800, 10, 0));  // Far right projectile
+        projectiles.Add(new BombombProjectile(bombombSheet, projectileX - 10, projectileY, 800, -0.25f));  // Left projectile
+        projectiles.Add(new BombombProjectile(bombombSheet, projectileX + 10, projectileY, 800, 0.25f));   // Right projectile
+        projectiles.Add(new BombombProjectile(bombombSheet, projectileX - 50, projectileY, 800, -0.25f));  // Another left projectile
+        projectiles.Add(new BombombProjectile(bombombSheet, projectileX + 50, projectileY, 800, 0.25f));   // Another right projectile
+    }
+
+    private void ResetBombomb()
+    {
+        // Reset Bombomb to its initial position
+        x = initialX;
+        y = initialY;
+
+        // Clear all projectiles
+        projectiles.Clear();
+
+        // Reset the jump and explosion state
+        isJumping = true;
+        hasExploded = false;
+        isVisible = true;  // Make Bombomb visible again
     }
 }

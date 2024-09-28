@@ -5,12 +5,13 @@ public class BombombProjectile : ISprite
 {
     float x;
     float y;
-    float speedX;
-    float speedY;
+    float speedX;  // Horizontal speed (constant left or right)
+    float speedY;  // Vertical speed (constant falling)
     private Texture2D projectileSheet;
     int projectileSizeX;
     int projectileSizeY;
     int screenWidth;
+    int screenHeight;  // Added: screenHeight variable to check boundaries
 
     Rectangle[] projectileFrames;
     int currentFrame;
@@ -18,19 +19,21 @@ public class BombombProjectile : ISprite
     int delayCounter;
     int delayMax;
 
-    public BombombProjectile(Texture2D texture, float startX, float startY, int screenWidth, float speedX, float speedY)
+    public BombombProjectile(Texture2D texture, float startX, float startY, int screenWidth, float speedX)
     {
         projectileSheet = texture;
         x = startX;
         y = startY;
         this.screenWidth = screenWidth;
-        this.speedX = speedX;  // Speed in the X direction
-        this.speedY = speedY;  // Speed in the Y direction
+        this.screenHeight = 600;  // Default screen height (set as 600), modify this based on your screen size
+
+        this.speedX = speedX;  // Set horizontal speed (left or right)
+        this.speedY = 1f;    // Set constant falling speed
 
         // Define source frame for projectile (adjust based on sprite sheet)
         projectileFrames = new Rectangle[]
         {
-            new Rectangle(417, 24, 8, 6),  // Projectile frame
+            new Rectangle(417, 24, 8, 6),  // Projectile frame from sprite sheet
         };
 
         currentFrame = 0;
@@ -41,14 +44,12 @@ public class BombombProjectile : ISprite
         projectileSizeY = projectileFrames[currentFrame].Height;
     }
 
-    // Implement the missing Initialize method
     public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int size)
     {
         currentFrame = 0;
         delayCounter = 0;
     }
 
-    // Implement the missing Draw method matching the interface
     public void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically)
     {
         SpriteEffects spriteEffects = SpriteEffects.None;
@@ -72,11 +73,13 @@ public class BombombProjectile : ISprite
 
     public void Update(GameTime gameTime)
     {
-        // Move the projectile
-        x += speedX;
-        y += speedY;
+        // Move the projectile horizontally and vertically at constant speeds
+        x += speedX;  // Move left or right based on speedX
+        y += speedY;  // Move down at a constant speed
 
-        // Frame delay logic
+        // No increase in horizontal or vertical speed, maintain constant motion
+
+        // Frame delay logic (if needed for animation)
         delayCounter++;
         if (delayCounter >= delayMax)
         {
@@ -91,7 +94,7 @@ public class BombombProjectile : ISprite
 
     public bool IsOffScreen()
     {
-        // Remove the projectile if it moves off the screen
-        return x < 0 || x > screenWidth || y < 0 || y > 600;  // Adjust y-bound if needed
+        // Check if the projectile is off-screen based on screen width and height
+        return x < 0 || x > screenWidth || y > 300;  // Make sure y > screenHeight to detect bottom screen boundary
     }
 }

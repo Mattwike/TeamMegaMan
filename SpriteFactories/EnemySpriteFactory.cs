@@ -48,6 +48,6 @@ public class EnemySpriteFactory
 
     public ISprite CreateBombomb()
     {
-        return new Bombomb(enemySheet, 400, 21);
+        return new Bombomb(enemySheet, 400, 200);
     }
 }
