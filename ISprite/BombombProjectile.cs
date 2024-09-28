@@ -28,7 +28,7 @@ public class BombombProjectile : ISprite
         this.screenHeight = 600;  // Default screen height (set as 600), modify this based on your screen size
 
         this.speedX = speedX;  // Set horizontal speed (left or right)
-        this.speedY = 1f;    // Set constant falling speed
+        this.speedY = 2f;    // Set constant falling speed
 
         // Define source frame for projectile (adjust based on sprite sheet)
         projectileFrames = new Rectangle[]
