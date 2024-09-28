@@ -45,4 +45,9 @@ public class EnemySpriteFactory
     {
         return new BombManThrowBomb(bossSheet);
     }
+
+    public ISprite CreateBombomb()
+    {
+        return new Bombomb(enemySheet, 400, 21);
+    }
 }
