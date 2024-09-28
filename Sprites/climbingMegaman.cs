@@ -24,7 +24,7 @@ namespace Project1.Sprites
             y = 15;
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman megaman)
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman megaman, int interval)
         {
             currentFrame = 0;
             totalFrame = 2;

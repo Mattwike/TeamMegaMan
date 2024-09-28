@@ -23,7 +23,7 @@ namespace Project1.Sprites
             megaManSheet = texture;
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman)
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int interval)
         {
             currentframe = 0;
             totalframe = 3;

@@ -79,9 +79,9 @@ namespace Project1.States.MegamanState
             Sprite.Update(gameTime);
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
         {
-            Sprite.Initialize(_graphics, movementSpeed, megamanSize, megaman);
+            Sprite.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval);
         }
 
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed)

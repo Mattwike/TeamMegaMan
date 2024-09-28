@@ -29,6 +29,7 @@ namespace Project1
         int lastMouseQuad;
         int mouseQuad;
         int lastInput;
+        int interval = 0;
 
         public Game1()
         {
@@ -69,14 +70,14 @@ namespace Project1
             };
 
             megaman = new Megaman();
-            megaman.Initialize(_graphics, movementSpeed, 40);
+            megaman.Initialize(_graphics, movementSpeed, 40, interval);
 
             megaman.x = width;
             megaman.y = height;
 
             foreach (var obj in sprites)
             {
-                obj.Initialize(_graphics, movementSpeed, 40, megaman);
+                obj.Initialize(_graphics, movementSpeed, 40, megaman, interval);
             }
             _keyboardController = new KeyboardController(this,  megaman);
 

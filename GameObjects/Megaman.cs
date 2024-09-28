@@ -35,9 +35,9 @@ namespace Project1.GameObjects
             State.Update(gameTime);
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
         {
-            State.Initialize(_graphics, movementSpeed, megamanSize);
+            State.Initialize(_graphics, movementSpeed, megamanSize, interval);
         }
 
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed)

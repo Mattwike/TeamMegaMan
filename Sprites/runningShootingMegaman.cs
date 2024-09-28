@@ -17,13 +17,14 @@ namespace Project1.Sprites
         int megamanSizeY;
         private Texture2D megaManSheet;
         private Megaman megaman;
+        int interval;
 
         public runningShootingMegaman(Texture2D texture)
         {
             megaManSheet = texture;
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman)
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int intervalTime)
         {
             currentframe = 0;
             totalframe = 3;
@@ -32,6 +33,7 @@ namespace Project1.Sprites
             megamanSizeX = megamanSize + 10;
             megamanSizeY = megamanSize;
             this.megaman = Megaman;
+            interval = intervalTime;
         }
 
         public void Update(GameTime gameTime)
@@ -52,7 +54,7 @@ namespace Project1.Sprites
 
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically)
         {
-
+            /*
             if (delaycounter == delaymax)
             {
                 currentframe++;
@@ -64,7 +66,7 @@ namespace Project1.Sprites
                 currentframe = 0;
             }
             delaycounter++;
-
+            */
             SpriteEffects spriteEffects = SpriteEffects.None;
 
             if (flipHorizontally)
@@ -81,19 +83,20 @@ namespace Project1.Sprites
             Rectangle destinationRectangle;
 
             // TODO: Add your drawing code here
-            if (currentframe == 0)
+            if (interval % 24 < 6)
             {
+                
                 sourceRectangle = new Rectangle(14, 46, 31, 24);
                 destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
             }
 
-            else if (currentframe == 1)
+            else if (interval % 24 < 12)
             {
                 sourceRectangle = new Rectangle(50, 48, 29, 22);
                 destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y + 2, megamanSizeX - 2, megamanSizeY - 2);
             }
 
-            else if (currentframe == 2)
+            else if (interval % 24 < 18)
             {
                 sourceRectangle = new Rectangle(84, 46, 26, 24);
                 destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX - 5, megamanSizeY);
@@ -102,7 +105,7 @@ namespace Project1.Sprites
             else
             {
                 sourceRectangle = new Rectangle(113, 48, 30, 22);
-                destinationRectangle = new Rectangle((int)x, (int)+2, megamanSizeX - 1, megamanSizeY - 2);
+                destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y+2, megamanSizeX - 1, megamanSizeY - 2);
             }
 
             _spriteBatch.Begin();

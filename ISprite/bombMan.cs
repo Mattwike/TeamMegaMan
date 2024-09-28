@@ -22,7 +22,7 @@ public class bombMan : ISprite
         y = 15;
     }
 
-    public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman)
+    public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int interval)
     {
         currentFrame = 0;
         totalFrame = 20;

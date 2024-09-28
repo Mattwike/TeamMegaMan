@@ -16,6 +16,7 @@ public class KeyboardController : IController
     private Megaman megaman;
     private Dictionary<Keys, ICommand> commandDict = new Dictionary<Keys, ICommand>();
     private Keys[] priorKeys = new Keys[0];
+    int interval = 0;
 
     public KeyboardController(Game1 gameInstance, Megaman megaman)
     {
@@ -27,10 +28,12 @@ public class KeyboardController : IController
     {
         commandDict.Add(Keys.A, new RunningShootingLeftMegamanCommand(megaman));
         commandDict.Add(Keys.D, new RunningShootingRightMegamanCommand(megaman));
+        
     }
 
     public void Update(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, GameTime gameTime)
     {
+        interval++;
         Keys[] pressedKeys = Keyboard.GetState().GetPressedKeys();
 
         if (pressedKeys.Contains(Keys.D0))
@@ -41,12 +44,12 @@ public class KeyboardController : IController
         // Check for key presses and execute the corresponding commands
         if (pressedKeys.Contains(Keys.A) && priorKeys != null)
         {
-            commandDict[Keys.A].Execute(_graphics, movementSpeed, megamanSize);
+            commandDict[Keys.A].Execute(_graphics, movementSpeed, megamanSize, interval);
             megaman.x -= 3;
         }
         else if (pressedKeys.Contains(Keys.D) && priorKeys != null)
         {
-            commandDict[Keys.D].Execute(_graphics, movementSpeed, megamanSize);
+            commandDict[Keys.D].Execute(_graphics, movementSpeed, megamanSize, interval);
             megaman.x += 3;
         }
 
