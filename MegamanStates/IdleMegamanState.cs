@@ -84,10 +84,10 @@ namespace Project1.States.MegamanState
 			Sprite.Initialize(_graphics, movementSpeed, megamanSize);
 		}
 
-		public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
+		public void Draw(SpriteBatch _spriteBatch)
 		{
 
-			Sprite.Draw(_spriteBatch, movementSpeed, megaman.isfacingLeft, false);
+			Sprite.Draw(_spriteBatch, megaman.isfacingLeft, false);
 		}
 	}
 }
