@@ -42,7 +42,7 @@ namespace Project1.GameObjects
 
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
         {
-            State.Draw(_spriteBatch);
+            State.Draw(_spriteBatch, movementSpeed);
         }
 
     }

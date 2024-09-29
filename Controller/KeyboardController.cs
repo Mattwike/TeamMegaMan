@@ -14,30 +14,21 @@ public class KeyboardController : IController
 {
     private Game1 game;
     private Megaman megaman;
-    private GenericEnemy displayedEnemy;
     private Dictionary<Keys, ICommand> commandDict = new Dictionary<Keys, ICommand>();
     private Keys[] priorKeys = new Keys[0];
     int interval = 0;
 
-    public KeyboardController(Game1 gameInstance, Megaman megaman, GenericEnemy displayedEnemy)
+    public KeyboardController(Game1 gameInstance, Megaman megaman)
     {
         game = gameInstance;
         this.megaman = megaman;
-        this.displayedEnemy = displayedEnemy;
     }
 
     public void Initialize()
     {
         commandDict.Add(Keys.A, new RunningShootingLeftMegamanCommand(megaman));
         commandDict.Add(Keys.D, new RunningShootingRightMegamanCommand(megaman));
-<<<<<<< HEAD
         
-=======
-
-        commandDict.Add(Keys.O, new CycleEnemyBackwardCommand(displayedEnemy));
-        commandDict.Add(Keys.P, new CycleEnemyForwardCommand(displayedEnemy));
-
->>>>>>> 4ca635ec8bdddcec745316d0361920af3eb3494c
     }
 
     public void Update(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, GameTime gameTime)
@@ -49,13 +40,7 @@ public class KeyboardController : IController
         {
             game.Exit();
         }
-        if (Keyboard.GetState().IsKeyDown(Keys.O))
-        {
-            commandDict[Keys.O].Execute(_graphics, movementSpeed, megamanSize);
-        }else if (Keyboard.GetState().IsKeyDown(Keys.P))
-        {
-            commandDict[Keys.P].Execute(_graphics, movementSpeed, megamanSize);
-        }
+
         // Check for key presses and execute the corresponding commands
         if (pressedKeys.Contains(Keys.A) && priorKeys != null)
         {
@@ -76,6 +61,5 @@ public class KeyboardController : IController
         priorKeys = pressedKeys;
         pressedKeys = new Keys[0];
         megaman.Update(gameTime);
-        displayedEnemy.Update(gameTime);
     }
 }

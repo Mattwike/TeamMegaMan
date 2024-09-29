@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Project1.GameObjects;
 
-public class BombManThrowBomb : ISprite
+public class bombMan : ISprite
 {
     int currentFrame;    // Make sure to use camelCase consistently
     int totalFrame;
@@ -12,23 +13,24 @@ public class BombManThrowBomb : ISprite
     private Texture2D enemySheet;
     int enemySizeX;
     int enemySizeY;
-    public int bombInAir = 0;
+    private Megaman megaman;
 
-    public BombManThrowBomb(Texture2D texture)
+    public bombMan(Texture2D texture)
     {
         enemySheet = texture;
-        x = 450;
-        y = 50;
+        x = 400;
+        y = 15;
     }
 
-    public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
+    public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int interval)
     {
         currentFrame = 0;
-        totalFrame = 60;
+        totalFrame = 20;
         delayCounter = 0;
         delayMax = 10;
-        enemySizeX = 50;
-        enemySizeY = 50;
+        enemySizeX = megamanSize;
+        enemySizeY = megamanSize;
+        this.megaman = Megaman;
     }
 
     public void Update(GameTime gameTime)
@@ -46,11 +48,10 @@ public class BombManThrowBomb : ISprite
     }
 
 
-    public void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically)
+    public void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically)
     {
 
         SpriteEffects spriteEffects = SpriteEffects.None;
-        flipHorizontally = true;
 
         if (flipHorizontally)
         {
@@ -64,40 +65,25 @@ public class BombManThrowBomb : ISprite
 
         Rectangle sourceRectangle;
         Rectangle destinationRectangle;
-        Rectangle sourceRectangleBomb = Rectangle.Empty;
-        Rectangle destinationRectangleBomb = Rectangle.Empty;
 
         if (currentFrame < 10)
         {
             destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
-            sourceRectangle = new Rectangle(31, 29, 29, 32);
+            sourceRectangle = new Rectangle(60, 36, 25, 25);
         }
-        else if (currentFrame == 10 || currentFrame == 11)
+        else if (currentFrame == 10)
         {
-            destinationRectangle = new Rectangle((int)x-2, (int)y-1, enemySizeX+2, enemySizeY+1);
-            sourceRectangle = new Rectangle(195, 29, 31, 33);
-        }
-        else if(currentFrame > 11)
-        {
-            destinationRectangle = new Rectangle((int)x-4, (int)y+7, enemySizeX+4, enemySizeY-7);
-            sourceRectangle = new Rectangle(218, 63, 33, 25);
-            bombInAir = 1;
+            destinationRectangle = new Rectangle((int)x-8, (int)y-12, enemySizeX+8, enemySizeY+10);
+            sourceRectangle = new Rectangle(31, 30, 29, 31);
         }
         else
         {
-            destinationRectangle = new Rectangle((int)x - 4, (int)y + 7, enemySizeX + 4, enemySizeY - 7);
-            sourceRectangle = new Rectangle(218, 63, 33, 25);
-
-            destinationRectangleBomb = new Rectangle((int)x - 4, (int)y + 7, enemySizeX + 4, enemySizeY - 7);
-            sourceRectangleBomb = new Rectangle(0, 122, 17, 17);
+            destinationRectangle = new Rectangle((int)x-6, (int)y-32, enemySizeX+6, enemySizeY+30);
+            sourceRectangle = new Rectangle(0, 21, 28, 41);
         }
-
-
 
         _spriteBatch.Begin();
         _spriteBatch.Draw(enemySheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
         _spriteBatch.End();
-
-   
     }
 }

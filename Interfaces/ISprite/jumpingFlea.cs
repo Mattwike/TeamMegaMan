@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Project1.GameObjects;
 
-public class bombManIdle : ISprite
+public class jumpingFlea : ISprite
 {
     int currentFrame;    // Make sure to use camelCase consistently
     int totalFrame;
@@ -13,17 +13,13 @@ public class bombManIdle : ISprite
     private Texture2D enemySheet;
     int enemySizeX;
     int enemySizeY;
-<<<<<<< HEAD:ISprite/bombMan.cs
     private Megaman megaman;
 
-    public bombMan(Texture2D texture)
-=======
-    public bombManIdle(Texture2D texture)
->>>>>>> 4ca635ec8bdddcec745316d0361920af3eb3494c:ISprite/bombManIdle.cs
+    public jumpingFlea(Texture2D texture)
     {
         enemySheet = texture;
-        x = 400;
-        y = 40;
+        x = 350;
+        y = 30;
     }
 
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int interval)
@@ -32,14 +28,9 @@ public class bombManIdle : ISprite
         totalFrame = 20;
         delayCounter = 0;
         delayMax = 10;
-<<<<<<< HEAD:ISprite/bombMan.cs
         enemySizeX = megamanSize;
         enemySizeY = megamanSize;
         this.megaman = Megaman;
-=======
-        enemySizeX = 50;
-        enemySizeY = 50;
->>>>>>> 4ca635ec8bdddcec745316d0361920af3eb3494c:ISprite/bombManIdle.cs
     }
 
     public void Update(GameTime gameTime)
@@ -57,7 +48,7 @@ public class bombManIdle : ISprite
     }
 
 
-    public void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically)
+    public void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically)
     {
 
         SpriteEffects spriteEffects = SpriteEffects.None;
@@ -78,17 +69,17 @@ public class bombManIdle : ISprite
         if (currentFrame < 10)
         {
             destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
-            sourceRectangle = new Rectangle(60, 36, 25, 25);
+            sourceRectangle = new Rectangle(113, 177, 18, 14);
         }
         else if (currentFrame == 10)
         {
-            destinationRectangle = new Rectangle((int)x-8, (int)y-10, enemySizeX+8, enemySizeY+10);
-            sourceRectangle = new Rectangle(31, 30, 29, 31);
+            destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
+            sourceRectangle = new Rectangle(148, 170, 16, 19);
         }
         else
         {
-            destinationRectangle = new Rectangle((int)x-6, (int)y-30, enemySizeX+6, enemySizeY+30);
-            sourceRectangle = new Rectangle(0, 21, 28, 41);
+            destinationRectangle = new Rectangle((int)x, (int)y - 15, enemySizeX - 1, enemySizeY);
+            sourceRectangle = new Rectangle(131, 163, 16, 21);
         }
 
         _spriteBatch.Begin();
