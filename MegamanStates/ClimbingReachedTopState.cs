@@ -71,7 +71,7 @@ namespace Project1.States.MegamanState
 
         public void ChangeDirection()
         {
-           
+
         }
 
         public void Update(GameTime gameTime)
@@ -84,10 +84,11 @@ namespace Project1.States.MegamanState
             Sprite.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval);
         }
 
-        public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
+        public void Draw(SpriteBatch _spriteBatch)
         {
             // Implement draw logic here
-            Sprite.Draw(_spriteBatch, movementSpeed, megaman.isfacingLeft, false);
+            Sprite.Draw(_spriteBatch, megaman.isfacingLeft, false);
+
         }
     }
 }

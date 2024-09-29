@@ -33,7 +33,7 @@ namespace Project1.Sprites
         }
 
 
-        public void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically)
+        public void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically)
         {
 
             SpriteEffects spriteEffects = SpriteEffects.None;

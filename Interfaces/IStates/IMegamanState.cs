@@ -13,7 +13,7 @@ namespace Project1.Interfaces
 
 		public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval);
 
-		void Draw(SpriteBatch _spriteBatch, float movementSpeed);
+		void Draw(SpriteBatch _spriteBatch);
 
 		public void BeClimbingMegamanState();
 

@@ -30,9 +30,19 @@ public class EnemySpriteFactory
     {
         return new jumpingFlea(enemySheet);
     }
-
-    public ISprite CreateBombMan()
+  
+    public ISprite CreateScrewDriver()
     {
-        return new bombMan(bossSheet);
+        return new screwDriver(enemySheet);
+    }
+        
+    public ISprite CreateBombManIdle()
+    {
+        return new bombManIdle(bossSheet);
+    }
+
+    public ISprite CreateBombManThrowing()
+    {
+        return new BombManThrowBomb(bossSheet);
     }
 }
