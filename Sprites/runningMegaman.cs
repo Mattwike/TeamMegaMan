@@ -7,16 +7,12 @@ namespace Project1.Sprites
 {
     public class runningMegaman : ISprite
     {
-        int currentframe;
-        int totalframe;
-        int delaycounter;
-        int delaymax;
-        float x;
-        float y;
+
         int megamanSizeX;
         int megamanSizeY;
         private Texture2D megaManSheet;
         private Megaman megaman;
+        int interval;
 
         public runningMegaman(Texture2D texture)
         {
@@ -25,31 +21,16 @@ namespace Project1.Sprites
 
         public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int interval)
         {
-            currentframe = 0;
-            totalframe = 3;
-            delaycounter = 0;
-            delaymax = 10;
-            x = 55;
-            y = 15;
+
             megamanSizeX = megamanSize + 3;
             megamanSizeY = megamanSize;
             this.megaman = Megaman;
+            this.interval = interval;
         }
 
         public void Update(GameTime gameTime)
         {
 
-            if (delaycounter == delaymax)
-            {
-                currentframe++;
-                delaycounter = 0;
-            }
-
-            if (currentframe == totalframe)
-            {
-                currentframe = 0;
-            }
-            delaycounter++;
         }
 
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically)
@@ -71,13 +52,13 @@ namespace Project1.Sprites
             Rectangle destinationRectangle;
 
 
-            if (currentframe == 0)
+            if (interval % 24 < 6)
             {
                 sourceRectangle = new Rectangle(188, 12, 24, 22);
                 destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
             }
 
-            else if (currentframe == 1)
+            else if (interval % 24 < 12)
             {
                 sourceRectangle = new Rectangle(218, 10, 16, 24);
                 destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y - 2, megamanSizeX - 8, megamanSizeY + 2);

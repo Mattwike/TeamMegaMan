@@ -6,47 +6,30 @@ namespace Project1.Sprites
 {
     public class climbingMegaman : ISprite
     {
-        int currentFrame;    // Make sure to use camelCase consistently
-        int totalFrame;
-        int delayCounter;
-        int delayMax;
-        float x;
-        float y;
+
         int megamanSizeX;
         int megamanSizeY;
         private Texture2D megaManSheet;
         private Megaman megaman;
+        int interval;
 
         public climbingMegaman(Texture2D texture)
         {
             megaManSheet = texture;
-            x = 200;
-            y = 15;
         }
 
         public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman megaman, int interval)
         {
-            currentFrame = 0;
-            totalFrame = 2;
-            delayCounter = 0;
-            delayMax = 10;
+
             megamanSizeX = megamanSize - 5;
             megamanSizeY = megamanSize;
             this.megaman = megaman;
+            this.interval = interval;
         }
 
         public void Update(GameTime gameTime)
         {
-            delayCounter++;
-            if (delayCounter >= delayMax)
-            {
-                currentFrame++;
-                if (currentFrame >= totalFrame)
-                {
-                    currentFrame = 0;
-                }
-                delayCounter = 0;
-            }
+
         }
 
 
@@ -68,7 +51,7 @@ namespace Project1.Sprites
             Rectangle sourceRectangle;
             Rectangle destinationRectangle;
 
-            if (currentFrame == 0)
+            if (interval % 24 < 6)
             {
                 destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
                 sourceRectangle = new Rectangle(5, 81, 16, 29);

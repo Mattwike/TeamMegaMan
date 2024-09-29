@@ -7,16 +7,12 @@ namespace Project1.Sprites
 {
     public class damagedMegaman : ISprite
     {
-        int currentframe;
-        int totalframe;
-        int delaycounter;
-        int delaymax;
-        float x;
-        float y;
+
         int megamanSizeX;
         int megamanSizeY;
         private Texture2D megaManSheet;
         private Megaman megaman;
+        int interval;
 
         public damagedMegaman(Texture2D texture)
         {
@@ -26,31 +22,16 @@ namespace Project1.Sprites
 
         public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int interval)
         {
-            currentframe = 0;
-            totalframe = 3;
-            delaycounter = 0;
-            delaymax = 10;
-            x = 150;
-            y = 15;
+        
             megamanSizeX = megamanSize + 7;
             megamanSizeY = megamanSize;
             this.megaman = Megaman;
+            this.interval = interval;
         }
 
         public void Update(GameTime gameTime)
         {
-
-            if (delaycounter == delaymax)
-            {
-                currentframe++;
-                delaycounter = 0;
-            }
-
-            if (currentframe == totalframe)
-            {
-                currentframe = 0;
-            }
-            delaycounter++;
+            
         }
 
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically)
@@ -71,12 +52,12 @@ namespace Project1.Sprites
             Rectangle sourceRectangle;
             Rectangle destinationRectangle;
 
-            if (currentframe == 0)
+            if (interval % 24 < 6)
             {
                 destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
                 sourceRectangle = new Rectangle(213, 40, 28, 30);
             }
-            else if (currentframe == 1)
+            else if (interval % 24 < 12)
             {
                 destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y + 2, megamanSizeX - 2, megamanSizeY - 2);
                 sourceRectangle = new Rectangle(248, 42, 26, 28);

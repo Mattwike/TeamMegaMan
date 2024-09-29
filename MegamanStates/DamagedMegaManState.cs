@@ -15,7 +15,6 @@ namespace Project1.States.MegamanState
         public DamagedMegamanState(Megaman Megaman)
         {
             megaman = Megaman;
-            megaman.SetDirection(false);
             Sprite = megaManSpriteFactory.Instance.CreateDamagedMegaman();
         }
 

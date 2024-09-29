@@ -7,12 +7,7 @@ namespace Project1.Sprites
 {
     public class runningShootingMegaman : ISprite
     {
-        int currentframe;
-        int totalframe;
-        int delaycounter;
-        int delaymax;
-        float x;
-        float y;
+
         int megamanSizeX;
         int megamanSizeY;
         private Texture2D megaManSheet;
@@ -26,10 +21,7 @@ namespace Project1.Sprites
 
         public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int intervalTime)
         {
-            currentframe = 0;
-            totalframe = 3;
-            delaycounter = 0;
-            delaymax = 11;
+
             megamanSizeX = megamanSize + 10;
             megamanSizeY = megamanSize;
             this.megaman = Megaman;
@@ -39,34 +31,11 @@ namespace Project1.Sprites
         public void Update(GameTime gameTime)
         {
 
-            //if (delaycounter == delaymax)
-            //{
-            //    currentframe++;
-            //    delaycounter = 0;
-            //}
-
-            //if (currentframe == totalframe)
-            //{
-            //    currentframe = 0;
-            //}
-            //delaycounter++;
         }
 
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically)
         {
-            /*
-            if (delaycounter == delaymax)
-            {
-                currentframe++;
-                delaycounter = 0;
-            }
 
-            if (currentframe == totalframe)
-            {
-                currentframe = 0;
-            }
-            delaycounter++;
-            */
             SpriteEffects spriteEffects = SpriteEffects.None;
 
             if (flipHorizontally)

@@ -14,7 +14,7 @@ namespace Project1.States.MegamanState
 		public IdleMegamanState(Megaman megaman)
 		{
 			this.megaman = megaman;
-            megaman.SetDirection(false);
+            //megaman.SetDirection(false);
             Sprite = megaManSpriteFactory.Instance.CreateIdleMegaman(); 
 		}
 

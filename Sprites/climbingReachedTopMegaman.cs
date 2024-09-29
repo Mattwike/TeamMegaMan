@@ -6,8 +6,7 @@ namespace Project1.Sprites
 {
     public class climbingReachedTopMegaman : ISprite
     {
-        float x;
-        float y;
+
         int megamanSizeX;
         int megamanSizeY;
         private Texture2D megaManSheet;
@@ -16,8 +15,7 @@ namespace Project1.Sprites
         public climbingReachedTopMegaman(Texture2D texture)
         {
             megaManSheet = texture;
-            x = 300;
-            y = 15;
+
         }
 
         public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int interval)

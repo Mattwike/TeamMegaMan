@@ -36,7 +36,7 @@ public class KeyboardController : IController
         interval++;
         Keys[] pressedKeys = Keyboard.GetState().GetPressedKeys();
 
-        if (pressedKeys.Contains(Keys.D0))
+        if (pressedKeys.Contains(Keys.Q))
         {
             game.Exit();
         }
@@ -51,6 +51,11 @@ public class KeyboardController : IController
         {
             commandDict[Keys.D].Execute(_graphics, movementSpeed, megamanSize, interval);
             megaman.x += 3;
+        }
+        else
+        {
+            var Idle = new IdleMegamanCommand(megaman);
+            Idle.Execute(_graphics, movementSpeed, megamanSize, interval);
         }
 
         priorKeys = pressedKeys;
