@@ -35,6 +35,9 @@ namespace Project1.Interfaces
 
         public void BeRunningShootingRightMegamanState();
 
+		public void BeFallingMegamanState();
+
+        public void BeFallingShootingMegamanState();
 
     }
 }

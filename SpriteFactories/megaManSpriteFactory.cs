@@ -63,5 +63,15 @@ namespace Project1.SpriteFactories
             return new climbingReachedTopMegaman(megaManSheet);
         }
 
+        public ISprite CreateFallingMegaman()
+        {
+            return new fallingMegaman(megaManSheet);
+        }
+
+        public ISprite CreateFallingShootingMegaman()
+        {
+            return new fallingShootingMegaman(megaManSheet);
+        }
+
     }
 }

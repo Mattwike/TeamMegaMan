@@ -69,6 +69,16 @@ namespace Project1.States.MegamanState
             megaman.State = new RunningShootingLeftMegamanState(megaman);
         }
 
+        public void BeFallingMegamanState()
+        {
+            megaman.State = new FallingMegamanState(megaman);
+        }
+
+        public void BeFallingShootingMegamanState()
+        {
+            megaman.State = new FallingShootingMegamanState(megaman);
+        }
+
         public void ChangeDirection()
         {
 

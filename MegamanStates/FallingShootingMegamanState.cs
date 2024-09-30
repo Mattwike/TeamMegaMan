@@ -7,16 +7,15 @@ using Project1.States.MegamanState;
 
 namespace Project1.States.MegamanState
 {
-    public class ClimbingReachedTopMegamanState : IMegamanState
+    public class FallingShootingMegamanState : IMegamanState
     {
         private Megaman megaman;
         public ISprite Sprite;
 
-        public ClimbingReachedTopMegamanState(Megaman Megaman)
+        public FallingShootingMegamanState(Megaman Megaman)
         {
             megaman = Megaman;
-            megaman.SetDirection(false);
-            Sprite = megaManSpriteFactory.Instance.CreateClimbingReachedTopMegaman();
+            Sprite = megaManSpriteFactory.Instance.CreateFallingShootingMegaman();
         }
 
         public void BeClimbingMegamanState()
@@ -81,7 +80,7 @@ namespace Project1.States.MegamanState
 
         public void ChangeDirection()
         {
-           
+
         }
 
         public void Update(GameTime gameTime)
