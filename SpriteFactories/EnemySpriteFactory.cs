@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Project1.GameObjects; 
 
 public class EnemySpriteFactory
 {
@@ -44,5 +45,10 @@ public class EnemySpriteFactory
     public IEnemySprite CreateBombManThrowing()
     {
         return new BombManThrowBomb(bossSheet);
+    }
+
+    public IEnemySprite CreateKillerBomb()
+    {
+        return new KillerBomb(enemySheet);
     }
 }
