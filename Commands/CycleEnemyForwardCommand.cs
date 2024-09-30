@@ -17,15 +17,13 @@ namespace Project1.Commands
         }
         public void Execute(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
         {
-            if (enemy.state.getID() == 0)
+            if (enemy.currentSprite == 0)
             {
-                enemy.state = new BombManIdleState(enemy);
-                enemy.Initialize(_graphics, movementSpeed, megamanSize);
+                enemy.changeSprite(1);
             }
-            else if (enemy.state.getID() == 1)
+            else if (enemy.currentSprite == 1)
             {
-                enemy.state = new ScrewDriverState(enemy);
-                enemy.Initialize(_graphics, movementSpeed, megamanSize);
+                enemy.changeSprite(2);
             }
         }
     }

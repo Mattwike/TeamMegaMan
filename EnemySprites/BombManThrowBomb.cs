@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class BombManThrowBomb : ISprite
+public class BombManThrowBomb : IEnemySprite
 {
     int currentFrame;    // Make sure to use camelCase consistently
     int totalFrame;

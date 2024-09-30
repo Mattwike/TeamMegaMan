@@ -26,22 +26,22 @@ public class EnemySpriteFactory
         bossSheet = content.Load<Texture2D>("bossSheet");
     }
 
-    public ISprite CreateJumpingFlea()
+    public IEnemySprite CreateJumpingFlea()
     {
         return new jumpingFlea(enemySheet);
     }
   
-    public ISprite CreateScrewDriver()
+    public IEnemySprite CreateScrewDriver()
     {
         return new screwDriver(enemySheet);
     }
         
-    public ISprite CreateBombManIdle()
+    public IEnemySprite CreateBombManIdle()
     {
         return new bombManIdle(bossSheet);
     }
 
-    public ISprite CreateBombManThrowing()
+    public IEnemySprite CreateBombManThrowing()
     {
         return new BombManThrowBomb(bossSheet);
     }

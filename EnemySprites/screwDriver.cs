@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class bombManIdle : ISprite
+public class screwDriver : IEnemySprite
 {
     int currentFrame;    // Make sure to use camelCase consistently
     int totalFrame;
@@ -12,21 +12,21 @@ public class bombManIdle : ISprite
     private Texture2D enemySheet;
     int enemySizeX;
     int enemySizeY;
-    public bombManIdle(Texture2D texture)
+    public screwDriver(Texture2D texture)
     {
         enemySheet = texture;
         x = 400;
-        y = 40;
+        y = 30;
     }
 
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
     {
         currentFrame = 0;
-        totalFrame = 20;
+        totalFrame = 50;
         delayCounter = 0;
-        delayMax = 10;
-        enemySizeX = 50;
-        enemySizeY = 50;
+        delayMax = 5;
+        enemySizeX = megamanSize;
+        enemySizeY = megamanSize;
     }
 
     public void Update(GameTime gameTime)
@@ -42,7 +42,6 @@ public class bombManIdle : ISprite
             delayCounter = 0;
         }
     }
-
 
     public void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically)
     {
@@ -65,17 +64,32 @@ public class bombManIdle : ISprite
         if (currentFrame < 10)
         {
             destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
-            sourceRectangle = new Rectangle(60, 36, 25, 25);
+            sourceRectangle = new Rectangle(155, 250, 18, 18);
         }
-        else if (currentFrame == 10)
+        else if (currentFrame < 15)
         {
-            destinationRectangle = new Rectangle((int)x-8, (int)y-10, enemySizeX+8, enemySizeY+10);
-            sourceRectangle = new Rectangle(31, 30, 29, 31);
+            destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
+            sourceRectangle = new Rectangle(172, 250, 18, 18);
+        }
+        else if (currentFrame < 20)
+        {
+            destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
+            sourceRectangle = new Rectangle(189, 250, 18, 18);
+        }
+        else if (currentFrame < 30)
+        {
+            destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
+            sourceRectangle = new Rectangle(206, 250, 18, 18);
+        }
+        else if(currentFrame < 40)
+        {
+            destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
+            sourceRectangle = new Rectangle(223, 250, 18, 18);
         }
         else
         {
-            destinationRectangle = new Rectangle((int)x-6, (int)y-30, enemySizeX+6, enemySizeY+30);
-            sourceRectangle = new Rectangle(0, 21, 28, 41);
+            destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
+            sourceRectangle = new Rectangle(189, 250, 18, 18);
         }
 
         _spriteBatch.Begin();

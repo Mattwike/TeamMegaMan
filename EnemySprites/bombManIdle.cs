@@ -1,7 +1,7 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class jumpingFlea : ISprite
+public class bombManIdle : IEnemySprite
 {
     int currentFrame;    // Make sure to use camelCase consistently
     int totalFrame;
@@ -12,11 +12,11 @@ public class jumpingFlea : ISprite
     private Texture2D enemySheet;
     int enemySizeX;
     int enemySizeY;
-    public jumpingFlea(Texture2D texture)
+    public bombManIdle(Texture2D texture)
     {
         enemySheet = texture;
-        x = 350;
-        y = 30;
+        x = 400;
+        y = 40;
     }
 
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
@@ -25,8 +25,8 @@ public class jumpingFlea : ISprite
         totalFrame = 20;
         delayCounter = 0;
         delayMax = 10;
-        enemySizeX = megamanSize;
-        enemySizeY = megamanSize;
+        enemySizeX = 50;
+        enemySizeY = 50;
     }
 
     public void Update(GameTime gameTime)
@@ -65,17 +65,17 @@ public class jumpingFlea : ISprite
         if (currentFrame < 10)
         {
             destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
-            sourceRectangle = new Rectangle(113, 177, 18, 14);
+            sourceRectangle = new Rectangle(60, 36, 25, 25);
         }
         else if (currentFrame == 10)
         {
-            destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
-            sourceRectangle = new Rectangle(148, 170, 16, 19);
+            destinationRectangle = new Rectangle((int)x-8, (int)y-10, enemySizeX+8, enemySizeY+10);
+            sourceRectangle = new Rectangle(31, 30, 29, 31);
         }
         else
         {
-            destinationRectangle = new Rectangle((int)x, (int)y - 15, enemySizeX - 1, enemySizeY);
-            sourceRectangle = new Rectangle(131, 163, 16, 21);
+            destinationRectangle = new Rectangle((int)x-6, (int)y-30, enemySizeX+6, enemySizeY+30);
+            sourceRectangle = new Rectangle(0, 21, 28, 41);
         }
 
         _spriteBatch.Begin();
