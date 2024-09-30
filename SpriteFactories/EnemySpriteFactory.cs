@@ -50,4 +50,11 @@ public class EnemySpriteFactory
     {
         return new Bombomb(enemySheet, 400, 200);
     }
+
+    public RedBlasterProjectile CreateRedBlasterProjectile(float x, float y)
+    {
+        return new RedBlasterProjectile(enemySheet, x, y, 800);  // Use the `enemySheet` texture for projectiles
+    }
+    
+    
 }

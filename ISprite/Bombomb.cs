@@ -61,6 +61,16 @@ public class Bombomb : ISprite
         projectiles.Clear();  // Clear any existing projectiles
     }
 
+    public float X
+    {
+        get { return x; }
+    }
+
+    public float Y
+    {
+        get { return y; }
+    }
+
     public void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically)
     {
         SpriteEffects spriteEffects = SpriteEffects.None;
