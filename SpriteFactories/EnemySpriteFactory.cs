@@ -45,4 +45,9 @@ public class EnemySpriteFactory
     {
         return new BombManThrowBomb(bossSheet);
     }
+
+    public ISprite CreateSniperJoe()
+    {
+        return new SniperJoe(enemySheet, 400, 100);
+    }
 }
