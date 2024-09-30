@@ -12,7 +12,7 @@ namespace Project1.Commands
         {
             this.enemy = enemy;
         }
-        public void Execute(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
+        public void Execute(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
         {
             enemy.changeSprite(false);
 

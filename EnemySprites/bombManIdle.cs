@@ -20,7 +20,7 @@ public class bombManIdle : IEnemySprite
         y = 40;
     }
 
-    public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int interval)
+    public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
     {
         currentFrame = 0;
         totalFrame = 20;

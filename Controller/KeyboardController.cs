@@ -37,8 +37,8 @@ public class KeyboardController : IController
 
     public void Initialize()
     {
-        commandDict.Add(Keys.A, new RunningShootingLeftMegamanCommand(megaman));
-        commandDict.Add(Keys.D, new RunningShootingRightMegamanCommand(megaman));
+        //commandDict.Add(Keys.A, new RunningShootingLeftMegamanCommand(megaman));
+        //commandDict.Add(Keys.D, new RunningShootingRightMegamanCommand(megaman));
 
         commandDict.Add(Keys.O, new CycleEnemyBackwardCommand(displayedEnemy));
         commandDict.Add(Keys.P, new CycleEnemyForwardCommand(displayedEnemy));
@@ -63,13 +63,12 @@ public class KeyboardController : IController
 
 
         if (keyboardState.IsKeyDown(Keys.O) && previousKeyState.IsKeyUp(Keys.O)) {
-            commandDict[Keys.O].Execute(_graphics, movementSpeed, megamanSize);
+            commandDict[Keys.O].Execute(_graphics, movementSpeed, megamanSize, 0);
         }
         if (keyboardState.IsKeyDown(Keys.P) && previousKeyState.IsKeyUp(Keys.P)) {
-            commandDict[Keys.P].Execute(_graphics, movementSpeed, megamanSize);
+            commandDict[Keys.P].Execute(_graphics, movementSpeed, megamanSize, 0);
         }
         interval++;
-        Keys[] pressedKeys = Keyboard.GetState().GetPressedKeys();
         bool is_running = false;
         bool is_shooting = false;
         bool is_damaged = false;

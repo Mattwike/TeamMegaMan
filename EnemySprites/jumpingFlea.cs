@@ -13,7 +13,7 @@ public class jumpingFlea : IEnemySprite
     private Texture2D enemySheet;
     int enemySizeX;
     int enemySizeY;
-    private Megaman megaman;
+    
 
     public jumpingFlea(Texture2D texture)
     {
@@ -22,7 +22,7 @@ public class jumpingFlea : IEnemySprite
         y = 30;
     }
 
-    public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int interval)
+    public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
     {
         currentFrame = 0;
         totalFrame = 20;
@@ -30,7 +30,7 @@ public class jumpingFlea : IEnemySprite
         delayMax = 10;
         enemySizeX = megamanSize;
         enemySizeY = megamanSize;
-        this.megaman = Megaman;
+      
     }
 
     public void Update(GameTime gameTime)
