@@ -18,11 +18,10 @@ namespace Project1
         private Megaman megaman;
         private GenericEnemy displayedEnemy;
 
-        private SniperJoe sniperJoe;  // Step 1: Declare a Sniper Joe instance
-
         float movementSpeed;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
 
         int height;
         int width;
@@ -41,7 +40,7 @@ namespace Project1
 
         protected override void Initialize()
         {
-            // Existing initialization logic
+            // TODO: Add your initialization logic here
 
             output = 1;
             mouseQuad = 1;
@@ -57,21 +56,37 @@ namespace Project1
             megaManSpriteFactory.Instance.LoadAllTextures(Content);
             EnemySpriteFactory.Instance.LoadAllTextures(Content);
 
-            displayedEnemy = new GenericEnemy();
-            displayedEnemy.Initialize(_graphics, 30, 40);
+            //sprites = new List<ISprite>
+            //{
+            //    megaManSpriteFactory.Instance.CreateIdleMegaman(),
+            //    megaManSpriteFactory.Instance.CreateRunningMegaman(),
+            //    megaManSpriteFactory.Instance.CreateRunningShootingMegaman(),
+            //    megaManSpriteFactory.Instance.CreateClimbingShootingMegaman(),
+            //    megaManSpriteFactory.Instance.CreateDamagedMegaman(),
+            //    megaManSpriteFactory.Instance.CreateClimbingMegaman(),
+            //    EnemySpriteFactory.Instance.CreateJumpingFlea(),
+            //    EnemySpriteFactory.Instance.CreateBombManIdle(),
+            //    EnemySpriteFactory.Instance.CreateBombManThrowing(),
+            //    megaManSpriteFactory.Instance.CreateClimbingReachedTopMegaman(),
+            //    EnemySpriteFactory.Instance.CreateScrewDriver(),
+            //};
 
+            displayedEnemy = new GenericEnemy();
+            //arbitrary numbers for movement speed and size
+            displayedEnemy.Initialize(_graphics, 30, 40);
+         
             megaman = new Megaman();
             megaman.Initialize(_graphics, movementSpeed, 40);
 
-            _keyboardController = new KeyboardController(this, megaman, displayedEnemy);
+            //foreach (var obj in sprites)
+            //{
+            //    obj.Initialize(_graphics, movementSpeed, 40);
+            //}
+            _keyboardController = new KeyboardController(this,  megaman, displayedEnemy);
 
             _mouseController.Initialize(height, width);
             _keyboardController.Initialize();
-
-            // Step 2: Initialize Sniper Joe with default values (position and size can be adjusted)
-            sniperJoe = (SniperJoe)EnemySpriteFactory.Instance.CreateSniperJoe();
-
-
+            
             base.Initialize();
         }
 
@@ -79,18 +94,22 @@ namespace Project1
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // Step 3: Load the Sniper Joe content (texture)
-            sniperJoe.Initialize(_graphics, movementSpeed, 40);  // Example initialization values
         }
 
         protected override void Update(GameTime gameTime)
         {
-            // Existing update logic
+
+            // Use the keyboard controller to get input and update the ball position
+
+            //foreach (var obj in sprites)
+            //{
+            //    obj.Update(gameTime);
+            //}
 
             _keyboardController.Update(_graphics, movementSpeed, 40, gameTime);
+            
 
-            // Step 4: Update Sniper Joe animation
-            sniperJoe.Update(gameTime);
+           
 
             base.Update(gameTime);
         }
@@ -99,14 +118,15 @@ namespace Project1
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // Existing draw logic
+            //TODO: Add your drawing code here
+
+            //foreach (var obj in sprites)
+            //{
+            //    obj.Draw(_spriteBatch, movementSpeed, false, false);
+            //}
 
             megaman.Draw(_spriteBatch, movementSpeed);
             displayedEnemy.Draw(_spriteBatch);
-
-            // Step 5: Draw Sniper Joe
-            sniperJoe.Draw(_spriteBatch, false, false);  // Default flip values
-
             base.Draw(gameTime);
         }
     }
