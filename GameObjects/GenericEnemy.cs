@@ -38,7 +38,7 @@ namespace Project1.GameObjects
 
         public void changeSprite(bool forward)
         {
-            if (forward && currentSprite < sprites.Count)
+            if (forward && currentSprite < sprites.Count - 1)
             {
                 currentSprite++;
             }else if(!forward && currentSprite > 0)

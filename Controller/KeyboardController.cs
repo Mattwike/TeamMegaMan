@@ -19,6 +19,7 @@ public class KeyboardController : IController
     private Keys[] priorKeys = new Keys[0];
     private KeyboardState previousKeyState;
 
+
     public KeyboardController(Game1 gameInstance, Megaman megaman, GenericEnemy displayedEnemy)
     {
         game = gameInstance;
@@ -40,6 +41,8 @@ public class KeyboardController : IController
     {
         KeyboardState keyboardState = Keyboard.GetState();
         Keys[] pressedKeys = keyboardState.GetPressedKeys();
+     
+
 
         if (keyboardState.IsKeyDown(Keys.O) && previousKeyState.IsKeyUp(Keys.O)) {
             commandDict[Keys.O].Execute(_graphics, movementSpeed, megamanSize);
