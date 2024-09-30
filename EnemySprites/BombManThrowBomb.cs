@@ -64,37 +64,28 @@ public class BombManThrowBomb : IEnemySprite
 
         Rectangle sourceRectangle;
         Rectangle destinationRectangle;
-        Rectangle sourceRectangleBomb = Rectangle.Empty;
-        Rectangle destinationRectangleBomb = Rectangle.Empty;
+        Rectangle sourceRectangleBomb;
+        Rectangle destinationRectangleBomb;
 
-        if (currentFrame < 10)
+        if(currentFrame < 20)
         {
+            sourceRectangle = new Rectangle(195, 29, 33, 34);
             destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
-            sourceRectangle = new Rectangle(31, 29, 29, 32);
-        }
-        else if (currentFrame == 10 || currentFrame == 11)
+        } else
         {
-            destinationRectangle = new Rectangle((int)x-2, (int)y-1, enemySizeX+2, enemySizeY+1);
-            sourceRectangle = new Rectangle(195, 29, 31, 33);
+            sourceRectangle = new Rectangle(218, 61, 37, 30);
+            destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
+
+           
         }
-        else if(currentFrame > 11)
-        {
-            destinationRectangle = new Rectangle((int)x-4, (int)y+7, enemySizeX+4, enemySizeY-7);
-            sourceRectangle = new Rectangle(218, 63, 33, 25);
-            bombInAir = 1;
-        }
-        else
-        {
-            destinationRectangle = new Rectangle((int)x - 4, (int)y + 7, enemySizeX + 4, enemySizeY - 7);
-            sourceRectangle = new Rectangle(218, 63, 33, 25);
-
-            destinationRectangleBomb = new Rectangle((int)x - 4, (int)y + 7, enemySizeX + 4, enemySizeY - 7);
-            sourceRectangleBomb = new Rectangle(0, 122, 17, 17);
-        }
+        sourceRectangleBomb = new Rectangle(0, 123, 16, 18);
+        destinationRectangleBomb = new Rectangle((int)x + 100, (int)y, enemySizeX, enemySizeY);
 
 
 
+        
         _spriteBatch.Begin();
+        _spriteBatch.Draw(enemySheet, destinationRectangleBomb, sourceRectangleBomb, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
         _spriteBatch.Draw(enemySheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
         _spriteBatch.End();
 

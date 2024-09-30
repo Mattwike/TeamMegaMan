@@ -14,13 +14,8 @@ namespace Project1.Commands
         }
         public void Execute(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
         {
-            if(enemy.currentSprite == 1)
-            {
-                enemy.changeSprite(0);
-            }else if(enemy.currentSprite == 2)
-            {
-                enemy.changeSprite(1);
-            }
+            enemy.changeSprite(false);
+
         }
     }
 }

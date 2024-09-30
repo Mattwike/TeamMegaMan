@@ -21,7 +21,8 @@ namespace Project1.GameObjects
             {
                 EnemySpriteFactory.Instance.CreateScrewDriver(),
                 EnemySpriteFactory.Instance.CreateBombManIdle(),
-                EnemySpriteFactory.Instance.CreateJumpingFlea()
+                EnemySpriteFactory.Instance.CreateJumpingFlea(),
+                EnemySpriteFactory.Instance.CreateBombManThrowing()
 
             };
             currentSprite = 0;
@@ -35,9 +36,15 @@ namespace Project1.GameObjects
             }
         }
 
-        public void changeSprite(int newIndex)
+        public void changeSprite(bool forward)
         {
-            currentSprite = newIndex;
+            if (forward && currentSprite < sprites.Count)
+            {
+                currentSprite++;
+            }else if(!forward && currentSprite > 0)
+            {
+                currentSprite--;
+            }
         }
 
         public void Update(GameTime gameTime)
