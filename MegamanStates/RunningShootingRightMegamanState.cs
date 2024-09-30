@@ -74,14 +74,24 @@ namespace Project1.States.MegamanState
             megaman.State = new RunningShootingLeftMegamanState(megaman);
         }
 
+        public void BeFallingMegamanState()
+        {
+            megaman.State = new FallingMegamanState(megaman);
+        }
+
+        public void BeFallingShootingMegamanState()
+        {
+            megaman.State = new FallingShootingMegamanState(megaman);
+        }
+
         public void Update(GameTime gameTime)
         {
             Sprite.Update(gameTime);
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
         {
-            Sprite.Initialize(_graphics, movementSpeed, megamanSize);
+            Sprite.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval);
         }
 
         public void Draw(SpriteBatch _spriteBatch)

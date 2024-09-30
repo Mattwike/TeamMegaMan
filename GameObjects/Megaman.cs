@@ -10,8 +10,8 @@ namespace Project1.GameObjects
 
         public IMegamanState State;
 
-        int x {  get; set; }
-        int y { get; set; }
+        public float x {  get; set; }
+        public float y { get; set; }
 
         public bool isfacingLeft { get; set; }
 
@@ -35,9 +35,9 @@ namespace Project1.GameObjects
             State.Update(gameTime);
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
         {
-            State.Initialize(_graphics, movementSpeed, megamanSize);
+            State.Initialize(_graphics, movementSpeed, megamanSize, interval);
         }
 
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed)

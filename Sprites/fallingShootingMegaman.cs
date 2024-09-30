@@ -4,27 +4,28 @@ using Project1.GameObjects;
 
 namespace Project1.Sprites
 {
-    public class climbingMegaman : ISprite
+    public class fallingShootingMegaman : ISprite
     {
 
+        private Texture2D megaManSheet;
         int megamanSizeX;
         int megamanSizeY;
-        private Texture2D megaManSheet;
         private Megaman megaman;
         int interval;
 
-        public climbingMegaman(Texture2D texture)
+        public fallingShootingMegaman(Texture2D texture)
         {
             megaManSheet = texture;
+
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman megaman, int interval)
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int intervalTime)
         {
 
-            megamanSizeX = megamanSize - 5;
-            megamanSizeY = megamanSize;
-            this.megaman = megaman;
-            this.interval = interval;
+            megamanSizeX = megamanSize + 11;
+            megamanSizeY = megamanSize + 10;
+            this.megaman = Megaman;
+            interval = intervalTime;
         }
 
         public void Update(GameTime gameTime)
@@ -33,7 +34,7 @@ namespace Project1.Sprites
         }
 
 
-        public void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically)
+        public void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically)
         {
 
             SpriteEffects spriteEffects = SpriteEffects.None;
@@ -51,16 +52,9 @@ namespace Project1.Sprites
             Rectangle sourceRectangle;
             Rectangle destinationRectangle;
 
-            if (interval % 24 < 6)
-            {
-                destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
-                sourceRectangle = new Rectangle(5, 81, 16, 29);
-            }
-            else
-            {
-                destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
-                sourceRectangle = new Rectangle(32, 81, 16, 29);
-            }
+
+            destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
+            sourceRectangle = new Rectangle(146, 40, 29, 30);
 
             _spriteBatch.Begin();
             _spriteBatch.Draw(megaManSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);

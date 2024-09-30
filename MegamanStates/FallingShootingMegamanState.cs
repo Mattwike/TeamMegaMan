@@ -7,15 +7,15 @@ using Project1.States.MegamanState;
 
 namespace Project1.States.MegamanState
 {
-    public class DamagedMegamanState : IMegamanState
+    public class FallingShootingMegamanState : IMegamanState
     {
         private Megaman megaman;
         public ISprite Sprite;
 
-        public DamagedMegamanState(Megaman Megaman)
+        public FallingShootingMegamanState(Megaman Megaman)
         {
             megaman = Megaman;
-            Sprite = megaManSpriteFactory.Instance.CreateDamagedMegaman();
+            Sprite = megaManSpriteFactory.Instance.CreateFallingShootingMegaman();
         }
 
         public void BeClimbingMegamanState()
@@ -93,10 +93,10 @@ namespace Project1.States.MegamanState
             Sprite.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval);
         }
 
-        public void Draw(SpriteBatch _spriteBatch)
+        public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
         {
             // Implement draw logic here
-            Sprite.Draw(_spriteBatch, megaman.isfacingLeft, false);
+            Sprite.Draw(_spriteBatch, movementSpeed, megaman.isfacingLeft, false);
         }
     }
 }

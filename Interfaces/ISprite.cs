@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
+using Project1.GameObjects;
 
 public interface ISprite
 {
@@ -9,6 +9,5 @@ public interface ISprite
 
     void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically);
 
-    public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize);
-
+    public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman megaman, int interval);
 }

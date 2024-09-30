@@ -11,7 +11,7 @@ namespace Project1.Interfaces
 
 		void Update(GameTime gameTime);
 
-		public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize);
+		public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval);
 
 		void Draw(SpriteBatch _spriteBatch);
 
@@ -35,6 +35,9 @@ namespace Project1.Interfaces
 
         public void BeRunningShootingRightMegamanState();
 
+		public void BeFallingMegamanState();
+
+        public void BeFallingShootingMegamanState();
 
     }
 }

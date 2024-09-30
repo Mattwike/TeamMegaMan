@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Project1.GameObjects;
 
 public class bombManIdle : IEnemySprite
 {
@@ -19,7 +20,7 @@ public class bombManIdle : IEnemySprite
         y = 40;
     }
 
-    public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
+    public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int interval)
     {
         currentFrame = 0;
         totalFrame = 20;

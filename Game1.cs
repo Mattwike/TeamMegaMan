@@ -25,11 +25,7 @@ namespace Project1
 
         int height;
         int width;
-        int output;
-        int lastOutput;
-        int lastMouseQuad;
-        int mouseQuad;
-        int lastInput;
+        int interval = 0;
 
         public Game1()
         {
@@ -41,10 +37,6 @@ namespace Project1
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
-            output = 1;
-            mouseQuad = 1;
-            lastInput = 1;
 
             movementSpeed = 3;
 
@@ -76,8 +68,16 @@ namespace Project1
             displayedEnemy.Initialize(_graphics, 30, 40);
          
             megaman = new Megaman();
-            megaman.Initialize(_graphics, movementSpeed, 40);
+            megaman.Initialize(_graphics, movementSpeed, 40, interval);
 
+            megaman.x = width;
+            megaman.y = height;
+
+            foreach (var obj in sprites)
+            {
+                obj.Initialize(_graphics, movementSpeed, 40, megaman, interval);
+            }
+            _keyboardController = new KeyboardController(this,  megaman);
             //foreach (var obj in sprites)
             //{
             //    obj.Initialize(_graphics, movementSpeed, 40);

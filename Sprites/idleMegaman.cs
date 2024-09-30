@@ -1,49 +1,36 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Project1.GameObjects;
 
 namespace Project1.Sprites
 {
     public class idleMegaman : ISprite
     {
-        int currentFrame;
-        int totalFrame;
-        int delayCounter;
-        int delayMax;
-        float x;
-        float y;
+
         private Texture2D megaManSheet;
         int megamanSizeX;
         int megamanSizeY;
+        private Megaman megaman;
+        int interval;
 
         public idleMegaman(Texture2D texture)
         {
             megaManSheet = texture;
-            x = 15;
-            y = 15;
+
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int intervalTime)
         {
-            currentFrame = 0;
-            totalFrame = 3;
-            delayCounter = 0;
-            delayMax = 10;
+
             megamanSizeX = megamanSize;
             megamanSizeY = megamanSize;
+            this.megaman = Megaman;
+            interval = intervalTime;
         }
 
         public void Update(GameTime gameTime)
         {
-            delayCounter++;
-            if (delayCounter >= delayMax)
-            {
-                currentFrame++;
-                if (currentFrame >= totalFrame)
-                {
-                    currentFrame = 0;
-                }
-                delayCounter = 0;
-            }
+
         }
 
 
@@ -65,19 +52,19 @@ namespace Project1.Sprites
             Rectangle sourceRectangle;
             Rectangle destinationRectangle;
 
-            if (currentFrame == 0)
+            if (interval % 24 < 6)
             {
-                destinationRectangle = new Rectangle((int)x, (int)y, megamanSizeX, megamanSizeY);
+                destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
                 sourceRectangle = new Rectangle(103, 10, 21, 24);
             }
-            else if (currentFrame == 1)
+            else if (interval % 24 < 12)
             {
-                destinationRectangle = new Rectangle((int)x, (int)y, megamanSizeX, megamanSizeY);
+                destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
                 sourceRectangle = new Rectangle(133, 10, 21, 24);
             }
             else
             {
-                destinationRectangle = new Rectangle((int)x, (int)y, megamanSizeX - 1, megamanSizeY);
+                destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX - 1, megamanSizeY);
                 sourceRectangle = new Rectangle(160, 10, 20, 24);
             }
 

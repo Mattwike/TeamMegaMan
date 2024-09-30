@@ -7,19 +7,18 @@ using Project1.States.MegamanState;
 
 namespace Project1.Commands
 {
-    class RunningShootingLeftMegamanCommand : ICommand
+    class FallingShootingMegamanCommand : ICommand
     {
         Megaman megaman;
 
-        public RunningShootingLeftMegamanCommand(Megaman Megaman)
+        public FallingShootingMegamanCommand(Megaman Megaman)
         {
             this.megaman = Megaman;
         }
         public void Execute(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
         {
-            megaman.State.BeRunningShootingLeftMegamanState();
+            megaman.State.BeFallingShootingMegamanState();
             megaman.State.Initialize(_graphics, movementSpeed, 40, interval);
-
         }
     }
 }
