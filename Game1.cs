@@ -18,6 +18,7 @@ namespace Project1
         private Megaman megaman;
         private GenericEnemy displayedEnemy;
 
+
         float movementSpeed;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
