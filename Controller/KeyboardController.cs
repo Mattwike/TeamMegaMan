@@ -37,9 +37,7 @@ public class KeyboardController : IController
 
     public void Initialize()
     {
-        //commandDict.Add(Keys.A, new RunningShootingLeftMegamanCommand(megaman));
-        //commandDict.Add(Keys.D, new RunningShootingRightMegamanCommand(megaman));
-
+    
         commandDict.Add(Keys.O, new CycleEnemyBackwardCommand(displayedEnemy));
         commandDict.Add(Keys.P, new CycleEnemyForwardCommand(displayedEnemy));
 
@@ -72,7 +70,7 @@ public class KeyboardController : IController
         bool is_running = false;
         bool is_shooting = false;
         bool is_damaged = false;
-
+         
         if (pressedKeys.Contains(Keys.Q))
         {
             game.Exit();

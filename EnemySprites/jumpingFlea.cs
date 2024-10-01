@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Project1.GameObjects;
+using Project1.Sprites;
 
 public class jumpingFlea : IEnemySprite
 {
@@ -13,7 +14,10 @@ public class jumpingFlea : IEnemySprite
     private Texture2D enemySheet;
     int enemySizeX;
     int enemySizeY;
-    
+    float enemySpeed;
+    float gravity;
+    bool jumping;
+    bool falling;
 
     public jumpingFlea(Texture2D texture)
     {
@@ -25,11 +29,15 @@ public class jumpingFlea : IEnemySprite
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
     {
         currentFrame = 0;
-        totalFrame = 20;
+        totalFrame = 15;
         delayCounter = 0;
         delayMax = 10;
         enemySizeX = megamanSize;
         enemySizeY = megamanSize;
+        gravity = 4.5f;
+        enemySpeed = 2f;
+        jumping = false;
+        falling = false;
       
     }
 
@@ -38,6 +46,7 @@ public class jumpingFlea : IEnemySprite
         delayCounter++;
         if (delayCounter >= delayMax)
         {
+
             currentFrame++;
             if (currentFrame >= totalFrame)
             {
@@ -45,6 +54,37 @@ public class jumpingFlea : IEnemySprite
             }
             delayCounter = 0;
         }
+
+        if (jumping)
+        {
+            x += enemySpeed;
+            if (gravity > 0)
+            {
+                y -= gravity;
+                gravity -= 0.25f;
+            }
+            else
+            {
+                jumping = false;
+                falling = true;
+            }
+        }
+        else if (falling)
+        {
+            if (y < 30)
+            {
+                y += gravity;
+                gravity += 0.25f;
+            }
+            else
+            {
+                y = 30;
+                falling = false;
+                gravity = 4.5f;
+            }
+        }
+
+
     }
 
 
@@ -63,8 +103,8 @@ public class jumpingFlea : IEnemySprite
             spriteEffects |= SpriteEffects.FlipVertically;
         }
 
-        Rectangle sourceRectangle;
-        Rectangle destinationRectangle;
+        Rectangle sourceRectangle = Rectangle.Empty;
+        Rectangle destinationRectangle = Rectangle.Empty;
 
         if (currentFrame < 10)
         {
@@ -75,11 +115,19 @@ public class jumpingFlea : IEnemySprite
         {
             destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
             sourceRectangle = new Rectangle(148, 170, 16, 19);
+            jumping = true;
         }
-        else
+        else if(currentFrame > 10 && currentFrame < 13)
         {
-            destinationRectangle = new Rectangle((int)x, (int)y - 15, enemySizeX - 1, enemySizeY);
+            destinationRectangle = new Rectangle((int)x, (int)y-2, enemySizeX, enemySizeY+2);
             sourceRectangle = new Rectangle(131, 163, 16, 21);
+            
+        }else if(currentFrame >= 13)
+        {
+            destinationRectangle = new Rectangle((int)x, (int)y - 2, enemySizeX, enemySizeY + 2);
+            sourceRectangle = new Rectangle(131, 163, 16, 21);
+            jumping = false;
+            falling = true;
         }
 
         _spriteBatch.Begin();
