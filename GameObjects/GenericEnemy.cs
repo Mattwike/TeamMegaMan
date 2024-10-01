@@ -23,10 +23,9 @@ namespace Project1.GameObjects
                 EnemySpriteFactory.Instance.CreateBombManIdle(),
                 EnemySpriteFactory.Instance.CreateJumpingFlea(),
                 EnemySpriteFactory.Instance.CreateBombManThrowing(),
+                EnemySpriteFactory.Instance.CreateMambu(),
                 EnemySpriteFactory.Instance.CreateGabyoall()
 
-                EnemySpriteFactory.Instance.CreateBombManThrowing(),
-                EnemySpriteFactory.Instance.CreateMambu()
             };
             currentSprite = 0;
 
