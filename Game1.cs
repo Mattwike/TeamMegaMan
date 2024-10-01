@@ -17,7 +17,7 @@ namespace Project1
         private List<ISprite> sprites;
         private Megaman megaman;
         private GenericEnemy displayedEnemy;
-        private Gabyoall gabyoall;
+
 
         float movementSpeed;
         private GraphicsDeviceManager _graphics;
@@ -78,13 +78,7 @@ namespace Project1
 
             _mouseController.Initialize(height, width);
             _keyboardController.Initialize();
-
-            // Create Gabyoall using the factory method
-            gabyoall = (Gabyoall)EnemySpriteFactory.Instance.CreateGabyoall();
-
-            // Initialize Gabyoall with position, speed, and size values
-            gabyoall.Initialize(_graphics, movementSpeed, 32);  // Example size 32
-
+            
             base.Initialize();
         }
 
@@ -105,13 +99,9 @@ namespace Project1
             //}
 
             _keyboardController.Update(_graphics, movementSpeed, 40, gameTime);
+            
 
-            // Use the keyboard controller to get input and update the game objects
-            _keyboardController.Update(_graphics, movementSpeed, 40, gameTime);
-
-            // Update Gabyoall's movement and animation
-            gabyoall.Update(gameTime);
-
+           
 
             base.Update(gameTime);
         }
@@ -129,14 +119,6 @@ namespace Project1
 
             megaman.Draw(_spriteBatch, movementSpeed);
             displayedEnemy.Draw(_spriteBatch);
-
-            // Existing draw logic for MegaMan and other enemies
-            megaman.Draw(_spriteBatch, movementSpeed);
-            displayedEnemy.Draw(_spriteBatch);
-
-            // Draw Gabyoall on the screen
-            gabyoall.Draw(_spriteBatch, false, false);  // Default flip values
-
             base.Draw(gameTime);
         }
     }

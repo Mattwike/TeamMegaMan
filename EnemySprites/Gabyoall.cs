@@ -38,10 +38,10 @@ using Microsoft.Xna.Framework.Graphics;
             frames[1] = new Rectangle(263, 132, 16, 8);  // Frame 2
 
             currentFrame = 0;  // Start at frame 0
-            frameDelay = 3;  // Fast blinking animation (lower value = faster switching)
+            frameDelay = 5;  // Fast blinking animation (lower value = faster switching)
             frameCounter = 0;
 
-            speedX = 1f;  // Movement speed (adjust as necessary)
+            speedX = 0.5f;  // Movement speed (adjust as necessary)
             movementRange = 50;  // Movement range of 50 pixels back and forth
         }
 
@@ -57,7 +57,7 @@ using Microsoft.Xna.Framework.Graphics;
 
             width = size;  // Set sprite size based on the passed size
             height = size / 2;  // Height is half of the size to keep the aspect ratio
-            speedX = movementSpeed / 3f;  // Adjust horizontal speed based on movement speed parameter
+            speedX = movementSpeed / 10f;  // Adjust horizontal speed based on movement speed parameter
         }
 
         // Update method to handle movement and animation logic
