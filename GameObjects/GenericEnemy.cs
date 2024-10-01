@@ -23,6 +23,8 @@ namespace Project1.GameObjects
                 EnemySpriteFactory.Instance.CreateBombManIdle(),
                 EnemySpriteFactory.Instance.CreateJumpingFlea(),
                 EnemySpriteFactory.Instance.CreateBombManThrowing(),
+                EnemySpriteFactory.Instance.CreateOctopus()
+                EnemySpriteFactory.Instance.CreateBombManThrowing(),
                 EnemySpriteFactory.Instance.CreateMambu(),
                 EnemySpriteFactory.Instance.CreateGabyoall()
 

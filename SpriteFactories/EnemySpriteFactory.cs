@@ -46,6 +46,11 @@ public class EnemySpriteFactory
         return new BombManThrowBomb(bossSheet);
     }
 
+    public IEnemySprite CreateOctopus()
+    {
+        return new Octopus(enemySheet);
+    }
+
     public IEnemySprite CreateGabyoall()
     {
         return new Gabyoall(enemySheet);
