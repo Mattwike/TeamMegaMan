@@ -17,7 +17,7 @@ namespace Project1.Interfaces
 
 		public void BeClimbingMegamanState();
 
-		public void BeIdleMegamanState();
+        public void BeIdleMegamanState();
 
 		public void BeRunningRightMegamanState();
 
