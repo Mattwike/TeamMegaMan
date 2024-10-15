@@ -21,7 +21,7 @@ namespace Project1.States.MegamanState
 
         public void BeClimbingMegamanState()
         {
-            megaman.State = new ClimbingMegamanState(megaman);
+           
         }
 
         public void BeIdleMegamanState()

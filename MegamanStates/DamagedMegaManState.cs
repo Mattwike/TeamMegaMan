@@ -40,7 +40,7 @@ namespace Project1.States.MegamanState
 
         public void BeDamagedMegamanState()
         {
-            megaman.State = new DamagedMegamanState(megaman);
+
         }
 
         public void BeClimbingShootingLeftMegamanState()

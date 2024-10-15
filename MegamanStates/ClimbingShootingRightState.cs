@@ -51,7 +51,7 @@ namespace Project1.States.MegamanState
 
         public void BeClimbingShootingRightMegamanState()
         {
-            megaman.State = new ClimbingShootingRightMegamanState(megaman);
+
         }
 
         public void BeClimbingReachedTopMegaman()

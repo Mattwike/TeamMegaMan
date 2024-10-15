@@ -36,7 +36,7 @@ namespace Project1.States.MegamanState
 
         public void BeRunningLeftMegamanState()
         {
-            megaman.State = new RunningLeftMegamanState(megaman);
+
         }
 
         public void BeDamagedMegamanState()
