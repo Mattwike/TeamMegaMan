@@ -12,5 +12,5 @@ using Project1.Commands;
 
 public class megamanCollisions
 {
-    
+    List<IBlocks> blocks;
 }

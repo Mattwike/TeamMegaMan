@@ -22,7 +22,7 @@ namespace Project1.Sprites
 
                 if (Intersection.Height > Intersection.Width && object1.X > object2.X)
                 {
-                    .//right 
+                    //right 
                     return 3;
                 }
 
@@ -38,8 +38,7 @@ namespace Project1.Sprites
                     return 4;
                 }
             }
+            return 0;
         }
-
-        return 0;
     }
 }
