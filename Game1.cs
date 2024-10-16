@@ -46,6 +46,7 @@ namespace Project1
 
             megaManSpriteFactory.Instance.LoadAllTextures(Content);
             EnemySpriteFactory.Instance.LoadAllTextures(Content);
+            pelletSpriteFactory.Instance.LoadAllTextures(Content);
 
             sprites = new List<ISprite>
             {

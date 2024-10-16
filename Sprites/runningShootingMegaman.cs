@@ -13,6 +13,7 @@ namespace Project1.Sprites
         private Texture2D megaManSheet;
         private Megaman megaman;
         int interval;
+        GraphicsDeviceManager graphics;
 
         public runningShootingMegaman(Texture2D texture)
         {
@@ -26,6 +27,7 @@ namespace Project1.Sprites
             megamanSizeY = megamanSize;
             this.megaman = Megaman;
             interval = intervalTime;
+            graphics = _graphics;
         }
 
         public void Update(GameTime gameTime)
@@ -50,13 +52,25 @@ namespace Project1.Sprites
 
             Rectangle sourceRectangle;
             Rectangle destinationRectangle;
-
+            
             // TODO: Add your drawing code here
+            if (interval % 3 == 0)
+            {
+                Pellet pellet;
+                pellet = new Pellet();
+                pellet.Initialize(graphics, movementSpeed, 20, megaman, interval);
+                pellet.Draw(_spriteBatch, movementSpeed);
+            }
             if (interval % 24 < 6)
             {
                 
                 sourceRectangle = new Rectangle(14, 46, 31, 24);
                 destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
+                //Pellet pellet;
+                
+                //new pellet(megaManSheet).Draw(_spriteBatch, movementSpeed, false, false);
+                //pellet.Draw(_spriteBatch, movementSpeed, false, false);
+                
             }
 
             else if (interval % 24 < 12)
