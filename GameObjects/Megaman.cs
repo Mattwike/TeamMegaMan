@@ -21,6 +21,10 @@ namespace Project1.GameObjects
         //private bool is_damaged = false;
         public float initialY;
         public float gravity = 4.5f;
+        public int MegamanSize;
+        public Rectangle MegamanBox;
+        //test
+        private Floor floor;
 
         public IMegamanState State;
 
@@ -46,11 +50,14 @@ namespace Project1.GameObjects
 
         public void Update(GameTime gameTime)
         {
+            MegamanBox = new Rectangle((int)x, (int)y, MegamanSize, MegamanSize);
             State.Update(gameTime);
         }
 
         public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
         {
+            floor = new Floor();
+            MegamanSize = megamanSize;
             State.Initialize(_graphics, movementSpeed, megamanSize, interval);
         }
 
@@ -85,14 +92,13 @@ namespace Project1.GameObjects
             }
             else if (is_falling)
             {
-                if (y < initialY)
+                if (y < floor.FloorBox.Location.Y)
                 {
                     y += gravity;
                     gravity += .25f;
                 }
                 else
                 {
-                    y = initialY;
                     is_falling = false;
                     gravity = 4.5f;
                 }

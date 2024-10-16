@@ -56,8 +56,8 @@ namespace Project1
             megaman = new Megaman();
             megaman.Initialize(_graphics, movementSpeed, 40, interval);
 
-            megaman.x = width;
-            megaman.y = height;
+            megaman.x = 150;
+            megaman.y = 150;
 
             _keyboardController = new KeyboardController(this,  megaman, displayedEnemy);
             _keyboardController.Initialize();
