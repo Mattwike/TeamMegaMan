@@ -31,11 +31,12 @@ namespace Project1.Sprites
             pelletX = (int)Megaman.x;
             pelletY = (int)Megaman.y;
 
+
         }
 
         public void Update(GameTime gameTime)
         {
-
+            pelletX += 5;
         }
 
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically)
@@ -57,12 +58,12 @@ namespace Project1.Sprites
             Rectangle destinationRectangle;
 
             // TODO: Add your drawing code here
-            
-                
+
+            //pelletX += 5;
             sourceRectangle = new Rectangle(103, 10, 21, 24);
             destinationRectangle = new Rectangle(pelletX, pelletY, pelletSizeX*7, pelletSizeY*7);
 
-            pelletX += 5;
+            
             
 
             _spriteBatch.Begin();

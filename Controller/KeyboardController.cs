@@ -142,6 +142,7 @@ public class KeyboardController : IController
         else if (pressedKeys.Contains(Keys.D) && pressedKeys.Contains(Keys.S) && !is_climbing && !is_jumping && !is_falling)
         {
             commandDict[Keys.K].Execute(_graphics, movementSpeed, megamanSize, interval);
+            new PelletCommand(megaman).Execute(_graphics, movementSpeed, megamanSize, interval);
             megaman.x += 3;
             is_running = true;
             is_shooting = true;

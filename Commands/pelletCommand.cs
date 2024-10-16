@@ -19,8 +19,8 @@ namespace Project1.Commands
         }
         public void Execute(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
         {
-            megaman.State.BeClimbingMegamanState();
-            megaman.State.Initialize(_graphics, movementSpeed, 40, interval);
+            pellet.State.BePellet();
+            pellet.State.Initialize(_graphics, movementSpeed, 40, megaman, interval);
 
         }
     }

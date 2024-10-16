@@ -9,6 +9,7 @@ namespace Project1.States.MegamanState
 	public class PelletState : IPelletState
 	{
 		private Megaman megaman;
+		private Pellet pellet;
 		public ISprite Sprite;
 
         public PelletState(Pellet pellet)
@@ -16,6 +17,11 @@ namespace Project1.States.MegamanState
             //this.pellet = pellet;
             //megaman.SetDirection(false);
             Sprite = pelletSpriteFactory.Instance.CreatePellet();
+        }
+
+        public void BePellet()
+        {
+            pellet.State = new PelletState(pellet);
         }
 
         public void Update(GameTime gameTime)

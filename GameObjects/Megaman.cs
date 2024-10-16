@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Project1.Interfaces;
 using Project1.States.MegamanState;
+using System.Collections.Generic;
 
 namespace Project1.GameObjects
 {
@@ -40,7 +41,7 @@ namespace Project1.GameObjects
             State.Initialize(_graphics, movementSpeed, megamanSize, interval);
         }
 
-        public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
+        public void Draw(SpriteBatch _spriteBatch, float movementSpeed, List<Pellet> pellets)
         {
             State.Draw(_spriteBatch, movementSpeed);
         }

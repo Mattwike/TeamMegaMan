@@ -15,8 +15,8 @@ namespace Project1
         private KeyboardController _keyboardController;
         private MouseController _mouseController;
         private List<ISprite> sprites;
+        List<Pellet> pellets;
         private Megaman megaman;
-
         float movementSpeed;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -31,6 +31,7 @@ namespace Project1
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            pellets = new List<Pellet>();
         }
 
         protected override void Initialize()
@@ -75,6 +76,9 @@ namespace Project1
 
             _mouseController.Initialize(height, width);
             _keyboardController.Initialize();
+
+            
+
             
             base.Initialize();
         }
@@ -95,6 +99,12 @@ namespace Project1
                 obj.Update(gameTime);
             }
 
+            foreach (var pellet in pellets)
+            {
+                pellet.Update(gameTime);
+            }
+            
+
             megaman.Update(gameTime);
 
             _keyboardController.Update(_graphics, movementSpeed, 40, gameTime);
@@ -113,7 +123,11 @@ namespace Project1
             //{
             //    obj.Draw(_spriteBatch, movementSpeed, false, false);
             //}
-            megaman.Draw(_spriteBatch, movementSpeed);
+            megaman.Draw(_spriteBatch, movementSpeed, pellets);
+            foreach (var pellet in pellets)
+            {
+                pellet.Draw(_spriteBatch, movementSpeed);
+            }
 
             base.Draw(gameTime);
         }
