@@ -5,6 +5,7 @@ using Project1.SpriteFactories;
 using Project1.Sprites;
 using Project1.GameObjects;
 using System.Collections.Generic;
+using System.Reflection.Metadata;
 
 
 namespace Project1
@@ -16,6 +17,8 @@ namespace Project1
         private List<ISprite> sprites;  // Keeping this for future use if needed
         private Megaman megaman;
         private GenericEnemy displayedEnemy;
+
+        private Floor floor;
 
 
         float movementSpeed;
@@ -47,6 +50,12 @@ namespace Project1
             // Load all textures for MegaMan and Enemies
             megaManSpriteFactory.Instance.LoadAllTextures(Content);
             EnemySpriteFactory.Instance.LoadAllTextures(Content);
+
+            //load Block Textures
+            BlockSpriteFactory.Instance.LoadAllTextures(Content);
+            Vector2 floorPos = new Vector2(100, 100);
+            floor = new Floor(10, floorPos);
+            
 
             // Initialize the displayed enemy
             displayedEnemy = new GenericEnemy();
@@ -91,6 +100,7 @@ namespace Project1
             // Draw MegaMan and displayed enemy as before
             megaman.Draw(_spriteBatch, movementSpeed);
             displayedEnemy.Draw(_spriteBatch);
+            floor.Draw(_spriteBatch);
 
             // Draw Bombomb directly
             //bombomb.Draw(_spriteBatch, false, false);  // Draw Bombomb without flipping
