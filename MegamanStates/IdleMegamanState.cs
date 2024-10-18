@@ -14,7 +14,6 @@ namespace Project1.States.MegamanState
 		public IdleMegamanState(Megaman megaman)
 		{
 			this.megaman = megaman;
-            megaman.SetDirection(false);
             Sprite = megaManSpriteFactory.Instance.CreateIdleMegaman(); 
 		}
 
@@ -25,7 +24,7 @@ namespace Project1.States.MegamanState
 
         public void BeIdleMegamanState()
         {
-            megaman.State = new IdleMegamanState(megaman);
+
         }
 
         public void BeRunningRightMegamanState()
@@ -68,6 +67,16 @@ namespace Project1.States.MegamanState
             megaman.State = new RunningShootingLeftMegamanState(megaman);
         }
 
+        public void BeFallingMegamanState()
+        {
+            megaman.State = new FallingMegamanState(megaman);
+        }
+
+        public void BeFallingShootingMegamanState()
+        {
+            megaman.State = new FallingShootingMegamanState(megaman);
+        }
+
         public void ChangeDirection()
 		{
 
@@ -79,15 +88,15 @@ namespace Project1.States.MegamanState
 			Sprite.Update(gameTime);
 		}
 
-		public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
+		public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
 		{
-			Sprite.Initialize(_graphics, movementSpeed, megamanSize);
+			Sprite.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval);
 		}
 
-		public void Draw(SpriteBatch _spriteBatch)
+		public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
 		{
 
-			Sprite.Draw(_spriteBatch, megaman.isfacingLeft, false);
+			Sprite.Draw(_spriteBatch, 0, megaman.isfacingLeft, false);
 		}
 	}
 }
