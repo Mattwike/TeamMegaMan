@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 public class Floor
 {
     //Floor modeled as a list of blocks arranged in a straight line.
-    int numBlocks;
-    Vector2 pos;
-    Rectangle boundingBox;
+    private int numBlocks;
+    private Vector2 pos;
+    public Rectangle boundingBox;
 
     int blockWidth = 16;
     int blockHeight = 16;
@@ -20,7 +20,7 @@ public class Floor
 
     public Floor(int numOfBlocks, Vector2 startPos)
     {
-        numBlocks = numOfBlocks;
+        this.numBlocks = numOfBlocks;
         pos = startPos;
 
         blocksInFloorSegment = new List<IBlock>(numOfBlocks);

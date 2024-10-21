@@ -12,6 +12,7 @@ namespace Project1.Sprites
         int megamanSizeY;
         private Texture2D megaManSheet;
         private Megaman megaman;
+        private Rectangle MegamanBox;
         int interval;
 
         public damagedMegaman(Texture2D texture)
@@ -50,27 +51,31 @@ namespace Project1.Sprites
             }
 
             Rectangle sourceRectangle;
-            Rectangle destinationRectangle;
 
             if (interval % 24 < 6)
             {
-                destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
+                MegamanBox = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
                 sourceRectangle = new Rectangle(213, 40, 28, 30);
             }
             else if (interval % 24 < 12)
             {
-                destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y + 2, megamanSizeX - 2, megamanSizeY - 2);
+                MegamanBox = new Rectangle((int)megaman.x, (int)megaman.y + 2, megamanSizeX - 2, megamanSizeY - 2);
                 sourceRectangle = new Rectangle(248, 42, 26, 28);
             }
             else
             {
-                destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y + 8, megamanSizeX, megamanSizeY - 8);
+                MegamanBox = new Rectangle((int)megaman.x, (int)megaman.y + 8, megamanSizeX, megamanSizeY - 8);
                 sourceRectangle = new Rectangle(280, 48, 28, 22);
             }
 
             _spriteBatch.Begin();
-            _spriteBatch.Draw(megaManSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
+            _spriteBatch.Draw(megaManSheet, MegamanBox, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
             _spriteBatch.End();
+        }
+
+        public Rectangle getRectangle()
+        {
+            return MegamanBox;
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Linq;
 namespace Project1.GameObjects
 {
 
-    public class Wall : IBlocks
+    public class Wall
     {
         public Rectangle FloorBox = new Rectangle(0, 200, 100, 10);
     }

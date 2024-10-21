@@ -53,7 +53,7 @@ namespace Project1
 
             //load Block Textures
             BlockSpriteFactory.Instance.LoadAllTextures(Content);
-            Vector2 floorPos = new Vector2(100, 100);
+            Vector2 floorPos = new Vector2(0, 180);
             floor = new Floor(10, floorPos);
             
 
@@ -65,8 +65,8 @@ namespace Project1
             megaman = new Megaman();
             megaman.Initialize(_graphics, movementSpeed, 40, interval);
 
-            megaman.x = 150;
-            megaman.y = 150;
+            megaman.x = 0;
+            megaman.y = 100;
 
             _keyboardController = new KeyboardController(this,  megaman, displayedEnemy);
             _keyboardController.Initialize();

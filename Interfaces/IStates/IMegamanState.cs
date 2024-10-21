@@ -39,5 +39,7 @@ namespace Project1.Interfaces
 
         public void BeFallingShootingMegamanState();
 
+		public Rectangle getRectangle();
+
     }
 }

@@ -2,40 +2,37 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Project1.Enum;
 
-namespace Project1.Sprites
+namespace Project1.Collision
 {
     public class CollisionDetector
     {
 
-        public static int DetectCollisionType(Rectangle object1, Rectangle object2)
+        public static CollisionDirection DetectCollisionType(Rectangle object1, Rectangle object2)
         {
             Rectangle Intersection = Rectangle.Intersect(object1, object2);
-
             if (!Intersection.IsEmpty)
             {
                 if (Intersection.Height > Intersection.Width && object1.X < object2.X)
                 {
-                    //left
-                    return 1;
-                }
 
+                    return CollisionDirection.Left;
+                }
                 if (Intersection.Height > Intersection.Width && object1.X > object2.X)
                 {
-                    //right 
-                    return 3;
-                }
 
+                    return CollisionDirection.Right;
+                }
                 if (Intersection.Width > Intersection.Height && object1.Y < object2.Y)
                 {
-                    //top
-                    return 2;
+
+                    return CollisionDirection.Top;
                 }
-                
                 if (Intersection.Width > Intersection.Height && object1.Y > object2.Y)
                 {
-                    //bottom
-                    return 4;
+
+                    return CollisionDirection.Bottom;
                 }
             }
             return 0;
