@@ -54,6 +54,11 @@ public class KeyboardController : IController
         megaman.is_shooting = false;
         megaman.is_damaged = false;
 
+        if (!megaman.is_jumping && !megaman.is_falling && !megaman.istouchingfloor)
+        {
+            megaman.y += 4.5f;
+        }
+
         if (keyboardState.IsKeyDown(Keys.O) && previousKeyState.IsKeyUp(Keys.O)) {
             commandDict[Keys.O].Execute(_graphics, movementSpeed, megamanSize, 0);
         }

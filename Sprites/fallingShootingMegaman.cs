@@ -11,6 +11,7 @@ namespace Project1.Sprites
         int megamanSizeX;
         int megamanSizeY;
         private Megaman megaman;
+        private Rectangle MegamanBox;
         int interval;
 
         public fallingShootingMegaman(Texture2D texture)
@@ -50,15 +51,19 @@ namespace Project1.Sprites
             }
 
             Rectangle sourceRectangle;
-            Rectangle destinationRectangle;
 
 
-            destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
+            MegamanBox = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
             sourceRectangle = new Rectangle(146, 40, 29, 30);
 
             _spriteBatch.Begin();
-            _spriteBatch.Draw(megaManSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
+            _spriteBatch.Draw(megaManSheet, MegamanBox, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
             _spriteBatch.End();
+        }
+
+        public Rectangle getRectangle()
+        {
+            return MegamanBox;
         }
     }
 }

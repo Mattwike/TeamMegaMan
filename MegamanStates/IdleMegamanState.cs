@@ -11,11 +11,11 @@ namespace Project1.States.MegamanState
 		private Megaman megaman;
 		public ISprite Sprite;
 
-		public IdleMegamanState(Megaman megaman)
+        public IdleMegamanState(Megaman megaman)
 		{
 			this.megaman = megaman;
-            Sprite = megaManSpriteFactory.Instance.CreateIdleMegaman(); 
-		}
+            Sprite = megaManSpriteFactory.Instance.CreateIdleMegaman();
+        }
 
         public void BeClimbingMegamanState()
         {
@@ -98,5 +98,10 @@ namespace Project1.States.MegamanState
 
 			Sprite.Draw(_spriteBatch, 0, megaman.isfacingLeft, false);
 		}
-	}
+
+        public Rectangle getRectangle()
+        {
+            return Sprite.getRectangle();
+        }
+    }
 }

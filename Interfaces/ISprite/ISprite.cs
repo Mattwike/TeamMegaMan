@@ -5,6 +5,9 @@ using Project1.GameObjects;
 
 public interface ISprite
 {
+
+    public Rectangle getRectangle();
+
     void Update(GameTime gameTime);
 
     void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically);

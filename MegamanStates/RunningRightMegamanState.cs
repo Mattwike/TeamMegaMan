@@ -99,5 +99,10 @@ namespace Project1.States.MegamanState
             // Implement draw logic here
             Sprite.Draw(_spriteBatch, movementSpeed, megaman.isfacingLeft, false);
         }
+
+        public Rectangle getRectangle()
+        {
+            return Sprite.getRectangle();
+        }
     }
 }

@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Project1.Interfaces;
 using Project1.States.MegamanState;
+using Project1.Collision;
 using Microsoft.Xna.Framework.Input;
 using System.Linq;
 
@@ -21,6 +22,15 @@ namespace Project1.GameObjects
         //private bool is_damaged = false;
         public float initialY;
         public float gravity = 4.5f;
+        public int MegamanSize;
+        public Rectangle MegamanBox;
+        //test
+        private Floor floor;
+        private CollisionDetector detector;
+        //remove this
+        private Vector2 start = new Vector2(0, 180);
+        private int count = 10;
+        public bool istouchingfloor;
 
         public IMegamanState State;
 
@@ -46,11 +56,25 @@ namespace Project1.GameObjects
 
         public void Update(GameTime gameTime)
         {
+
+            MegamanBox = State.getRectangle();
             State.Update(gameTime);
+            //if(CollisionDetector.DetectCollisionType(MegamanBox, floor.boundingBox) == 3)
+            //{
+            //    istouchingfloor = true;
+            //}
+            //else
+            //{
+            //    istouchingfloor = false;
+            //    //is_falling = true;
+            //}
         }
 
         public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
         {
+            floor = new Floor(count, start);
+            detector = new CollisionDetector();
+            MegamanSize = megamanSize;
             State.Initialize(_graphics, movementSpeed, megamanSize, interval);
         }
 
@@ -85,14 +109,13 @@ namespace Project1.GameObjects
             }
             else if (is_falling)
             {
-                if (y < initialY)
+                if (y < floor.boundingBox.Location.Y)
                 {
                     y += gravity;
                     gravity += .25f;
                 }
                 else
                 {
-                    y = initialY;
                     is_falling = false;
                     gravity = 4.5f;
                 }
