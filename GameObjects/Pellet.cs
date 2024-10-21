@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Project1.Interfaces;
 using Project1.States.MegamanState;
+using System.Collections.Generic;
 
 namespace Project1.GameObjects
 {
@@ -31,9 +32,9 @@ namespace Project1.GameObjects
             State.Update(gameTime);
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman megaman, int interval)
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman megaman, int interval, bool isRight)
         {
-            State.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval);
+            State.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval, isRight);
         }
 
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed)

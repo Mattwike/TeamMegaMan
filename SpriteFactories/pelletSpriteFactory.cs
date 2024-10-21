@@ -9,7 +9,7 @@ namespace Project1.SpriteFactories
     public class pelletSpriteFactory
     {
 	    private static pelletSpriteFactory instance = new pelletSpriteFactory();
-	    private Texture2D megaManSheet;
+	    private Texture2D pelletSheet;
 
 	    public static pelletSpriteFactory Instance
 	    {
@@ -25,12 +25,12 @@ namespace Project1.SpriteFactories
 
 	    public void LoadAllTextures(ContentManager content)
 	    {
-		    megaManSheet = content.Load<Texture2D>("Megaman");
+		    pelletSheet = content.Load<Texture2D>("PelletSpriteSheet");
 	    }
 
 	    public ISprite CreatePellet()
 	    {
-		    return new pellet(megaManSheet);
+		    return new pellet(pelletSheet);
 	    }
 
 

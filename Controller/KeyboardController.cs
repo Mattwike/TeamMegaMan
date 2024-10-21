@@ -13,21 +13,25 @@ using Project1.Commands;
 public class KeyboardController : IController
 {
     private Game1 game;
+    Pellet pellet;
     private Megaman megaman;
     private Dictionary<Keys, ICommand> commandDict = new Dictionary<Keys, ICommand>();
+    List<Pellet> pellets;
     int interval = 0;
     private bool is_jumping = false;
     private bool is_falling = false;
     private bool is_climbing = false;
     private bool reached_top = false;
+    bool mouseClicked = false;
     //private bool is_damaged = false;
     private float initialY;
     private float gravity = 4.5f;
 
-    public KeyboardController(Game1 gameInstance, Megaman megaman)
+    public KeyboardController(Game1 gameInstance, Megaman megaman, List<Pellet> pellets)
     {
         game = gameInstance;
         this.megaman = megaman;
+        this.pellets = pellets;
     }
 
     public void Initialize()
@@ -48,9 +52,11 @@ public class KeyboardController : IController
     {
         interval++;
         Keys[] pressedKeys = Keyboard.GetState().GetPressedKeys();
+        
         bool is_running = false;
         bool is_shooting = false;
         bool is_damaged = false;
+        
 
         if (pressedKeys.Contains(Keys.Q))
         {
@@ -131,21 +137,38 @@ public class KeyboardController : IController
             reached_top = true;
         }
 
-        if (pressedKeys.Contains(Keys.A) && pressedKeys.Contains(Keys.S) && !is_climbing && !is_jumping && !is_falling)
+        if (pressedKeys.Contains(Keys.A) && Mouse.GetState().LeftButton == ButtonState.Pressed && !is_climbing && !is_jumping && !is_falling)
         {
             commandDict[Keys.L].Execute(_graphics, movementSpeed, megamanSize, interval);
             megaman.x -= 3;
             is_running = true;
             is_shooting = true;
+            mouseClicked = true;
+
+            if (interval % 10 == 0)
+            {
+                pellet = new Pellet();
+                pellet.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval, false);
+                pellets.Add(pellet);
+            }
         }
 
-        else if (pressedKeys.Contains(Keys.D) && pressedKeys.Contains(Keys.S) && !is_climbing && !is_jumping && !is_falling)
+        
+        else if (pressedKeys.Contains(Keys.D) && Mouse.GetState().LeftButton == ButtonState.Pressed && !is_climbing && !is_jumping && !is_falling)
         {
             commandDict[Keys.K].Execute(_graphics, movementSpeed, megamanSize, interval);
-            new PelletCommand(megaman).Execute(_graphics, movementSpeed, megamanSize, interval);
+            
+            if (interval % 10 == 0 || !mouseClicked)
+            {
+                pellet = new Pellet();
+                pellet.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval, true);
+                pellets.Add(pellet);
+            }
+            
             megaman.x += 3;
             is_running = true;
             is_shooting = true;
+            mouseClicked = true;
         }
 
         if (!is_shooting && !is_climbing && pressedKeys.Contains(Keys.A))
@@ -157,6 +180,7 @@ public class KeyboardController : IController
 
             megaman.x -= 3;
             is_running = true;
+            bool mouseClicked = false;
         }
         else if (!is_shooting && !is_climbing && pressedKeys.Contains(Keys.D))
         {
@@ -167,9 +191,11 @@ public class KeyboardController : IController
 
             megaman.x += 3;
             is_running = true;
+            bool mouseClicked = false;
         }
         if(!is_shooting && !is_running && !is_falling && ! is_jumping && !is_climbing && !is_damaged)
         {
+            bool mouseClicked = false;
             var Idle = new IdleMegamanCommand(megaman);
             Idle.Execute(_graphics, movementSpeed, megamanSize, interval);
         }

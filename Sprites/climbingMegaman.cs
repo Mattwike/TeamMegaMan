@@ -18,7 +18,7 @@ namespace Project1.Sprites
             megaManSheet = texture;
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman megaman, int interval)
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman megaman, int interval, bool isRight)
         {
 
             megamanSizeX = megamanSize - 5;

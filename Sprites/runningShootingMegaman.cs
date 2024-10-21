@@ -15,15 +15,13 @@ namespace Project1.Sprites
         private Megaman megaman;
         int interval;
         GraphicsDeviceManager graphics;
-        private List<Pellet> pellets;
 
         public runningShootingMegaman(Texture2D texture)
         {
             megaManSheet = texture;
-            pellets = new List<Pellet>();
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int intervalTime)
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int intervalTime, bool isRight)
         {
 
             megamanSizeX = megamanSize + 10;
@@ -35,10 +33,7 @@ namespace Project1.Sprites
 
         public void Update(GameTime gameTime)
         {
-            foreach (var pellet in pellets)
-            {
-                pellet.Update(gameTime);
-            }
+            
         }
 
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically)
@@ -59,29 +54,11 @@ namespace Project1.Sprites
             Rectangle sourceRectangle;
             Rectangle destinationRectangle;
             
-            // TODO: Add your drawing code here
-            if (interval % 3 == 0)
-            {
-                Pellet pellet;
-                pellet = new Pellet();
-                pellet.Initialize(graphics, movementSpeed, 20, megaman, interval);
-                //pellets.Add(pellet);
-      
-            }
-            //foreach(var pellet in pellets)
-            //{
-            //    pellet.Draw(_spriteBatch, movementSpeed);
-            //}
+            
             if (interval % 24 < 6)
             {
-                
                 sourceRectangle = new Rectangle(14, 46, 31, 24);
                 destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
-                //Pellet pellet;
-                
-                //new pellet(megaManSheet).Draw(_spriteBatch, movementSpeed, false, false);
-                //pellet.Draw(_spriteBatch, movementSpeed, false, false);
-                
             }
 
             else if (interval % 24 < 12)

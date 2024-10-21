@@ -14,14 +14,7 @@ namespace Project1.States.MegamanState
 
         public PelletState(Pellet pellet)
         {
-            //this.pellet = pellet;
-            //megaman.SetDirection(false);
             Sprite = pelletSpriteFactory.Instance.CreatePellet();
-        }
-
-        public void BePellet()
-        {
-            pellet.State = new PelletState(pellet);
         }
 
         public void Update(GameTime gameTime)
@@ -30,9 +23,9 @@ namespace Project1.States.MegamanState
 			Sprite.Update(gameTime);
 		}
 
-		public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman megaman, int interval)
+		public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman megaman, int interval, bool isRight)
 		{
-			Sprite.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval);
+			Sprite.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval, isRight);
 		}
 
 		public void Draw(SpriteBatch _spriteBatch, float movementSpeed)

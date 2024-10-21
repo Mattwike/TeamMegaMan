@@ -10,11 +10,10 @@ namespace Project1.Interfaces
 
 		void Update(GameTime gameTime);
 
-		public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman megaman, int interval);
+		public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman megaman, int interval, bool isRight);
 
 		void Draw(SpriteBatch _spriteBatch, float movementSpeed);
 
-        public void BePellet();
 
 
     }

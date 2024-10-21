@@ -48,6 +48,7 @@ namespace Project1
             megaManSpriteFactory.Instance.LoadAllTextures(Content);
             EnemySpriteFactory.Instance.LoadAllTextures(Content);
             pelletSpriteFactory.Instance.LoadAllTextures(Content);
+            pelletSpriteFactory.Instance.CreatePellet();
 
             sprites = new List<ISprite>
             {
@@ -70,9 +71,9 @@ namespace Project1
 
             foreach (var obj in sprites)
             {
-                obj.Initialize(_graphics, movementSpeed, 40, megaman, interval);
+                obj.Initialize(_graphics, movementSpeed, 40, megaman, interval, false);
             }
-            _keyboardController = new KeyboardController(this,  megaman);
+            _keyboardController = new KeyboardController(this,  megaman, pellets);
 
             _mouseController.Initialize(height, width);
             _keyboardController.Initialize();

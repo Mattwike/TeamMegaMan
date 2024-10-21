@@ -12,31 +12,48 @@ namespace Project1.Sprites
         int pelletSizeY;
         int pelletX;
         int pelletY;
-        private Texture2D megaManSheet;
+        private Texture2D pelletSheet;
         private Megaman megaman;
         int interval;
+        bool isRight;
 
         public pellet(Texture2D texture)
         {
-            megaManSheet = texture;
+            pelletSheet = texture;
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int intervalTime)
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int intervalTime, bool isRight)
         {
 
-            pelletSizeX = megamanSize + 10;
-            pelletSizeY = megamanSize;
+            pelletSizeX = 10;
+            pelletSizeY = 10;
             this.megaman = Megaman;
             interval = intervalTime;
-            pelletX = (int)Megaman.x;
-            pelletY = (int)Megaman.y;
-
+            if (isRight)
+            {
+                pelletX = (int)Megaman.x + 20 + megamanSize / 2;
+            }
+            else
+            {
+                pelletX = (int)Megaman.x - 20 + megamanSize / 2;
+            }
+            
+            pelletY = (int)Megaman.y + 12;
+            this.isRight = isRight;
 
         }
 
         public void Update(GameTime gameTime)
         {
-            pelletX += 5;
+            if (isRight)
+            {
+                pelletX += 5;
+            }
+            else
+            {
+                pelletX -= 5;
+            }
+            
         }
 
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically)
@@ -60,14 +77,14 @@ namespace Project1.Sprites
             // TODO: Add your drawing code here
 
             //pelletX += 5;
-            sourceRectangle = new Rectangle(103, 10, 21, 24);
-            destinationRectangle = new Rectangle(pelletX, pelletY, pelletSizeX*7, pelletSizeY*7);
+            sourceRectangle = new Rectangle(253, 13, 9, 7);
+            destinationRectangle = new Rectangle(pelletX, pelletY, pelletSizeX, pelletSizeY);
 
             
             
 
             _spriteBatch.Begin();
-            _spriteBatch.Draw(megaManSheet, destinationRectangle, sourceRectangle, Color.Black, 0f, Vector2.Zero, spriteEffects, 0f);
+            _spriteBatch.Draw(pelletSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
             _spriteBatch.End();
         }
     }
