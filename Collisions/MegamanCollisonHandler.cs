@@ -20,7 +20,7 @@ namespace Project1.Collisions
         public Megaman megaman;
         private CollisionDetector detector;
 
-        Dictionary<Type, Dictionary<CollisionDirection, ICommand>> commandDict;
+        Dictionary<Type, Dictionary<CollisionDirection, ICommand>> collisionDict;
 
         public MegamanCollisonHandler(Megaman megaman)
         {
