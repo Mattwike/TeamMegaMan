@@ -126,18 +126,14 @@ namespace Project1
             megaman.Draw(_spriteBatch, movementSpeed);
             displayedEnemy.Draw(_spriteBatch);
             floor.Draw(_spriteBatch);
-<<<<<<< HEAD
             floor2.Draw(_spriteBatch);
             wall.Draw(_spriteBatch);
             Ceiling.Draw(_spriteBatch);
-=======
 
             foreach (var pellet in pellets)
             {
                 pellet.Draw(_spriteBatch, movementSpeed);
             }
-
->>>>>>> 430013a473ca578aaa85f053bd3351c3d7ac1f3a
             // Draw Bombomb directly
             //bombomb.Draw(_spriteBatch, false, false);  // Draw Bombomb without flipping
 

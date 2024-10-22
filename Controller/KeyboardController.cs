@@ -61,11 +61,7 @@ public class KeyboardController : IController
 
         if (!megaman.is_jumping && !megaman.is_falling && !megaman.istouchingfloor)
         {
-<<<<<<< HEAD
             megaman.y += megaman.gravity;
-=======
-            megaman.y += 0f;
->>>>>>> 430013a473ca578aaa85f053bd3351c3d7ac1f3a
         }
 
         if (keyboardState.IsKeyDown(Keys.O) && previousKeyState.IsKeyUp(Keys.O)) {
