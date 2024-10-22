@@ -1,1 +1,19 @@
-﻿
+﻿Author: Carson Lewis
+Date: October 21
+Sprint 3
+Name of file: CollisionDetector
+Author of File: Matthew Weikel
+Number of Minutes to Complete Review: 15
+Comments: Looks very good and organized. I like the use of enums. The logic
+also looks good and when I tested the megaman collision with blocks it seemed to work fine.
+
+Author: Carson Lewis
+Date: October 21
+Sprint 3
+Name of file: KeyboardController
+Author of File: Matthew Weikel
+Number of Minutes to Complete Review: 15
+Comments: Quality is decent. Everything seems to work but there is a lot of extra if statements
+that could be better placed and condensed.
+Change: Make everything more organized as it is all over the place right now. Also
+make the if statements easier to read.
