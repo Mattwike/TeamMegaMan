@@ -17,6 +17,7 @@ namespace Project1
         private KeyboardController _keyboardController;
         private MouseController _mouseController;
         private List<ISprite> sprites;  // Keeping this for future use if needed
+        List<Pellet> pellets;
         private Megaman megaman;
         private GenericEnemy displayedEnemy;
 
@@ -38,6 +39,7 @@ namespace Project1
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            pellets = new List<Pellet>();
         }
 
         protected override void Initialize()
@@ -54,6 +56,8 @@ namespace Project1
             // Load all textures for MegaMan and Enemies
             megaManSpriteFactory.Instance.LoadAllTextures(Content);
             EnemySpriteFactory.Instance.LoadAllTextures(Content);
+            pelletSpriteFactory.Instance.LoadAllTextures(Content);
+            pelletSpriteFactory.Instance.CreatePellet();
 
             //load Block Textures
             BlockSpriteFactory.Instance.LoadAllTextures(Content);
@@ -78,7 +82,7 @@ namespace Project1
             megaman.x = 0;
             megaman.y = 100;
 
-            _keyboardController = new KeyboardController(this,  megaman, displayedEnemy);
+            _keyboardController = new KeyboardController(this,  megaman, displayedEnemy, pellets);
             _keyboardController.Initialize();
             _mouseController.Initialize(height, width);
 
@@ -106,6 +110,11 @@ namespace Project1
             displayedEnemy.Update(gameTime);
             CollidionHandler.HandleMegamanCollisions(megaman, blockList);
 
+            foreach (var pellet in pellets)
+            {
+                pellet.Update(gameTime);
+            }
+
             base.Update(gameTime);
         }
 
@@ -117,9 +126,18 @@ namespace Project1
             megaman.Draw(_spriteBatch, movementSpeed);
             displayedEnemy.Draw(_spriteBatch);
             floor.Draw(_spriteBatch);
+<<<<<<< HEAD
             floor2.Draw(_spriteBatch);
             wall.Draw(_spriteBatch);
             Ceiling.Draw(_spriteBatch);
+=======
+
+            foreach (var pellet in pellets)
+            {
+                pellet.Draw(_spriteBatch, movementSpeed);
+            }
+
+>>>>>>> 430013a473ca578aaa85f053bd3351c3d7ac1f3a
             // Draw Bombomb directly
             //bombomb.Draw(_spriteBatch, false, false);  // Draw Bombomb without flipping
 
