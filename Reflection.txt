@@ -1,0 +1,5 @@
+Sprint 3: This Sprint we had lackluster performance. We still need to implement the blocks and level design as well as some enemies and collision logic. Some members had little contribution and forgot to push code to main. Camera logic needs 
+to be implemented as well Items and pickup logic. Some code needs to be cleaned up and fixed from sprint 2 feedback. Player collision with blocks is close to being done but needs tuning. The player is almost fully implemented pening 
+enemy pellet logic and collisions. We need to implement reset logic. As well as more weapons and abilities. Enemy collision and bounding boxes need to be implemented. Logic for creating a level from a text file needs to be implemented. 
+For the next Sprint we will need to keep each other accountable for getting their portion of the assignment done and be more consistent about working on the project and have meetings once or twice a week to go over what we did last check in. 
+We need to implement what we are missing for sprint 3. And have improvements done for the next check in. 
