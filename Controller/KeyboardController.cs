@@ -56,7 +56,7 @@ public class KeyboardController : IController
 
         if (!megaman.is_jumping && !megaman.is_falling && !megaman.istouchingfloor)
         {
-            megaman.y += 4.5f;
+            megaman.y += megaman.gravity;
         }
 
         if (keyboardState.IsKeyDown(Keys.O) && previousKeyState.IsKeyUp(Keys.O)) {
@@ -74,6 +74,7 @@ public class KeyboardController : IController
         // Check for key presses and execute the corresponding commands
 
         megaman.Jump(pressedKeys);
+        
 
         if ((megaman.is_jumping || megaman.is_falling) && pressedKeys.Contains(Keys.S))
         {
@@ -114,7 +115,7 @@ public class KeyboardController : IController
         if (pressedKeys.Contains(Keys.A) && pressedKeys.Contains(Keys.S) && !megaman.is_climbing && !megaman.is_jumping && !megaman.is_falling)
         {
             commandDict[Keys.L].Execute(_graphics, movementSpeed, megamanSize, interval);
-            megaman.x -= 3;
+            megaman.x -= 3 * megaman.velocity;
             megaman.is_running = true;
             megaman.is_shooting = true;
         }
@@ -122,7 +123,7 @@ public class KeyboardController : IController
         else if (pressedKeys.Contains(Keys.D) && pressedKeys.Contains(Keys.S) && !megaman.is_climbing && !megaman.is_jumping && !megaman.is_falling)
         {
             commandDict[Keys.K].Execute(_graphics, movementSpeed, megamanSize, interval);
-            megaman.x += 3;
+            megaman.x += 3 * megaman.velocity;
             megaman.is_running = true;
             megaman.is_shooting = true;
         }
@@ -134,7 +135,7 @@ public class KeyboardController : IController
                 commandDict[Keys.A].Execute(_graphics, movementSpeed, megamanSize, interval);
             }
 
-            megaman.x -= 3;
+            megaman.x -= 3 * megaman.velocity;
             megaman.is_running = true;
         }
         else if (!megaman.is_shooting && !megaman.is_climbing && pressedKeys.Contains(Keys.D))
@@ -144,7 +145,7 @@ public class KeyboardController : IController
                 commandDict[Keys.D].Execute(_graphics, movementSpeed, megamanSize, interval);
             }
 
-            megaman.x += 3;
+            megaman.x += 3 * megaman.velocity;
             megaman.is_running = true;
         }
         if (!megaman.is_shooting && !megaman.is_running && !megaman.is_falling && !megaman.is_jumping && !megaman.is_climbing && !megaman.is_damaged)

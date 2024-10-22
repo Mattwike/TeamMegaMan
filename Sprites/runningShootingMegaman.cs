@@ -86,5 +86,6 @@ namespace Project1.Sprites
         {
             return MegamanBox;
         }
+
     }
 }

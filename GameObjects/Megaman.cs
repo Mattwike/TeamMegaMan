@@ -3,8 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Project1.Interfaces;
 using Project1.States.MegamanState;
 using Project1.Collision;
+using Project1.Enum;
 using Microsoft.Xna.Framework.Input;
 using System.Linq;
+using Project1.Collisions;
 
 
 
@@ -25,12 +27,13 @@ namespace Project1.GameObjects
         public int MegamanSize;
         public Rectangle MegamanBox;
         //test
-        private Floor floor;
+        public Floor floor;
         private CollisionDetector detector;
         //remove this
-        private Vector2 start = new Vector2(0, 180);
-        private int count = 10;
+        private Vector2 start = new Vector2(0, 200);
+        private int count = 100;
         public bool istouchingfloor;
+        public float velocity = 1f;
 
         public IMegamanState State;
 
@@ -57,17 +60,10 @@ namespace Project1.GameObjects
         public void Update(GameTime gameTime)
         {
 
-            MegamanBox = State.getRectangle();
+            //MegamanBox = State.getRectangle();
+            MegamanBox = new Rectangle((int)x, (int)y, MegamanSize, MegamanSize);
             State.Update(gameTime);
-            //if(CollisionDetector.DetectCollisionType(MegamanBox, floor.boundingBox) == 3)
-            //{
-            //    istouchingfloor = true;
-            //}
-            //else
-            //{
-            //    istouchingfloor = false;
-            //    //is_falling = true;
-            //}
+  
         }
 
         public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
@@ -81,6 +77,7 @@ namespace Project1.GameObjects
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
         {
             State.Draw(_spriteBatch, movementSpeed);
+            //floor.Draw(_spriteBatch);
         }
         
         public void Jump(Keys[] pressedKeys)
@@ -109,7 +106,7 @@ namespace Project1.GameObjects
             }
             else if (is_falling)
             {
-                if (y < floor.boundingBox.Location.Y)
+                if (!istouchingfloor)
                 {
                     y += gravity;
                     gravity += .25f;

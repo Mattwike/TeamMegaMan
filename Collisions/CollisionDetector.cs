@@ -35,7 +35,7 @@ namespace Project1.Collision
                     return CollisionDirection.Bottom;
                 }
             }
-            return 0;
+            return CollisionDirection.None;
         }
     }
 }
