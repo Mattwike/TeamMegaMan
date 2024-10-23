@@ -66,7 +66,7 @@ public class EnemySpriteFactory
         return new Mambu(enemySheet);
     }
 
-    public ISprite CreateSniperJoe()
+    public IEnemySprite CreateSniperJoe()
     {
         return new SniperJoe(enemySheet, 400, 100);
     }

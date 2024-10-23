@@ -2,8 +2,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Project1.Interfaces;
 using Project1.States.MegamanState;
+using Project1.Collision;
+using Project1.Enum;
 using Microsoft.Xna.Framework.Input;
 using System.Linq;
+using Project1.Collisions;
 
 
 
@@ -21,6 +24,16 @@ namespace Project1.GameObjects
         //private bool is_damaged = false;
         public float initialY;
         public float gravity = 4.5f;
+        public int MegamanSize;
+        public Rectangle MegamanBox;
+        //test
+        public Floor floor;
+        private CollisionDetector detector;
+        //remove this
+        private Vector2 start = new Vector2(0, 200);
+        private int count = 100;
+        public bool istouchingfloor;
+        public float velocity = 1f;
 
         public IMegamanState State;
 
@@ -46,17 +59,25 @@ namespace Project1.GameObjects
 
         public void Update(GameTime gameTime)
         {
+
+            //MegamanBox = State.getRectangle();
+            MegamanBox = new Rectangle((int)x, (int)y, MegamanSize, MegamanSize);
             State.Update(gameTime);
+  
         }
 
         public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
         {
+            floor = new Floor(count, start);
+            detector = new CollisionDetector();
+            MegamanSize = megamanSize;
             State.Initialize(_graphics, movementSpeed, megamanSize, interval);
         }
 
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
         {
             State.Draw(_spriteBatch, movementSpeed);
+            //floor.Draw(_spriteBatch);
         }
         
         public void Jump(Keys[] pressedKeys)
@@ -85,14 +106,13 @@ namespace Project1.GameObjects
             }
             else if (is_falling)
             {
-                if (y < initialY)
+                if (!istouchingfloor)
                 {
                     y += gravity;
                     gravity += .25f;
                 }
                 else
                 {
-                    y = initialY;
                     is_falling = false;
                     gravity = 4.5f;
                 }

@@ -12,13 +12,14 @@ namespace Project1.Sprites
         private Texture2D megaManSheet;
         private Megaman megaman;
         int interval;
+        private Rectangle MegamanBox;
 
         public climbingMegaman(Texture2D texture)
         {
             megaManSheet = texture;
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman megaman, int interval)
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman megaman, int interval, bool isRight)
         {
 
             megamanSizeX = megamanSize - 5;
@@ -49,22 +50,26 @@ namespace Project1.Sprites
             }
 
             Rectangle sourceRectangle;
-            Rectangle destinationRectangle;
 
             if (interval % 24 < 6)
             {
-                destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
+                MegamanBox = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
                 sourceRectangle = new Rectangle(5, 81, 16, 29);
             }
             else
             {
-                destinationRectangle = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
+                MegamanBox = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
                 sourceRectangle = new Rectangle(32, 81, 16, 29);
             }
 
             _spriteBatch.Begin();
-            _spriteBatch.Draw(megaManSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
+            _spriteBatch.Draw(megaManSheet, MegamanBox, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
             _spriteBatch.End();
+        }
+
+        public Rectangle getRectangle()
+        {
+            return MegamanBox;
         }
     }
 }
