@@ -13,19 +13,24 @@ public class SniperJoe : IEnemySprite
     private float initialY;  // The initial Y-position for Sniper Joe's jump
     private float gravity;  // The gravity effect for jumping
     private Texture2D enemySheet;  // Texture for the Sniper Joe sprite
+    private Texture2D projectileTexture;  // Texture for the projectile
     private int enemySizeX;  // Width of Sniper Joe's sprite
     private int enemySizeY;  // Height of Sniper Joe's sprite
     private bool isJumping;  // Flag to check if Sniper Joe is jumping
     private bool isFalling;  // Flag to check if Sniper Joe is falling
     private bool justLanded; // Flag to detect landing and advance the frame
+    private bool hasShot;  // Flag to track if a projectile has been shot during frame 3
+    private List<IEnemySprite> projectiles;  // List to store projectiles
 
-    // Constructor to initialize Sniper Joe with texture and position
-    public SniperJoe(Texture2D texture, float startX, float startY)
+    private int screenWidth;  // Screen width to manage projectile boundaries
+
+    // Constructor with only the texture parameter, like the other enemy classes
+    public SniperJoe(Texture2D texture)
     {
         enemySheet = texture;
-        x = startX;  // Set the starting x position of Sniper Joe
-        y = startY;  // Set the starting y position of Sniper Joe
-        initialY = startY;  // Set the initial Y for jumping reference
+        x = 400;  // Set the starting x position of Sniper Joe
+        y = 100;  // Set the starting y position of Sniper Joe
+        initialY = y;  // Set the initial Y for jumping reference
         gravity = 4.5f;  // Set the gravity for the jump
         currentFrame = 0;
         totalFrame = 4;  // Total number of animation frames
@@ -35,12 +40,20 @@ public class SniperJoe : IEnemySprite
         enemySizeY = 24;  // Default size based on the first frame
         isJumping = false;  // Initially, Sniper Joe is not jumping
         isFalling = false;  // Initially, Sniper Joe is not falling
-        justLanded = false; // Track when Sniper Joe just landed
+        justLanded = false;  // Track when Sniper Joe just landed
+        hasShot = false;  // Track if Sniper Joe has already shot during frame 3
+
+        // Load default textures and settings
+        projectileTexture = texture;  // Here you would load a default projectile texture if available
+        screenWidth = 800;  // Assume a default screen width; adjust if necessary
+
+        projectiles = new List<IEnemySprite>();
     }
 
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
     {
         // Any other initialization logic if required
+        screenWidth = _graphics.PreferredBackBufferWidth;  // Use the actual screen width if available
     }
 
     public void Update(GameTime gameTime)
@@ -95,6 +108,7 @@ public class SniperJoe : IEnemySprite
             }
             justLanded = false;  // Reset the just landed flag
             delayCounter = 0;  // Reset the delay counter so Sniper Joe doesn't switch frames too quickly
+            hasShot = false;  // Reset shooting flag when moving to frame 0 (after jump)
         }
 
         // If not jumping, falling, or just landed, continue normal frame update based on delay
@@ -111,6 +125,32 @@ public class SniperJoe : IEnemySprite
                 delayCounter = 0;
             }
         }
+
+        // Check if Sniper Joe is in Frame 3 and shoot a projectile once
+        if (currentFrame == 2 && !hasShot)
+        {
+            ShootProjectile();
+            hasShot = true;  // Ensure the projectile is only shot once per frame 3
+        }
+
+        // Update each projectile
+        for (int i = projectiles.Count - 1; i >= 0; i--)
+        {
+            projectiles[i].Update(gameTime);
+
+            // Remove the projectile if it's off the screen
+            if (((SniperJoeProjectile)projectiles[i]).IsOffScreen())
+            {
+                projectiles.RemoveAt(i);
+            }
+        }
+    }
+
+    private void ShootProjectile()
+    {
+        // Create a new projectile at Sniper Joe's gun position
+        SniperJoeProjectile projectile = new SniperJoeProjectile(projectileTexture, x, y + 10, screenWidth);
+        projectiles.Add(projectile);
     }
 
     public void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically)
@@ -140,12 +180,12 @@ public class SniperJoe : IEnemySprite
                 enemySizeY = 24;
                 break;
             case 2:
-                sourceRectangle = new Rectangle(312, 243, 22, 24);  // Frame 3 (jump frame)
+                sourceRectangle = new Rectangle(312, 243, 22, 24);  // Frame 3 (shoot frame)
                 enemySizeX = 22;
                 enemySizeY = 24;
                 break;
             case 3:
-                sourceRectangle = new Rectangle(337, 243, 28, 31);  // Frame 4
+                sourceRectangle = new Rectangle(337, 243, 28, 31);  // Frame 4 (jump frame)
                 enemySizeX = 28;
                 enemySizeY = 31;
                 break;
@@ -162,6 +202,13 @@ public class SniperJoe : IEnemySprite
 
         _spriteBatch.Begin();
         _spriteBatch.Draw(enemySheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
+
+        // Draw each projectile
+        foreach (var projectile in projectiles)
+        {
+            projectile.Draw(_spriteBatch, false, false);  // No flipping required for projectiles
+        }
+
         _spriteBatch.End();
     }
 }

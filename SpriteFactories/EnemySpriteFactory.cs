@@ -68,6 +68,8 @@ public class EnemySpriteFactory
 
     public IEnemySprite CreateSniperJoe()
     {
-        return new SniperJoe(enemySheet, 400, 100);
+        return new SniperJoe(enemySheet); 
     }
+
+
 }
