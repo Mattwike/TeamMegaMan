@@ -1,2 +1,2 @@
 # TeamMegaMan
-Player Controller logic, Press A and S to run left and shoot, press D and S to run and shoot. Press and hold Z to display the damaged animation, press W while in the leftmost part of the screen to climb and press A to shoot while climbing. Press space to jump and press space and hold S to jump and shoot. 
+Press A and D to move left and right, press left mouse button to shoot, press spacebar to jump. Left and right and top and bottom collisions with blocks work, but when colliding with the bottom of a block there is a brief pause at the top of the arc. You can jump once in mid air. the non moving shooting state is not displaying. 

@@ -5,13 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Project1.Interfaces;
 
-public class Floor
+public class Floor : IBlocks
 {
     //Floor modeled as a list of blocks arranged in a straight line.
-    int numBlocks;
-    Vector2 pos;
-    Rectangle boundingBox;
+    private int numBlocks;
+    private Vector2 pos;
+    public Rectangle boundingBox { get; private set; }
 
     int blockWidth = 16;
     int blockHeight = 16;
@@ -20,7 +21,7 @@ public class Floor
 
     public Floor(int numOfBlocks, Vector2 startPos)
     {
-        numBlocks = numOfBlocks;
+        this.numBlocks = numOfBlocks;
         pos = startPos;
 
         blocksInFloorSegment = new List<IBlock>(numOfBlocks);

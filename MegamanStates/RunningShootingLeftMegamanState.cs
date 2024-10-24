@@ -91,13 +91,18 @@ namespace Project1.States.MegamanState
 
         public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
         {
-            Sprite.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval);
+            Sprite.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval, false);
         }
 
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
         {
             // Implement draw logic here
             Sprite.Draw(_spriteBatch, 0, megaman.isfacingLeft, false);
+        }
+
+        public Rectangle getRectangle()
+        {
+            return Sprite.getRectangle();
         }
     }
 }
