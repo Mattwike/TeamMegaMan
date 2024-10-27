@@ -27,7 +27,16 @@ namespace Project1.GameObjects
                 EnemySpriteFactory.Instance.CreateBombManThrowing(),
                 EnemySpriteFactory.Instance.CreateMambu(),
                 EnemySpriteFactory.Instance.CreateGabyoall(),
-                EnemySpriteFactory.Instance.CreateBombomb()
+                EnemySpriteFactory.Instance.CreateBombomb(),
+
+                //Temporary using this to generate items.
+                EnemySpriteFactory.Instance.CreateExtraLife(),
+                EnemySpriteFactory.Instance.CreateBigYellowDiamond(),
+                EnemySpriteFactory.Instance.CreateSmallYellowDiamond(),
+                EnemySpriteFactory.Instance.CreateBigBlueRectangle(),
+                EnemySpriteFactory.Instance.CreateSmallBlueRectangle(),
+                EnemySpriteFactory.Instance.CreateYellowBall(),
+                EnemySpriteFactory.Instance.CreateSmallBall()
 
             };
             currentSprite = 0;
