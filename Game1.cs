@@ -8,6 +8,8 @@ using Project1.Interfaces;
 using Project1.Collisions;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
+using Project1.Levels;
+using System.IO;
 
 
 namespace Project1
@@ -25,6 +27,11 @@ namespace Project1
         private Floor floor2;
         private Floor wall;
         private Floor Ceiling;
+
+        private LevelLoader levelLoader;
+        private LevelParser levelParser;
+        private List<IBlock> levelBlocks;
+
 
         float movementSpeed;
         private GraphicsDeviceManager _graphics;
@@ -86,6 +93,19 @@ namespace Project1
             _keyboardController.Initialize();
             _mouseController.Initialize(height, width);
 
+            // Initialize the level loader and parser
+            levelLoader = new LevelLoader();
+            levelParser = new LevelParser();
+
+            // Load the level data
+            List<string> levelData = levelLoader.LoadLevel("Content/Levels/Level1.txt");
+
+            // Parse the level data to create blocks
+            levelParser.ParseLevel(levelData);
+
+            // Retrieve the blocks created by the parser
+            levelBlocks = levelParser.Blocks;
+
             base.Initialize();
         }
 
@@ -93,6 +113,7 @@ namespace Project1
         {
             // Create the SpriteBatch used for rendering
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            BlockSpriteFactory.Instance.LoadAllTextures(Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -115,12 +136,23 @@ namespace Project1
                 pellet.Update(gameTime);
             }
 
+            // Update level blocks if necessary
+            foreach (var block in levelBlocks)
+            {
+                block.Update();
+            }
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);  // Clear the screen
+
+            foreach (var block in levelBlocks)
+            {
+                block.Draw(_spriteBatch);
+            }
 
             // Draw MegaMan and displayed enemy as before
             megaman.Draw(_spriteBatch, movementSpeed);

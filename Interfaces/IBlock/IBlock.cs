@@ -1,17 +1,18 @@
-﻿using Microsoft.Xna.Framework;
+﻿
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-public interface IBlock
+namespace Project1.Interfaces
 {
-    public void Update();
-
-    public void Initialize();
-
-    public void Draw(SpriteBatch spriteBatch, int blockNum, int blockWidth, Vector2 pos);
-
+    public interface IBlock
+    {
+        void Initialize();
+        void Update();
+        void Draw(SpriteBatch spriteBatch);
+        Rectangle boundingBox { get; }
+    }
 }

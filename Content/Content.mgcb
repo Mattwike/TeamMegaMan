@@ -13,7 +13,7 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin ../../../../../Downloads/megamanBlocks.png
+#begin ../../../../../OneDrive/Desktop/CSE2431/CSE 3902/megamanBlocks.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -23,7 +23,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:../../../../../Downloads/megamanBlocks.png;megamanBlocks.png
+/build:../../../../../OneDrive/Desktop/CSE2431/CSE 3902/megamanBlocks.png;megamanBlocks.png
 
 #begin bossSheet.png
 /importer:TextureImporter
@@ -85,6 +85,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:MegaMan.png
+
+#begin megamanBlocks.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:megamanBlocks.png
 
 #begin megamanBlocks.png
 /importer:TextureImporter
