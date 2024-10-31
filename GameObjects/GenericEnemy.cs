@@ -27,7 +27,8 @@ namespace Project1.GameObjects
                 EnemySpriteFactory.Instance.CreateBombManThrowing(),
                 EnemySpriteFactory.Instance.CreateMambu(),
                 EnemySpriteFactory.Instance.CreateGabyoall(),
-                EnemySpriteFactory.Instance.CreateBombomb()
+                EnemySpriteFactory.Instance.CreateBombomb(),
+                EnemySpriteFactory.Instance.CreateSniperJoe()
 
             };
             currentSprite = 0;
