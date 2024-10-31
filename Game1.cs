@@ -19,6 +19,7 @@ namespace Project1
         private List<ISprite> sprites;  // Keeping this for future use if needed
         List<Pellet> pellets;
         private Megaman megaman;
+        private SniperJoe sniperjoe;
         private GenericEnemy displayedEnemy;
 
         private Floor floor;
@@ -38,14 +39,14 @@ namespace Project1
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
             pellets = new List<Pellet>();
         }
 
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            Texture2D SniperJoeSheet;
+            SniperJoeSheet = Content.Load<Texture2D>("enemy");
             movementSpeed = 3;
 
             width = _graphics.PreferredBackBufferWidth / 2;
@@ -77,10 +78,14 @@ namespace Project1
 
             // Initialize the MegaMan character
             megaman = new Megaman();
+            sniperjoe = new SniperJoe(SniperJoeSheet);
             megaman.Initialize(_graphics, movementSpeed, 40, interval);
+            sniperjoe.Initialize(_graphics, 30, 40);
 
             megaman.x = 0;
             megaman.y = 100;
+
+            megaman.reachedCheckpoint();
 
             _keyboardController = new KeyboardController(this,  megaman, displayedEnemy, pellets);
             _keyboardController.Initialize();
@@ -107,8 +112,11 @@ namespace Project1
 
             // Update Bombomb directly
             megaman.Update(gameTime);
+            sniperjoe.Update(gameTime);
             displayedEnemy.Update(gameTime);
             CollidionHandler.HandleMegamanCollisions(megaman, blockList);
+            CollidionHandler.HandleEnemyCollisions(sniperjoe, blockList);
+
 
             foreach (var pellet in pellets)
             {
@@ -124,6 +132,7 @@ namespace Project1
 
             // Draw MegaMan and displayed enemy as before
             megaman.Draw(_spriteBatch, movementSpeed);
+            sniperjoe.Draw(_spriteBatch, false, false);
             displayedEnemy.Draw(_spriteBatch);
             floor.Draw(_spriteBatch);
             floor2.Draw(_spriteBatch);
