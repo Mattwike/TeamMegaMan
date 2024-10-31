@@ -56,7 +56,7 @@ namespace Project1.States.MegamanState
 
         public void BeClimbingReachedTopMegaman()
         {
-            megaman.State = new ClimbingReachedTopMegamanState(megaman);
+
         }
 
         public void BeRunningShootingRightMegamanState()
@@ -69,9 +69,19 @@ namespace Project1.States.MegamanState
             megaman.State = new RunningShootingLeftMegamanState(megaman);
         }
 
+        public void BeFallingMegamanState()
+        {
+            megaman.State = new FallingMegamanState(megaman);
+        }
+
+        public void BeFallingShootingMegamanState()
+        {
+            megaman.State = new FallingShootingMegamanState(megaman);
+        }
+
         public void ChangeDirection()
         {
-           
+
         }
 
         public void Update(GameTime gameTime)
@@ -79,15 +89,21 @@ namespace Project1.States.MegamanState
             Sprite.Update(gameTime);
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
         {
-            Sprite.Initialize(_graphics, movementSpeed, megamanSize);
+            Sprite.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval, false);
         }
 
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
         {
             // Implement draw logic here
             Sprite.Draw(_spriteBatch, movementSpeed, megaman.isfacingLeft, false);
+
+        }
+
+        public Rectangle getRectangle()
+        {
+            return Sprite.getRectangle();
         }
     }
 }

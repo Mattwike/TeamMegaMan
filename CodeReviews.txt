@@ -1,0 +1,38 @@
+﻿Author: Carson Lewis
+Date: October 21
+Sprint 3
+Name of file: CollisionDetector
+Author of File: Matthew Weikel
+Number of Minutes to Complete Review: 15
+Comments: Looks very good and organized. I like the use of enums. The logic
+also looks good and when I tested the megaman collision with blocks it seemed to work fine.
+
+Author: Carson Lewis
+Date: October 21
+Sprint 3
+Name of file: KeyboardController
+Author of File: Matthew Weikel
+Number of Minutes to Complete Review: 15
+Comments: Quality is decent. Everything seems to work but there is a lot of extra if statements
+that could be better placed and condensed.
+Change: Make everything more organized as it is all over the place right now. Also
+make the if statements easier to read.
+
+Author: Matthew Weikel
+Date: 10/21/2024
+Sprint 3
+GameObjects/Pellet.cs
+Created by Carson Lewis
+maintainability: There Will most likely need to be a variable holding the damage that a pellot inflicts for collisions. the Variable name for isfacing left should be ismoving left. Double check if Megaman is needed for the init function.
+Time took: 10 minutes
+Readability: the code is readable and most are short and have one purpose, just some names are misleading like isfacingleft
+
+Author: Matthew Weikel
+Date: 10/21/2024
+Sprint 3
+GameObjects/Floor.cs
+Created by Tyler Burkett
+maintainability: Block Width and Block Height should be settable variables in case we need to have variable length blocks. 
+Time took: 8 minutes
+Readability: the code is readable and most are short. 
+

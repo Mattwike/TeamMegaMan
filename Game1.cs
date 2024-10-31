@@ -1,12 +1,14 @@
-﻿using Microsoft.VisualBasic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Collections.Generic;
 using Project1.SpriteFactories;
 using Project1.Sprites;
-using Project1.States.MegamanState;
 using Project1.GameObjects;
+using Project1.Interfaces;
+using Project1.Collisions;
+using System.Collections.Generic;
+using System.Reflection.Metadata;
+
 
 namespace Project1
 {
@@ -14,36 +16,35 @@ namespace Project1
     {
         private KeyboardController _keyboardController;
         private MouseController _mouseController;
-        private List<ISprite> sprites;
+        private List<ISprite> sprites;  // Keeping this for future use if needed
+        List<Pellet> pellets;
         private Megaman megaman;
+        private GenericEnemy displayedEnemy;
+
+        private Floor floor;
+        private Floor floor2;
+        private Floor wall;
+        private Floor Ceiling;
 
         float movementSpeed;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-
         int height;
         int width;
-        int output;
-        int lastOutput;
-        int lastMouseQuad;
-        int mouseQuad;
-        int lastInput;
+        int interval = 0;
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            pellets = new List<Pellet>();
         }
 
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
-            output = 1;
-            mouseQuad = 1;
-            lastInput = 1;
 
             movementSpeed = 3;
 
@@ -52,74 +53,89 @@ namespace Project1
 
             _mouseController = new MouseController();
 
+            // Load all textures for MegaMan and Enemies
             megaManSpriteFactory.Instance.LoadAllTextures(Content);
             EnemySpriteFactory.Instance.LoadAllTextures(Content);
+            pelletSpriteFactory.Instance.LoadAllTextures(Content);
+            pelletSpriteFactory.Instance.CreatePellet();
 
-            sprites = new List<ISprite>
-            {
-                megaManSpriteFactory.Instance.CreateIdleMegaman(),
-                megaManSpriteFactory.Instance.CreateRunningMegaman(),
-                megaManSpriteFactory.Instance.CreateRunningShootingMegaman(),
-                megaManSpriteFactory.Instance.CreateClimbingShootingMegaman(),
-                megaManSpriteFactory.Instance.CreateDamagedMegaman(),
-                megaManSpriteFactory.Instance.CreateClimbingMegaman(),
-                EnemySpriteFactory.Instance.CreateJumpingFlea(),
-                EnemySpriteFactory.Instance.CreateBombManIdle(),
-                EnemySpriteFactory.Instance.CreateBombManThrowing(),
-                megaManSpriteFactory.Instance.CreateClimbingReachedTopMegaman(),
-                EnemySpriteFactory.Instance.CreateScrewDriver(),
-            };
+            //load Block Textures
+            BlockSpriteFactory.Instance.LoadAllTextures(Content);
+            Vector2 floorPos = new Vector2(0, 180);
+            Vector2 floorPos2 = new Vector2(200, 180);
+            Vector2 wallpos = new Vector2(250, 160);
+            Vector2 Ceilingpos = new Vector2(200, 100);
+            floor = new Floor(10, floorPos);
+            floor2 = new Floor(10, floorPos2);
+            wall = new Floor(3, wallpos);
+            Ceiling = new Floor(10, Ceilingpos);
 
+
+            // Initialize the displayed enemy
+            displayedEnemy = new GenericEnemy();
+            displayedEnemy.Initialize(_graphics, 30, 40);
+
+            // Initialize the MegaMan character
             megaman = new Megaman();
-            megaman.Initialize(_graphics, movementSpeed, 40);
+            megaman.Initialize(_graphics, movementSpeed, 40, interval);
 
-            foreach (var obj in sprites)
-            {
-                obj.Initialize(_graphics, movementSpeed, 40);
-            }
-            _keyboardController = new KeyboardController(this,  megaman);
+            megaman.x = 0;
+            megaman.y = 100;
 
-            _mouseController.Initialize(height, width);
+            _keyboardController = new KeyboardController(this,  megaman, displayedEnemy, pellets);
             _keyboardController.Initialize();
-            
+            _mouseController.Initialize(height, width);
+
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
+            // Create the SpriteBatch used for rendering
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
         }
 
         protected override void Update(GameTime gameTime)
         {
-
-            // Use the keyboard controller to get input and update the ball position
-
-            foreach (var obj in sprites)
-            {
-                obj.Update(gameTime);
-            }
-
-            megaman.Update(gameTime);
-
+            // Use the keyboard controller to get input and update MegaMan and enemies
             _keyboardController.Update(_graphics, movementSpeed, 40, gameTime);
+            List<IBlocks> blockList = new List<IBlocks>();
+            blockList.Add(floor);
+            blockList.Add(floor2);
+            blockList.Add(wall);
+            blockList.Add(Ceiling);
 
+            // Update Bombomb directly
+            megaman.Update(gameTime);
+            displayedEnemy.Update(gameTime);
+            CollidionHandler.HandleMegamanCollisions(megaman, blockList);
+
+            foreach (var pellet in pellets)
+            {
+                pellet.Update(gameTime);
+            }
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.CornflowerBlue);  // Clear the screen
 
-            //TODO: Add your drawing code here
-
-            //foreach (var obj in sprites)
-            //{
-            //    obj.Draw(_spriteBatch, movementSpeed, false, false);
-            //}
+            // Draw MegaMan and displayed enemy as before
             megaman.Draw(_spriteBatch, movementSpeed);
+            displayedEnemy.Draw(_spriteBatch);
+            floor.Draw(_spriteBatch);
+            floor2.Draw(_spriteBatch);
+            wall.Draw(_spriteBatch);
+            Ceiling.Draw(_spriteBatch);
+
+            foreach (var pellet in pellets)
+            {
+                pellet.Draw(_spriteBatch, movementSpeed);
+            }
+            // Draw Bombomb directly
+            //bombomb.Draw(_spriteBatch, false, false);  // Draw Bombomb without flipping
 
             base.Draw(gameTime);
         }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-public class screwDriver : ISprite
+public class screwDriver : IEnemySprite
 {
     int currentFrame;    // Make sure to use camelCase consistently
     int totalFrame;
@@ -43,7 +43,7 @@ public class screwDriver : ISprite
         }
     }
 
-    public void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically)
+    public void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically)
     {
 
         SpriteEffects spriteEffects = SpriteEffects.None;
