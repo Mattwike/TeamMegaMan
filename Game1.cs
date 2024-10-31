@@ -97,8 +97,10 @@ namespace Project1
             levelLoader = new LevelLoader();
             levelParser = new LevelParser();
 
+            string levelPath = Path.Combine("Levels", "Level1.txt");
+
             // Load the level data
-            List<string> levelData = levelLoader.LoadLevel("Content/Levels/Level1.txt");
+            List<string> levelData = levelLoader.LoadLevel(levelPath);
 
             // Parse the level data to create blocks
             levelParser.ParseLevel(levelData);

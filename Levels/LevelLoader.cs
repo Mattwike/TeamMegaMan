@@ -1,14 +1,6 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
-
-using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Project1.Interfaces;
-using Project1.SpriteFactories;
-using Project1.GameObjects;
-
 
 namespace Project1.Levels
 {
@@ -18,7 +10,16 @@ namespace Project1.Levels
         {
             List<string> levelData = new List<string>();
 
-            using (StreamReader reader = new StreamReader(filePath))
+            // Get the full path to the file relative to the executable
+            string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filePath);
+
+            if (!File.Exists(fullPath))
+            {
+                Console.WriteLine($"Level file not found: {fullPath}");
+                throw new FileNotFoundException("Level file not found.", fullPath);
+            }
+
+            using (StreamReader reader = new StreamReader(fullPath))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)

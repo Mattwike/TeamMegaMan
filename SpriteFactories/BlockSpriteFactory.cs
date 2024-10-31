@@ -20,12 +20,12 @@ namespace Project1.SpriteFactories
 
         public void LoadAllTextures(ContentManager content)
         {
-            blockSheet = content.Load<Texture2D>("megamanBlocks");
+            blockSheet = content.Load<Texture2D>("megamanblocks2");
 
             // Define the source rectangles based on the positions of the sprites in your texture atlas
-            floorEndLeftSource = new Rectangle(0, 0, 16, 16);  // Adjust the coordinates accordingly
-            floorMiddleSource = new Rectangle(16, 0, 16, 16);   // Adjust the coordinates accordingly
-            floorEndRightSource = new Rectangle(32, 0, 16, 16); // Adjust the coordinates accordingly
+            floorEndLeftSource = new Rectangle(77, 1, 16, 16);  
+            floorMiddleSource = new Rectangle(94, 1, 16, 16);   
+            floorEndRightSource = new Rectangle(111, 1, 16, 16); 
 
             // Add source rectangles for other block types as needed
         }
