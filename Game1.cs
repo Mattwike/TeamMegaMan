@@ -48,6 +48,8 @@ namespace Project1
         {
             // TODO: Add your initialization logic here
             camera = new Camera(GraphicsDevice.Viewport);
+            
+
             Texture2D SniperJoeSheet;
             SniperJoeSheet = Content.Load<Texture2D>("enemy");
             movementSpeed = 3;
@@ -126,7 +128,7 @@ namespace Project1
                 pellet.Update(gameTime);
             }
 
-            camera.Position = new Vector2(megaman.x, megaman.y);
+            camera.Position = new Vector2(megaman.x, camera.Position.Y);
 
             base.Update(gameTime);
         }

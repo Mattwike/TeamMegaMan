@@ -11,10 +11,12 @@ public class Camera
     {
         view = port;
         Position = Vector2.Zero;
+        
     }
 
     public Matrix GetTransform()
     {
+        
         return Matrix.CreateTranslation(-Position.X + (view.Width / 2), -Position.Y + (view.Height / 2), 0f);
     }
 
