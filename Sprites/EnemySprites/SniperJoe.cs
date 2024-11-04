@@ -207,7 +207,6 @@ public class SniperJoe : IEnemySprite
         destinationRectangle.Width = enemySizeX;
         destinationRectangle.Height = enemySizeY;
 
-        _spriteBatch.Begin();
         _spriteBatch.Draw(enemySheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
 
         // Draw each projectile
@@ -216,6 +215,5 @@ public class SniperJoe : IEnemySprite
             projectile.Draw(_spriteBatch, false, false);  // No flipping required for projectiles
         }
 
-        _spriteBatch.End();
     }
 }

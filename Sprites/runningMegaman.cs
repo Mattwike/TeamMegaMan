@@ -69,9 +69,7 @@ namespace Project1.Sprites
                 MegamanBox = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX - 3, megamanSizeY);
             }
 
-            _spriteBatch.Begin();
             _spriteBatch.Draw(megaManSheet, MegamanBox, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
-            _spriteBatch.End();
 
         }
 

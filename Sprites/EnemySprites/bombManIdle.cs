@@ -79,8 +79,6 @@ public class bombManIdle : IEnemySprite
             sourceRectangle = new Rectangle(0, 21, 28, 41);
         }
 
-        _spriteBatch.Begin();
         _spriteBatch.Draw(enemySheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
-        _spriteBatch.End();
     }
 }

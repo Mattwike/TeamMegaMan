@@ -92,8 +92,6 @@ public class screwDriver : IEnemySprite
             sourceRectangle = new Rectangle(189, 250, 18, 18);
         }
 
-        _spriteBatch.Begin();
         _spriteBatch.Draw(enemySheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
-        _spriteBatch.End();
     }
 }

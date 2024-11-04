@@ -137,7 +137,6 @@ public class Mambu : IEnemySprite
         if (flipVertically)
             spriteEffects |= SpriteEffects.FlipVertically;
 
-        spriteBatch.Begin();
 
         // Define the destination rectangle where the sprite will be drawn on the screen
         Rectangle destinationRectangle = new Rectangle((int)x, (int)y, width, height);
@@ -151,7 +150,6 @@ public class Mambu : IEnemySprite
             projectile.Draw(spriteBatch, false, false);
         }
 
-        spriteBatch.End();
     }
 
     // Method to shoot 8 projectiles in a circular pattern, using locked position for centralized origin

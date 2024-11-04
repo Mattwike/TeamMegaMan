@@ -81,9 +81,7 @@ public class Bombomb : IEnemySprite
             Rectangle destinationRectangle = new Rectangle((int)x, (int)y, bombombFrames[currentFrame].Width, bombombFrames[currentFrame].Height);
             Rectangle sourceRectangle = bombombFrames[currentFrame];
 
-            _spriteBatch.Begin();
             _spriteBatch.Draw(bombombSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
-            _spriteBatch.End();
         }
 
         // Draw all projectiles regardless of Bombomb's visibility

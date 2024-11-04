@@ -14,6 +14,8 @@ namespace Project1
 {
     public class Game1 : Game
     {
+        Camera camera;
+
         private KeyboardController _keyboardController;
         private MouseController _mouseController;
         private List<ISprite> sprites;  // Keeping this for future use if needed
@@ -45,6 +47,7 @@ namespace Project1
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            camera = new Camera(GraphicsDevice.Viewport);
             Texture2D SniperJoeSheet;
             SniperJoeSheet = Content.Load<Texture2D>("enemy");
             movementSpeed = 3;
@@ -123,12 +126,16 @@ namespace Project1
                 pellet.Update(gameTime);
             }
 
+            camera.Position = new Vector2(megaman.x, megaman.y);
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);  // Clear the screen
+
+            _spriteBatch.Begin(transformMatrix: camera.GetTransform());
 
             // Draw MegaMan and displayed enemy as before
             megaman.Draw(_spriteBatch, movementSpeed);
@@ -143,6 +150,9 @@ namespace Project1
             {
                 pellet.Draw(_spriteBatch, movementSpeed);
             }
+
+            _spriteBatch.End();
+
             // Draw Bombomb directly
             //bombomb.Draw(_spriteBatch, false, false);  // Draw Bombomb without flipping
 

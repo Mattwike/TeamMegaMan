@@ -62,9 +62,7 @@ namespace Project1.Sprites
                 sourceRectangle = new Rectangle(32, 81, 16, 29);
             }
 
-            _spriteBatch.Begin();
             _spriteBatch.Draw(megaManSheet, MegamanBox, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
-            _spriteBatch.End();
         }
 
         public Rectangle getRectangle()
