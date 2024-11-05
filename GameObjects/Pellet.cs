@@ -46,6 +46,10 @@ namespace Project1.GameObjects
         {
             return State.getRectangle();
         }
+        public void changeColor()
+        {
+            
+        }
 
     }
 }

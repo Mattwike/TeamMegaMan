@@ -20,6 +20,7 @@ public class BombombProjectile : IEnemySprite
     int delayMax;
 
     public Rectangle hitbox;
+    public int health;
 
     public BombombProjectile(Texture2D texture, float startX, float startY, int screenWidth, float speedX)
     {
@@ -100,5 +101,13 @@ public class BombombProjectile : IEnemySprite
     public Rectangle getRectangle()
     {
         return hitbox;
+    }
+    public int GetHealth()
+    {
+        return health;
+    }
+    public void TakeDamage()
+    {
+        health -= 10;
     }
 }

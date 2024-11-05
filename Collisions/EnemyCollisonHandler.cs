@@ -56,16 +56,12 @@ namespace Project1.Collisions
         public void handlePelletCollision(Pellet pellet)
         {
             
-
             CollisionDirection collisionDirection = CollisionDetector.DetectCollisionType(pellet.getRectangle(), sniperjoe.getRectangle());
             CollisionDirection Direction = collisionDirection;
             if (Direction != CollisionDirection.None)
             {
-                pellet.x = -1000;
-                while (true)
-                {
-
-                }
+                pellet.y = -1000;
+                sniperjoe.TakeDamage();
 
             }
         }

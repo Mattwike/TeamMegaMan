@@ -29,6 +29,7 @@ public class BombManThrowBomb : IEnemySprite
     private float bombSpeed = 5f;
 
     public Rectangle hitbox;
+    public int health;
 
     public BombManThrowBomb(Texture2D texture)
     {
@@ -201,5 +202,13 @@ public class BombManThrowBomb : IEnemySprite
     public Rectangle getRectangle()
     {
         return hitbox;
+    }
+    public int GetHealth()
+    {
+        return health;
+    }
+    public void TakeDamage()
+    {
+        health -= 10;
     }
 }
