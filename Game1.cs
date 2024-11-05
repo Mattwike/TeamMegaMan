@@ -9,7 +9,6 @@ using Project1.Collisions;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
 
-
 namespace Project1
 {
     public class Game1 : Game
@@ -26,11 +25,13 @@ namespace Project1
         private Floor wall;
         private Floor Ceiling;
 
+        private Bombomb bombomb;  // Added: Bombomb field for testing
+
         float movementSpeed;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        int height;
+        int keight;
         int width;
         int interval = 0;
 
@@ -46,10 +47,8 @@ namespace Project1
         {
             // TODO: Add your initialization logic here
 
-            movementSpeed = 3;
 
-            width = _graphics.PreferredBackBufferWidth / 2;
-            height = _graphics.PreferredBackBufferHeight / 2;
+            movementSpeed = 3;
 
             _mouseController = new MouseController();
 
@@ -58,7 +57,6 @@ namespace Project1
             EnemySpriteFactory.Instance.LoadAllTextures(Content);
             pelletSpriteFactory.Instance.LoadAllTextures(Content);
             pelletSpriteFactory.Instance.CreatePellet();
-
             //load Block Textures
             BlockSpriteFactory.Instance.LoadAllTextures(Content);
             Vector2 floorPos = new Vector2(0, 180);
@@ -72,19 +70,22 @@ namespace Project1
 
 
             // Initialize the displayed enemy
+
             displayedEnemy = new GenericEnemy();
             displayedEnemy.Initialize(_graphics, 30, 40);
 
             // Initialize the MegaMan character
             megaman = new Megaman();
             megaman.Initialize(_graphics, movementSpeed, 40, interval);
-
             megaman.x = 0;
             megaman.y = 100;
+            // Create Bombomb using the factory method
+            bombomb = (Bombomb)EnemySpriteFactory.Instance.CreateBombomb();  // Use factory method to create Bombomb
+            bombomb.Initialize(_graphics, movementSpeed, 40);  // Initialize Bombomb with movement speed and size
 
+            // Initialize controllers as before
             _keyboardController = new KeyboardController(this,  megaman, displayedEnemy, pellets);
             _keyboardController.Initialize();
-            _mouseController.Initialize(height, width);
 
             base.Initialize();
         }
@@ -115,6 +116,10 @@ namespace Project1
                 pellet.Update(gameTime);
             }
 
+            // Update Bombomb directly
+            bombomb.Update(gameTime);  // Update Bombomb each frame
+           
+
             base.Update(gameTime);
         }
 
@@ -124,7 +129,6 @@ namespace Project1
 
             // Draw MegaMan and displayed enemy as before
             megaman.Draw(_spriteBatch, movementSpeed);
-            displayedEnemy.Draw(_spriteBatch);
             floor.Draw(_spriteBatch);
             floor2.Draw(_spriteBatch);
             wall.Draw(_spriteBatch);
@@ -137,6 +141,7 @@ namespace Project1
             // Draw Bombomb directly
             //bombomb.Draw(_spriteBatch, false, false);  // Draw Bombomb without flipping
 
+            displayedEnemy.Draw(_spriteBatch);
             base.Draw(gameTime);
         }
     }
