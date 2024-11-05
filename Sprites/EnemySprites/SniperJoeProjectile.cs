@@ -18,6 +18,7 @@ public class SniperJoeProjectile : IEnemySprite
 	int delayMax;
 
 	public Rectangle hitbox;
+	public int health;
 
 	public SniperJoeProjectile(Texture2D texture, float startX, float startY, int screenWidth)
 	{
@@ -96,5 +97,13 @@ public class SniperJoeProjectile : IEnemySprite
     public Rectangle getRectangle()
     {
         return hitbox;
+    }
+    public int GetHealth()
+    {
+        return health;
+    }
+    public void TakeDamage()
+    {
+        health -= 10;
     }
 }

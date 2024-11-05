@@ -14,6 +14,7 @@ public class bombManIdle : IEnemySprite
     int enemySizeX;
     int enemySizeY;
     public Rectangle hitbox;
+    public int health;
     public bombManIdle(Texture2D texture)
     {
         enemySheet = texture;
@@ -89,5 +90,13 @@ public class bombManIdle : IEnemySprite
     public Rectangle getRectangle()
     {
         return hitbox;
+    }
+    public int GetHealth()
+    {
+        return health;
+    }
+    public void TakeDamage()
+    {
+        health -= 10;
     }
 }

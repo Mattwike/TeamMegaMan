@@ -30,6 +30,7 @@ public class Mambu : IEnemySprite
     private int movementSpeed = 2;  // Movement speed for Mambu
 
     public Rectangle hitbox;
+    public int health;
 
     // Constructor to initialize Mambu with its texture
     public Mambu(Texture2D texture)
@@ -187,5 +188,13 @@ public class Mambu : IEnemySprite
     public Rectangle getRectangle()
     {
         return hitbox;
+    }
+    public int GetHealth()
+    {
+        return health;
+    }
+    public void TakeDamage()
+    {
+        health -= 10;
     }
 }

@@ -97,5 +97,6 @@ namespace Project1.Sprites
         {
             return hitbox;
         }
+        
     }
 }

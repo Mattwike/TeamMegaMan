@@ -25,6 +25,10 @@ public class SniperJoe : IEnemySprite
     public Rectangle SniperJoeBox;
     public bool istouchingfloor;
 
+    public Rectangle hitbox;
+    public int health;
+    bool isVisible = true;
+
     private int screenWidth;  // Screen width to manage projectile boundaries
 
     // Constructor with only the texture parameter, like the other enemy classes
@@ -45,6 +49,7 @@ public class SniperJoe : IEnemySprite
         isFalling = false;  // Initially, Sniper Joe is not falling
         justLanded = false;  // Track when Sniper Joe just landed
         hasShot = false;  // Track if Sniper Joe has already shot during frame 3
+        health = 100;
 
         // Load default textures and settings
         projectileTexture = texture;  // Here you would load a default projectile texture if available
@@ -62,7 +67,19 @@ public class SniperJoe : IEnemySprite
     public void Update(GameTime gameTime)
     {
 
-        SniperJoeBox = new Rectangle((int) x, (int) y, 26, 24);
+        if (health <= 0)
+        {
+            isVisible = false;
+        }
+        if (!isVisible)
+        {
+            return;
+        }
+        SniperJoeBox = new Rectangle((int)x, (int)y, 26, 24);
+        hitbox.X = (int)x;
+        hitbox.Y = (int)y;
+        hitbox.Width = 26;
+        hitbox.Height = 24;    
 
         // Check if Sniper Joe is in the third frame (index 2), and initiate the jump
         if (currentFrame == 3 && !isJumping && !isFalling && !justLanded)
@@ -161,6 +178,10 @@ public class SniperJoe : IEnemySprite
 
     public void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically)
     {
+        if (!isVisible)
+        {
+            return;
+        }
         SpriteEffects spriteEffects = SpriteEffects.None;
 
         if (flipHorizontally)
@@ -218,4 +239,14 @@ public class SniperJoe : IEnemySprite
     {
         return this.SniperJoeBox;
     }
+
+    public int GetHealth()
+    {
+        return health;
+    }
+    public void TakeDamage()
+    {
+        health -= 10;
+    }
 }
+
