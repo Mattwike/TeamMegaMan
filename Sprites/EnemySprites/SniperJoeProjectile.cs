@@ -17,6 +17,8 @@ public class SniperJoeProjectile : IEnemySprite
 	int delayCounter;
 	int delayMax;
 
+	public Rectangle hitbox;
+
 	public SniperJoeProjectile(Texture2D texture, float startX, float startY, int screenWidth)
 	{
 		projectileSheet = texture;
@@ -90,4 +92,9 @@ public class SniperJoeProjectile : IEnemySprite
 		// Check if the projectile is off-screen based on screen width
 		return x < 0 || x > screenWidth;  // Remove the projectile when it goes off the left or right of the screen
 	}
+
+    public Rectangle getRectangle()
+    {
+        return hitbox;
+    }
 }

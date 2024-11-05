@@ -26,6 +26,8 @@ public class Octopus : IEnemySprite
     private Rectangle[] frames;  // Array of rectangles for animation frames
     private int movementRange;  // Movement range for back-and-forth motion
 
+    public Rectangle hitbox;
+
     // Constructor to initialize Octopus with its texture
     public Octopus(Texture2D texture)
     {
@@ -142,6 +144,10 @@ public class Octopus : IEnemySprite
         // Draw the sprite using its texture and current frame rectangle
         spriteBatch.Draw(enemyTexture, destinationRectangle, frames[currentFrame], Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
 
+    }
+    public Rectangle getRectangle()
+    {
+        return hitbox;
     }
 }
 

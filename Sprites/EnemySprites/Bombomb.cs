@@ -24,6 +24,8 @@ public class Bombomb : IEnemySprite
 
     Rectangle[] bombombFrames;
 
+    public Rectangle hitbox;
+
     public Bombomb(Texture2D texture, float startX, float startY)
     {
         bombombSheet = texture;
@@ -49,6 +51,11 @@ public class Bombomb : IEnemySprite
         delayCounter = 0;
         delayMax = 10;  // Adjust frame rate as needed
         projectiles = new List<BombombProjectile>();
+
+        hitbox.X = (int)x;
+        hitbox.Y = (int)y;
+        //hitbox.Width = 
+
     }
 
     public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int size)
@@ -59,6 +66,8 @@ public class Bombomb : IEnemySprite
         hasExploded = false;
         isVisible = true; // Make Bombomb visible when initialized
         projectiles.Clear();  // Clear any existing projectiles
+
+        
     }
 
     public void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically)
@@ -162,5 +171,9 @@ public class Bombomb : IEnemySprite
         isJumping = true;
         hasExploded = false;
         isVisible = true;  // Make Bombomb visible again
+    }
+    public Rectangle getRectangle()
+    {
+        return hitbox;
     }
 }

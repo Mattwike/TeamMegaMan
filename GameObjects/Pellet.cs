@@ -42,5 +42,10 @@ namespace Project1.GameObjects
             State.Draw(_spriteBatch, movementSpeed);
         }
 
+        public Rectangle getRectangle()
+        {
+            return State.getRectangle();
+        }
+
     }
 }

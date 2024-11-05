@@ -12,6 +12,7 @@ public class screwDriver : IEnemySprite
     private Texture2D enemySheet;
     int enemySizeX;
     int enemySizeY;
+    public Rectangle hitbox;
     public screwDriver(Texture2D texture)
     {
         enemySheet = texture;
@@ -93,5 +94,9 @@ public class screwDriver : IEnemySprite
         }
 
         _spriteBatch.Draw(enemySheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
+    }
+    public Rectangle getRectangle()
+    {
+        return hitbox;
     }
 }

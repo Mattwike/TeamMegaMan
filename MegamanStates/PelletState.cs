@@ -33,5 +33,10 @@ namespace Project1.States.MegamanState
 
             Sprite.Draw(_spriteBatch, movementSpeed, false, false);
         }
+
+        public Rectangle getRectangle()
+        {
+            return Sprite.getRectangle();
+        }
     }
 }

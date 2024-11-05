@@ -14,6 +14,7 @@ namespace Project1.Interfaces
 
         void Draw(SpriteBatch _spriteBatch, float movementSpeed);
 
+        public Rectangle getRectangle();
 
 
     }
