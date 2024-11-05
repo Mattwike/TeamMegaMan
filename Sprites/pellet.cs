@@ -16,6 +16,7 @@ namespace Project1.Sprites
         private Megaman megaman;
         int interval;
         bool isRight;
+        Rectangle hitbox;
 
         public pellet(Texture2D texture)
         {
@@ -32,13 +33,18 @@ namespace Project1.Sprites
             if (isRight)
             {
                 pelletX = (int)Megaman.x + 20 + megamanSize / 2;
+                hitbox.X = pelletX;
             }
             else
             {
                 pelletX = (int)Megaman.x - 20 + megamanSize / 2;
+                hitbox.X= pelletX;
             }
 
             pelletY = (int)Megaman.y + 12;
+            hitbox.Y = pelletY;
+            hitbox.Width = 10;
+            hitbox.Height = 10;
             this.isRight = isRight;
 
         }
@@ -48,10 +54,12 @@ namespace Project1.Sprites
             if (isRight)
             {
                 pelletX += 5;
+                hitbox.X += 5;
             }
             else
             {
                 pelletX -= 5;
+                hitbox.X -= 5;
             }
 
         }
@@ -87,7 +95,7 @@ namespace Project1.Sprites
         }
         public Rectangle getRectangle()
         {
-            return new Rectangle();
+            return hitbox;
         }
     }
 }

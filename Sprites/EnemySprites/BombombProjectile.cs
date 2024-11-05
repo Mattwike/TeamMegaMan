@@ -19,6 +19,8 @@ public class BombombProjectile : IEnemySprite
     int delayCounter;
     int delayMax;
 
+    public Rectangle hitbox;
+
     public BombombProjectile(Texture2D texture, float startX, float startY, int screenWidth, float speedX)
     {
         projectileSheet = texture;
@@ -94,5 +96,9 @@ public class BombombProjectile : IEnemySprite
     {
         // Check if the projectile is off-screen based on screen width and height
         return x < 0 || x > screenWidth || y > 300;  // Make sure y > screenHeight to detect bottom screen boundary
+    }
+    public Rectangle getRectangle()
+    {
+        return hitbox;
     }
 }

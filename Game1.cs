@@ -118,12 +118,13 @@ namespace Project1
             sniperjoe.Update(gameTime);
             displayedEnemy.Update(gameTime);
             CollidionHandler.HandleMegamanCollisions(megaman, blockList);
-            CollidionHandler.HandleEnemyCollisions(sniperjoe, blockList);
+            CollidionHandler.HandleEnemyCollisions(sniperjoe, blockList, pellets);
 
 
             foreach (var pellet in pellets)
             {
                 pellet.Update(gameTime);
+                //CollidionHandler.HandleMegamanPelletCollisions(pellet, sniperjoe);
             }
 
             camera.Position = new Vector2(megaman.x, megaman.y);

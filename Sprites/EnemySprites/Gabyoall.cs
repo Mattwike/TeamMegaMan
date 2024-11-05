@@ -20,6 +20,8 @@ using Microsoft.Xna.Framework.Graphics;
         private Rectangle[] frames;  // Array of rectangles for animation frames
         private int movementRange;  // Movement range for back-and-forth motion
 
+    public Rectangle hitbox;
+
         // Constructor to initialize Gabyoall with its texture
         public Gabyoall(Texture2D texture)
         {
@@ -105,5 +107,9 @@ using Microsoft.Xna.Framework.Graphics;
             spriteBatch.Draw(enemyTexture, destinationRectangle, frames[currentFrame], Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
 
         }
+    public Rectangle getRectangle()
+    {
+        return hitbox;
     }
+}
 

@@ -25,6 +25,8 @@ public class SniperJoe : IEnemySprite
     public Rectangle SniperJoeBox;
     public bool istouchingfloor;
 
+    public Rectangle hitbox;
+
     private int screenWidth;  // Screen width to manage projectile boundaries
 
     // Constructor with only the texture parameter, like the other enemy classes
@@ -215,5 +217,9 @@ public class SniperJoe : IEnemySprite
             projectile.Draw(_spriteBatch, false, false);  // No flipping required for projectiles
         }
 
+    }
+    public Rectangle getRectangle()
+    {
+        return hitbox;
     }
 }

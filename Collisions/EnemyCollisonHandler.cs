@@ -11,6 +11,7 @@ using Project1.Commands;
 using Project1.Collision;
 using Project1.Enum;
 using Project1.CollisionEffects;
+using Project1.Sprites;
 
 namespace Project1.Collisions
 {
@@ -51,6 +52,22 @@ namespace Project1.Collisions
                 sniperjoe.istouchingfloor = false;
             }
 
+        }
+        public void handlePelletCollision(Pellet pellet)
+        {
+            
+
+            CollisionDirection collisionDirection = CollisionDetector.DetectCollisionType(pellet.getRectangle(), sniperjoe.getRectangle());
+            CollisionDirection Direction = collisionDirection;
+            if (Direction != CollisionDirection.None)
+            {
+                pellet.x = -1000;
+                while (true)
+                {
+
+                }
+
+            }
         }
 
     }

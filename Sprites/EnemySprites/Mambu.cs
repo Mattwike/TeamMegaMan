@@ -29,6 +29,8 @@ public class Mambu : IEnemySprite
     private float projectileSpeed = 2f;  // Speed of the projectiles
     private int movementSpeed = 2;  // Movement speed for Mambu
 
+    public Rectangle hitbox;
+
     // Constructor to initialize Mambu with its texture
     public Mambu(Texture2D texture)
     {
@@ -181,5 +183,9 @@ public class Mambu : IEnemySprite
             // Add the projectile to the projectiles list
             projectiles.Add(projectile);
         }
+    }
+    public Rectangle getRectangle()
+    {
+        return hitbox;
     }
 }
