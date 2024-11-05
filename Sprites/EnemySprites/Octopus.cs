@@ -27,6 +27,7 @@ public class Octopus : IEnemySprite
     private int movementRange;  // Movement range for back-and-forth motion
 
     public Rectangle hitbox;
+    public int health;
 
     // Constructor to initialize Octopus with its texture
     public Octopus(Texture2D texture)
@@ -148,6 +149,14 @@ public class Octopus : IEnemySprite
     public Rectangle getRectangle()
     {
         return hitbox;
+    }
+    public int GetHealth()
+    {
+        return health;
+    }
+    public void TakeDamage()
+    {
+        health -= 10;
     }
 }
 

@@ -13,6 +13,8 @@ public class screwDriver : IEnemySprite
     int enemySizeX;
     int enemySizeY;
     public Rectangle hitbox;
+    public int health;
+
     public screwDriver(Texture2D texture)
     {
         enemySheet = texture;
@@ -98,5 +100,13 @@ public class screwDriver : IEnemySprite
     public Rectangle getRectangle()
     {
         return hitbox;
+    }
+    public int GetHealth()
+    {
+        return health;
+    }
+    public void TakeDamage()
+    {
+        health -= 10;
     }
 }

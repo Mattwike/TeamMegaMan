@@ -25,6 +25,7 @@ public class Bombomb : IEnemySprite
     Rectangle[] bombombFrames;
 
     public Rectangle hitbox;
+    public int health;
 
     public Bombomb(Texture2D texture, float startX, float startY)
     {
@@ -175,5 +176,13 @@ public class Bombomb : IEnemySprite
     public Rectangle getRectangle()
     {
         return hitbox;
+    }
+    public int GetHealth()
+    {
+        return health;
+    }
+    public void TakeDamage()
+    {
+        health -= 10;
     }
 }

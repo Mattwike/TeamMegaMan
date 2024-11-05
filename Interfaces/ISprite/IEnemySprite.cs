@@ -13,4 +13,7 @@ public interface IEnemySprite
 
     public Rectangle getRectangle();
 
+    public void TakeDamage();
+
+    public int GetHealth();
 }

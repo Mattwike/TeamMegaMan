@@ -19,6 +19,7 @@ public class jumpingFlea : IEnemySprite
     bool jumping;
     bool falling;
     public Rectangle hitbox;
+    public int health;
 
     public jumpingFlea(Texture2D texture)
     {
@@ -136,5 +137,13 @@ public class jumpingFlea : IEnemySprite
     public Rectangle getRectangle()
     {
         return hitbox;
+    }
+    public int GetHealth()
+    {
+        return health;
+    }
+    public void TakeDamage()
+    {
+        health -= 10;
     }
 }
