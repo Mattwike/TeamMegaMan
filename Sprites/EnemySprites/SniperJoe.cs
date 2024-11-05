@@ -21,7 +21,7 @@ public class SniperJoe : IEnemySprite
     public bool isFalling;  // Flag to check if Sniper Joe is falling
     private bool justLanded; // Flag to detect landing and advance the frame
     private bool hasShot;  // Flag to track if a projectile has been shot during frame 3
-    private List<IEnemySprite> projectiles;  // List to store projectiles
+    public List<IEnemySprite> projectiles;  // List to store projectiles
     public Rectangle SniperJoeBox;
     public bool istouchingfloor;
 

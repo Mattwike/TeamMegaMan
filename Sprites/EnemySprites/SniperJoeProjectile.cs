@@ -63,9 +63,9 @@ public class SniperJoeProjectile : IEnemySprite
 		}
 
 		
-		Rectangle destinationRectangle = new Rectangle((int)x, (int)y, projectileSizeX, projectileSizeY);
+		hitbox = new Rectangle((int)x, (int)y, projectileSizeX, projectileSizeY);
 		Rectangle sourceRectangle = projectileFrames[currentFrame];
-		_spriteBatch.Draw(projectileSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
+		_spriteBatch.Draw(projectileSheet, hitbox, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
 		
 	}
 

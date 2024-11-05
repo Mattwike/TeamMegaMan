@@ -110,6 +110,8 @@ namespace Project1
             // Use the keyboard controller to get input and update MegaMan and enemies
             _keyboardController.Update(_graphics, movementSpeed, 40, gameTime);
             List<IBlocks> blockList = new List<IBlocks>();
+            List<IEnemySprite> projectiles = new List<IEnemySprite>();
+            projectiles.AddRange(sniperjoe.projectiles);
             blockList.Add(floor);
             blockList.Add(floor2);
             blockList.Add(wall);
@@ -119,7 +121,7 @@ namespace Project1
             megaman.Update(gameTime);
             sniperjoe.Update(gameTime);
             displayedEnemy.Update(gameTime);
-            CollidionHandler.HandleMegamanCollisions(megaman, blockList);
+            CollidionHandler.HandleMegamanCollisions(megaman, blockList, projectiles);
             CollidionHandler.HandleEnemyCollisions(sniperjoe, blockList, pellets);
 
 

@@ -46,10 +46,6 @@ namespace Project1.Collisions
             if (Direction != CollisionDirection.None)
             {
                 pellet.x = -1000;
-                while (true)
-                {
-
-                }
                 
             }
         }
