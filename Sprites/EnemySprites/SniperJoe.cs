@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-
+//using System.Drawing;
 
 public class SniperJoe : IEnemySprite
 {
@@ -19,8 +19,8 @@ public class SniperJoe : IEnemySprite
     private int enemySizeY;  // Height of Sniper Joe's sprite
     public bool isJumping;  // Flag to check if Sniper Joe is jumping
     public bool isFalling;  // Flag to check if Sniper Joe is falling
-    private bool hasShot;  // Flag to track if a projectile has been shot during frame 3
     private bool justLanded; // Flag to detect landing and advance the frame
+    private bool hasShot;  // Flag to track if a projectile has been shot during frame 3
     private List<IEnemySprite> projectiles;  // List to store projectiles
     public Rectangle SniperJoeBox;
     public bool istouchingfloor;
@@ -35,8 +35,8 @@ public class SniperJoe : IEnemySprite
     public SniperJoe(Texture2D texture)
     {
         enemySheet = texture;
-        x = 0;  // Set the starting x position of Sniper Joe
-        y = 130;  // Set the starting y position of Sniper Joe
+        x = 200;  // Set the starting x position of Sniper Joe
+        y = 150;  // Set the starting y position of Sniper Joe
         initialY = y;  // Set the initial Y for jumping reference
         gravity = 4.5f;  // Set the gravity for the jump
         currentFrame = 0;
@@ -66,6 +66,7 @@ public class SniperJoe : IEnemySprite
 
     public void Update(GameTime gameTime)
     {
+
         if (health <= 0)
         {
             isVisible = false;
@@ -78,18 +79,14 @@ public class SniperJoe : IEnemySprite
         hitbox.X = (int)x;
         hitbox.Y = (int)y;
         hitbox.Width = 26;
-        hitbox.Height = 24;
+        hitbox.Height = 24;    
+
         // Check if Sniper Joe is in the third frame (index 2), and initiate the jump
         if (currentFrame == 3 && !isJumping && !isFalling && !justLanded)
         {
             // Start the jump on the third frame
             isJumping = true;
             gravity = 4.5f;  // Reset gravity for the jump
-        }
-
-        if (!isJumping && !istouchingfloor)
-        {
-            y += gravity;
         }
 
         // Handle jumping
@@ -110,15 +107,17 @@ public class SniperJoe : IEnemySprite
         // Handle falling back down
         else if (isFalling)
         {
-            if (!istouchingfloor)
+            if (y < initialY)
             {
+                y += gravity;  // Move Sniper Joe down
                 gravity += 0.25f;  // Increase gravity to simulate speeding up while falling
             }
             else
             {
+                y = initialY;  // Reset to the ground level
                 isFalling = false;
                 justLanded = true;  // Mark that Sniper Joe just landed
-                istouchingfloor = false;
+                gravity = 4.5f;  // Reset gravity for the next jump
             }
         }
 
@@ -227,7 +226,6 @@ public class SniperJoe : IEnemySprite
         // Set the destination rectangle size based on the current frame's size
         destinationRectangle.Width = enemySizeX;
         destinationRectangle.Height = enemySizeY;
-
         _spriteBatch.Draw(enemySheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
 
         // Draw each projectile
@@ -235,12 +233,13 @@ public class SniperJoe : IEnemySprite
         {
             projectile.Draw(_spriteBatch, false, false);  // No flipping required for projectiles
         }
-
     }
+
     public Rectangle getRectangle()
     {
-        return hitbox;
+        return this.SniperJoeBox;
     }
+
     public int GetHealth()
     {
         return health;
@@ -250,3 +249,4 @@ public class SniperJoe : IEnemySprite
         health -= 10;
     }
 }
+
