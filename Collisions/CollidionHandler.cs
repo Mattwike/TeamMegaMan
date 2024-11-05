@@ -33,5 +33,15 @@ namespace Project1.Collisions
 				handler.handleBlockCollision(block);
 			}
 		}
-	}
+
+        public static void HandleEnemyCollisions(SniperJoe sniperjoe, List<IBlocks> blocklist)
+        {
+            EnemyCollisonHandler handler = new EnemyCollisonHandler(sniperjoe);
+
+            foreach (IBlocks block in blocklist)
+            {
+                handler.handleBlockCollision(block);
+            }
+        }
+    }
 }

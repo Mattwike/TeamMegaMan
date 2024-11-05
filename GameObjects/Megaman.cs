@@ -21,8 +21,9 @@ namespace Project1.GameObjects
         public bool is_falling = false;
         public bool is_climbing = false;
         public bool reached_top = false;
+        private float origionalx;
+        private float origionaly;
         //private bool is_damaged = false;
-        public float initialY;
         public float gravity = 4.5f;
         public int MegamanSize;
         public Rectangle MegamanBox;
@@ -50,6 +51,18 @@ namespace Project1.GameObjects
         public void SetDirection(bool isFacingLeft)
         {
             isfacingLeft = isFacingLeft;
+        }
+
+        public void reachedCheckpoint()
+        {
+            origionalx = x;
+            origionaly = y;
+        }
+
+        public void reset()
+        {
+            x = origionalx;
+            y = origionaly;
         }
 
         public void ChangeDirection()
@@ -86,7 +99,6 @@ namespace Project1.GameObjects
             if (!is_jumping && !is_falling && pressedKeys.Contains(Keys.Space))
             {
                 is_jumping = true;
-                initialY = y;
                 gravity = 4.5f;
 
             }
@@ -108,7 +120,7 @@ namespace Project1.GameObjects
             {
                 if (!istouchingfloor)
                 {
-                    y += gravity;
+
                     gravity += .25f;
                 }
                 else

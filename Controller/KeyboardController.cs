@@ -59,7 +59,7 @@ public class KeyboardController : IController
         megaman.is_shooting = false;
         megaman.is_damaged = false;
 
-        if (!megaman.is_jumping && !megaman.is_falling && !megaman.istouchingfloor)
+        if (!megaman.is_jumping && !megaman.istouchingfloor)
         {
             megaman.y += megaman.gravity;
         }
@@ -76,10 +76,19 @@ public class KeyboardController : IController
         {
             game.Exit();
         }
+
+        if (pressedKeys.Contains(Keys.R))
+        {
+            megaman.reset();
+        }
         // Check for key presses and execute the corresponding commands
 
         megaman.Jump(pressedKeys);
-        
+
+        if (megaman.is_falling)
+        {
+            commandDict[Keys.D6].Execute(_graphics, movementSpeed, megamanSize, interval);
+        }
 
         if ((megaman.is_jumping || megaman.is_falling) && (Mouse.GetState().LeftButton == ButtonState.Pressed))
         {

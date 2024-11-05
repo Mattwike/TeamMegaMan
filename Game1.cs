@@ -13,11 +13,14 @@ namespace Project1
 {
     public class Game1 : Game
     {
+        Camera camera;
+
         private KeyboardController _keyboardController;
         private MouseController _mouseController;
         private List<ISprite> sprites;  // Keeping this for future use if needed
         List<Pellet> pellets;
         private Megaman megaman;
+        private SniperJoe sniperjoe;
         private GenericEnemy displayedEnemy;
 
         private Floor floor;
@@ -39,18 +42,17 @@ namespace Project1
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
             pellets = new List<Pellet>();
         }
 
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
-
+            camera = new Camera(GraphicsDevice.Viewport);
+            
+            Texture2D SniperJoeSheet;
+            SniperJoeSheet = Content.Load<Texture2D>("enemy");
             movementSpeed = 3;
-
-            _mouseController = new MouseController();
 
             // Load all textures for MegaMan and Enemies
             megaManSpriteFactory.Instance.LoadAllTextures(Content);
@@ -76,14 +78,15 @@ namespace Project1
 
             // Initialize the MegaMan character
             megaman = new Megaman();
-            megaman.Initialize(_graphics, movementSpeed, 40, interval);
+            sniperjoe = new SniperJoe(SniperJoeSheet);
+            sniperjoe.Initialize(_graphics, 30, 40);
             megaman.x = 0;
             megaman.y = 100;
             // Create Bombomb using the factory method
             bombomb = (Bombomb)EnemySpriteFactory.Instance.CreateBombomb();  // Use factory method to create Bombomb
             bombomb.Initialize(_graphics, movementSpeed, 40);  // Initialize Bombomb with movement speed and size
-
-            // Initialize controllers as before
+            
+            megaman.reachedCheckpoint();
             _keyboardController = new KeyboardController(this,  megaman, displayedEnemy, pellets);
             _keyboardController.Initialize();
 
@@ -108,8 +111,11 @@ namespace Project1
 
             // Update Bombomb directly
             megaman.Update(gameTime);
+            sniperjoe.Update(gameTime);
             displayedEnemy.Update(gameTime);
             CollidionHandler.HandleMegamanCollisions(megaman, blockList);
+            CollidionHandler.HandleEnemyCollisions(sniperjoe, blockList);
+
 
             foreach (var pellet in pellets)
             {
@@ -118,7 +124,7 @@ namespace Project1
 
             // Update Bombomb directly
             bombomb.Update(gameTime);  // Update Bombomb each frame
-           
+            camera.Position = new Vector2(megaman.x, camera.Position.Y);
 
             base.Update(gameTime);
         }
@@ -127,8 +133,12 @@ namespace Project1
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);  // Clear the screen
 
+            _spriteBatch.Begin(transformMatrix: camera.GetTransform());
+
             // Draw MegaMan and displayed enemy as before
             megaman.Draw(_spriteBatch, movementSpeed);
+            sniperjoe.Draw(_spriteBatch, false, false);
+            displayedEnemy.Draw(_spriteBatch);
             floor.Draw(_spriteBatch);
             floor2.Draw(_spriteBatch);
             wall.Draw(_spriteBatch);
@@ -138,6 +148,9 @@ namespace Project1
             {
                 pellet.Draw(_spriteBatch, movementSpeed);
             }
+
+            _spriteBatch.End();
+
             // Draw Bombomb directly
             //bombomb.Draw(_spriteBatch, false, false);  // Draw Bombomb without flipping
 

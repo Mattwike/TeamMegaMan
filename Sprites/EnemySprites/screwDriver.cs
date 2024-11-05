@@ -126,7 +126,6 @@ public class screwDriver : IEnemySprite
             sourceRectangle = new Rectangle(206, 250, 18, 18);  // 4th animation frame (fires here)
         else
             sourceRectangle = new Rectangle(224, 251, 18, 18);  // 5th animation frame (fires here)
-
         // Draw the screwDriver sprite
         _spriteBatch.Begin();  // Begin drawing here to ensure it affects only this section
         _spriteBatch.Draw(enemySheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
@@ -137,5 +136,6 @@ public class screwDriver : IEnemySprite
         {
             projectile.Draw(_spriteBatch, false, false);
         }
+//         _spriteBatch.Draw(enemySheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
     }
 }

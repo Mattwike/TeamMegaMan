@@ -130,8 +130,6 @@ public class jumpingFlea : IEnemySprite
             falling = true;
         }
 
-        _spriteBatch.Begin();
         _spriteBatch.Draw(enemySheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
-        _spriteBatch.End();
     }
 }

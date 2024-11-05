@@ -181,7 +181,6 @@ public class BombManThrowBomb : IEnemySprite
 
 
 
-        _spriteBatch.Begin();
 
         if(bombInAir)
         {
@@ -193,7 +192,6 @@ public class BombManThrowBomb : IEnemySprite
         }
 
         _spriteBatch.Draw(enemySheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
-        _spriteBatch.End();
 
    
     }
