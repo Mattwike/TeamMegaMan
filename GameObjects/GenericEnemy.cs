@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Project1.Interfaces;
-using Project1.Interfaces.IStates;
+
 using Project1.States.MegamanState;
 using System;
 using System.Collections.Generic;
@@ -12,25 +12,54 @@ namespace Project1.GameObjects
     public class GenericEnemy
     {
 
-        public IEnemyState state;
+        private List<IEnemySprite> sprites;
+        public int currentSprite;
 
         public GenericEnemy()
         {
-            state = new JumpingFleaState(this);
+            sprites = new List<IEnemySprite>
+            {
+                EnemySpriteFactory.Instance.CreateScrewDriver(),
+                EnemySpriteFactory.Instance.CreateBombManIdle(),
+                EnemySpriteFactory.Instance.CreateJumpingFlea(),
+                EnemySpriteFactory.Instance.CreateBombManThrowing(),
+                EnemySpriteFactory.Instance.CreateOctopus(),
+                EnemySpriteFactory.Instance.CreateBombManThrowing(),
+                EnemySpriteFactory.Instance.CreateMambu(),
+                EnemySpriteFactory.Instance.CreateGabyoall(),
+                EnemySpriteFactory.Instance.CreateBombomb(),
+                EnemySpriteFactory.Instance.CreateSniperJoe()
+
+            };
+            currentSprite = 0;
 
         }
         public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int Size)
         {
-            state.Initialize(graphics, movementSpeed, Size);
+            foreach (var sprite in sprites)
+            {
+                sprite.Initialize(graphics, movementSpeed, Size);
+            }
+        }
+
+        public void changeSprite(bool forward)
+        {
+            if (forward && currentSprite < sprites.Count - 1)
+            {
+                currentSprite++;
+            }else if(!forward && currentSprite > 0)
+            {
+                currentSprite--;
+            }
         }
 
         public void Update(GameTime gameTime)
         {
-            state.Update(gameTime);        
+            sprites[currentSprite].Update(gameTime);
         }
         public void Draw(SpriteBatch _spriteBatch)
         {
-            state.Draw(_spriteBatch);
+            sprites[currentSprite].Draw(_spriteBatch, false, false);
         }
 
 

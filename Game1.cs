@@ -4,8 +4,10 @@ using Microsoft.Xna.Framework.Input;
 using Project1.SpriteFactories;
 using Project1.Sprites;
 using Project1.GameObjects;
+using Project1.Interfaces;
+using Project1.Collisions;
 using System.Collections.Generic;
-
+using System.Reflection.Metadata;
 
 namespace Project1
 {
@@ -14,8 +16,14 @@ namespace Project1
         private KeyboardController _keyboardController;
         private MouseController _mouseController;
         private List<ISprite> sprites;  // Keeping this for future use if needed
+        List<Pellet> pellets;
         private Megaman megaman;
         private GenericEnemy displayedEnemy;
+
+        private Floor floor;
+        private Floor floor2;
+        private Floor wall;
+        private Floor Ceiling;
 
         private Bombomb bombomb;  // Added: Bombomb field for testing
 
@@ -23,56 +31,61 @@ namespace Project1
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        int height;
+        int keight;
         int width;
-        int output;
-        int lastOutput;
-        int lastMouseQuad;
-        int mouseQuad;
-        int lastInput;
+        int interval = 0;
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            pellets = new List<Pellet>();
         }
 
         protected override void Initialize()
         {
-            // Initialize values as before
-            output = 1;
-            mouseQuad = 1;
-            lastInput = 1;
+            // TODO: Add your initialization logic here
+
 
             movementSpeed = 3;
-
-            width = _graphics.PreferredBackBufferWidth / 2;
-            height = _graphics.PreferredBackBufferHeight / 2;
 
             _mouseController = new MouseController();
 
             // Load all textures for MegaMan and Enemies
             megaManSpriteFactory.Instance.LoadAllTextures(Content);
             EnemySpriteFactory.Instance.LoadAllTextures(Content);
+            pelletSpriteFactory.Instance.LoadAllTextures(Content);
+            pelletSpriteFactory.Instance.CreatePellet();
+            //load Block Textures
+            BlockSpriteFactory.Instance.LoadAllTextures(Content);
+            Vector2 floorPos = new Vector2(0, 180);
+            Vector2 floorPos2 = new Vector2(200, 180);
+            Vector2 wallpos = new Vector2(250, 160);
+            Vector2 Ceilingpos = new Vector2(200, 100);
+            floor = new Floor(10, floorPos);
+            floor2 = new Floor(10, floorPos2);
+            wall = new Floor(3, wallpos);
+            Ceiling = new Floor(10, Ceilingpos);
+
 
             // Initialize the displayed enemy
+
             displayedEnemy = new GenericEnemy();
             displayedEnemy.Initialize(_graphics, 30, 40);
 
             // Initialize the MegaMan character
             megaman = new Megaman();
-            megaman.Initialize(_graphics, movementSpeed, 40);
-
+            megaman.Initialize(_graphics, movementSpeed, 40, interval);
+            megaman.x = 0;
+            megaman.y = 100;
             // Create Bombomb using the factory method
             bombomb = (Bombomb)EnemySpriteFactory.Instance.CreateBombomb();  // Use factory method to create Bombomb
             bombomb.Initialize(_graphics, movementSpeed, 40);  // Initialize Bombomb with movement speed and size
 
             // Initialize controllers as before
-            _keyboardController = new KeyboardController(this, megaman, displayedEnemy);
+            _keyboardController = new KeyboardController(this,  megaman, displayedEnemy, pellets);
             _keyboardController.Initialize();
-
-            _mouseController.Initialize(height, width);
 
             base.Initialize();
         }
@@ -87,9 +100,25 @@ namespace Project1
         {
             // Use the keyboard controller to get input and update MegaMan and enemies
             _keyboardController.Update(_graphics, movementSpeed, 40, gameTime);
+            List<IBlocks> blockList = new List<IBlocks>();
+            blockList.Add(floor);
+            blockList.Add(floor2);
+            blockList.Add(wall);
+            blockList.Add(Ceiling);
+
+            // Update Bombomb directly
+            megaman.Update(gameTime);
+            displayedEnemy.Update(gameTime);
+            CollidionHandler.HandleMegamanCollisions(megaman, blockList);
+
+            foreach (var pellet in pellets)
+            {
+                pellet.Update(gameTime);
+            }
 
             // Update Bombomb directly
             bombomb.Update(gameTime);  // Update Bombomb each frame
+           
 
             base.Update(gameTime);
         }
@@ -100,11 +129,19 @@ namespace Project1
 
             // Draw MegaMan and displayed enemy as before
             megaman.Draw(_spriteBatch, movementSpeed);
-            displayedEnemy.Draw(_spriteBatch);
+            floor.Draw(_spriteBatch);
+            floor2.Draw(_spriteBatch);
+            wall.Draw(_spriteBatch);
+            Ceiling.Draw(_spriteBatch);
 
+            foreach (var pellet in pellets)
+            {
+                pellet.Draw(_spriteBatch, movementSpeed);
+            }
             // Draw Bombomb directly
-            bombomb.Draw(_spriteBatch, false, false);  // Draw Bombomb without flipping
+            //bombomb.Draw(_spriteBatch, false, false);  // Draw Bombomb without flipping
 
+            displayedEnemy.Draw(_spriteBatch);
             base.Draw(gameTime);
         }
     }

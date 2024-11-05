@@ -15,18 +15,10 @@ namespace Project1.Commands
         {
             this.enemy = enemy;
         }
-        public void Execute(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
+        public void Execute(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
         {
-            if (enemy.state.getID() == 0)
-            {
-                enemy.state = new BombManIdleState(enemy);
-                enemy.Initialize(_graphics, movementSpeed, megamanSize);
-            }
-            else if (enemy.state.getID() == 1)
-            {
-                enemy.state = new ScrewDriverState(enemy);
-                enemy.Initialize(_graphics, movementSpeed, megamanSize);
-            }
+            enemy.changeSprite(true);
+
         }
     }
 }

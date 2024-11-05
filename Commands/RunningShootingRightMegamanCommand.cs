@@ -15,10 +15,10 @@ namespace Project1.Commands
         {
             this.megaman = Megaman;
         }
-        public void Execute(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
+        public void Execute(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
         {
             megaman.State.BeRunningShootingRightMegamanState();
-            megaman.State.Initialize(_graphics, movementSpeed, 40);
+            megaman.State.Initialize(_graphics, movementSpeed, 40, interval);
 
         }
     }
