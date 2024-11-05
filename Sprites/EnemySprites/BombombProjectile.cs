@@ -64,11 +64,9 @@ public class BombombProjectile : IEnemySprite
             spriteEffects |= SpriteEffects.FlipVertically;
         }
 
-        _spriteBatch.Begin();
         Rectangle destinationRectangle = new Rectangle((int)x, (int)y, projectileSizeX, projectileSizeY);
         Rectangle sourceRectangle = projectileFrames[currentFrame];
         _spriteBatch.Draw(projectileSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
-        _spriteBatch.End();
     }
 
     public void Update(GameTime gameTime)

@@ -21,9 +21,7 @@ public class FloorMiddle : IBlock
         Rectangle sourceRect = new Rectangle(68, 479, 16, 16);
         Rectangle destRect = new Rectangle((int)pos.X + blockNum * blockWidth, (int)pos.Y, 16, 16);
 
-        spriteBatch.Begin();
         spriteBatch.Draw(blockSheet, destRect, sourceRect, Color.White);
-        spriteBatch.End();
     }
 
     public void Initialize()

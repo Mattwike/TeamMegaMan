@@ -83,9 +83,7 @@ namespace Project1.Sprites
 
 
 
-            _spriteBatch.Begin();
             _spriteBatch.Draw(pelletSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
-            _spriteBatch.End();
         }
         public Rectangle getRectangle()
         {
