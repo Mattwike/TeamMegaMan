@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Project1.GameObjects;
+//using System.Drawing;
 
 namespace Project1.Sprites
 {
@@ -64,7 +65,7 @@ namespace Project1.Sprites
 
         }
 
-        public void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically)
+        public void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically, Color color)
         {
 
             SpriteEffects spriteEffects = SpriteEffects.None;

@@ -118,7 +118,7 @@ namespace Project1
             blockList.Add(Ceiling);
 
             // Update Bombomb directly
-            megaman.Update(gameTime);
+            megaman.Update(gameTime, interval);
             sniperjoe.Update(gameTime);
             displayedEnemy.Update(gameTime);
             CollidionHandler.HandleMegamanCollisions(megaman, blockList, projectiles);

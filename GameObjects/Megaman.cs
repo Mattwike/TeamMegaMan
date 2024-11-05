@@ -23,6 +23,9 @@ namespace Project1.GameObjects
         public bool reached_top = false;
         private float origionalx;
         private float origionaly;
+        public bool isVulnerable;
+        private double invulnerabilityTimer = 0;
+        private int timeInvunerable = 20000;
         //private bool is_damaged = false;
         public float gravity = 4.5f;
         public int MegamanSize;
@@ -35,6 +38,7 @@ namespace Project1.GameObjects
         private int count = 100;
         public bool istouchingfloor;
         public float velocity = 1f;
+        public Color currentColor = Color.White;
 
         public IMegamanState State;
 
@@ -46,6 +50,7 @@ namespace Project1.GameObjects
         public Megaman()
         {
             State = new IdleMegamanState(this);
+            isVulnerable = true;
         }
 
         public void SetDirection(bool isFacingLeft)
@@ -70,14 +75,54 @@ namespace Project1.GameObjects
             State.ChangeDirection();
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, int interval)
         {
-
-            //MegamanBox = State.getRectangle();
             MegamanBox = new Rectangle((int)x, (int)y, MegamanSize, MegamanSize);
             State.Update(gameTime);
-  
+
+            if (!isVulnerable)
+            {
+                invulnerabilityTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (invulnerabilityTimer >= timeInvunerable)
+                {
+                    isVulnerable = true;
+                    invulnerabilityTimer = 0;
+                }
+                if (!isVulnerable)
+                {
+                    invulnerabilityTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
+
+                    // Toggle color every 100 milliseconds for blinking effect
+                    if ((int)(invulnerabilityTimer / 100) % 2 == 0)
+                    {
+                        currentColor = Color.White;
+                    }
+                    else
+                    {
+                        currentColor = Color.Blue; // Replace with Megaman’s normal color
+                    }
+
+                    if (invulnerabilityTimer >= timeInvunerable * 100)
+                    {
+                        isVulnerable = true;
+                        invulnerabilityTimer = 0;
+                        currentColor = Color.Blue; // Set to Megaman's normal color when vulnerability returns
+                    }
+                }
+            }
         }
+
+        public void TakeDamage()
+        {
+            if (isVulnerable)
+            {
+                isVulnerable = false;
+                invulnerabilityTimer = 0;
+                currentColor = Color.White;
+                //implement damage and damage spritesh
+            }
+        }
+
 
         public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
         {
@@ -89,7 +134,7 @@ namespace Project1.GameObjects
 
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
         {
-            State.Draw(_spriteBatch, movementSpeed);
+            State.Draw(_spriteBatch, movementSpeed, currentColor);
             //floor.Draw(_spriteBatch);
         }
         

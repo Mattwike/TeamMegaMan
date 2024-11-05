@@ -62,15 +62,17 @@ namespace Project1.Collisions
 
         public void handleEnemyCollision(IEnemySprite enemy)
         {
-            enemy = enemy;
+            this.enemy = enemy;
 
             EnemyBox = enemy.getRectangle();
 
             CollisionDirection Direction = CollisionDetector.DetectCollisionType(megaman.MegamanBox, EnemyBox);
-
-            if (collisionDict[typeof(IEnemySprite)].ContainsKey(Direction))
+            if (megaman.isVulnerable)
             {
-                collisionDict[typeof(IEnemySprite)][Direction].Execute();
+                if (collisionDict[typeof(IEnemySprite)].ContainsKey(Direction))
+                {
+                    collisionDict[typeof(IEnemySprite)][Direction].Execute();
+                }
             }
         }
 

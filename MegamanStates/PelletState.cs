@@ -31,7 +31,7 @@ namespace Project1.States.MegamanState
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
         {
 
-            Sprite.Draw(_spriteBatch, movementSpeed, false, false);
+            Sprite.Draw(_spriteBatch, movementSpeed, false, false, Color.White);
         }
 
         public Rectangle getRectangle()

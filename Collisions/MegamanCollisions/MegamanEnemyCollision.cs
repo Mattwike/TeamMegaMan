@@ -26,19 +26,19 @@ namespace Project1.CollisionEffects
 
 		public void Execute()
 		{
-			Rectangle enemyBox = Handler.EnemyBox;
-			CollisionDirection side = CollisionDetector.DetectCollisionType(Handler.megaman.MegamanBox, enemyBox);
+            Rectangle enemyBox = Handler.EnemyBox;
+            CollisionDirection side = CollisionDetector.DetectCollisionType(Handler.megaman.MegamanBox, enemyBox);
 
             if (side == CollisionDirection.Left)
-			{
+            {
                 Handler.megaman.x += 10;
-
+                Handler.megaman.TakeDamage();
             }
-
-			else if(side == CollisionDirection.Right)
-			{
-				Handler.megaman.x -= 10;
+            else if (side == CollisionDirection.Right)
+            {
+                Handler.megaman.x -= 10;
+                Handler.megaman.TakeDamage();
             }
-		}
+        }
 	}
 }
