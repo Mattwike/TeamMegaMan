@@ -23,6 +23,8 @@ public class KeyboardController : IController
     private KeyboardState previousKeyState;
     int interval = 0;
     bool mouseClicked = false;
+    private bool paused = false;
+    private KeyboardState previousKeyboardState;
 
     public KeyboardController(Game1 gameInstance, Megaman megaman, GenericEnemy displayedEnemy, List<Pellet> pellets)
     {
@@ -30,6 +32,30 @@ public class KeyboardController : IController
         this.megaman = megaman;
         this.displayedEnemy = displayedEnemy;
         this.pellets = pellets;
+    }
+
+    public bool isPaused()
+    {
+        KeyboardState keyState = Keyboard.GetState();
+
+        if (keyState.IsKeyDown(Keys.Escape) && previousKeyboardState.IsKeyUp(Keys.Escape))
+        {
+            paused = !paused;
+        }
+
+        previousKeyboardState = keyState;
+
+        return paused;
+    }
+
+    public void checkExit()
+    {
+        KeyboardState keyState = Keyboard.GetState();
+
+        if (keyState.IsKeyDown(Keys.Q))
+        {
+            game.Exit();
+        }
     }
 
     public void Initialize()
@@ -71,11 +97,7 @@ public class KeyboardController : IController
             commandDict[Keys.P].Execute(_graphics, movementSpeed, megamanSize, 0);
         }
         interval++;
-         
-        if (pressedKeys.Contains(Keys.Q))
-        {
-            game.Exit();
-        }
+       
 
         if (pressedKeys.Contains(Keys.R))
         {

@@ -107,33 +107,39 @@ namespace Project1
 
         protected override void Update(GameTime gameTime)
         {
-            // Use the keyboard controller to get input and update MegaMan and enemies
-            _keyboardController.Update(_graphics, movementSpeed, 40, gameTime);
-            List<IBlocks> blockList = new List<IBlocks>();
-            List<IEnemySprite> projectiles = new List<IEnemySprite>();
-            projectiles.AddRange(sniperjoe.projectiles);
-            blockList.Add(floor);
-            blockList.Add(floor2);
-            blockList.Add(wall);
-            blockList.Add(Ceiling);
-
-            // Update Bombomb directly
-            megaman.Update(gameTime, interval);
-            sniperjoe.Update(gameTime);
-            displayedEnemy.Update(gameTime);
-            CollidionHandler.HandleMegamanCollisions(megaman, blockList, projectiles);
-            CollidionHandler.HandleEnemyCollisions(sniperjoe, blockList, pellets);
-
-
-            foreach (var pellet in pellets)
+            if (!_keyboardController.isPaused())
             {
-                pellet.Update(gameTime);
-                //CollidionHandler.HandleMegamanPelletCollisions(pellet, sniperjoe);
+                // Use the keyboard controller to get input and update MegaMan and enemies
+                _keyboardController.Update(_graphics, movementSpeed, 40, gameTime);
+                List<IBlocks> blockList = new List<IBlocks>();
+                List<IEnemySprite> projectiles = new List<IEnemySprite>();
+                projectiles.AddRange(sniperjoe.projectiles);
+                blockList.Add(floor);
+                blockList.Add(floor2);
+                blockList.Add(wall);
+                blockList.Add(Ceiling);
+
+                // Update Bombomb directly
+                megaman.Update(gameTime, interval);
+                sniperjoe.Update(gameTime);
+                displayedEnemy.Update(gameTime);
+                CollidionHandler.HandleMegamanCollisions(megaman, blockList, projectiles);
+                CollidionHandler.HandleEnemyCollisions(sniperjoe, blockList, pellets);
+
+
+                _keyboardController.checkExit();
+
+
+                foreach (var pellet in pellets)
+                {
+                    pellet.Update(gameTime);
+                    //CollidionHandler.HandleMegamanPelletCollisions(pellet, sniperjoe);
+                }
+
+                camera.Position = new Vector2(megaman.x, camera.Position.Y);
+
+                base.Update(gameTime);
             }
-
-            camera.Position = new Vector2(megaman.x, camera.Position.Y);
-
-            base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
