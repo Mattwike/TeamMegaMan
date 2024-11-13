@@ -16,6 +16,8 @@ namespace Project1.Interfaces
 
         public Rectangle getRectangle();
 
+        public void removePellet();
+
 
     }
 }

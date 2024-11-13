@@ -6,7 +6,7 @@ using Project1.GameObjects;
 
 namespace Project1.Sprites
 {
-    public class pellet : ISprite
+    public class pellet : IPelletSprite
     {
 
         int pelletSizeX;
@@ -18,6 +18,7 @@ namespace Project1.Sprites
         int interval;
         bool isRight;
         Rectangle hitbox;
+        bool isVisible = true;
 
         public pellet(Texture2D texture)
         {
@@ -52,6 +53,10 @@ namespace Project1.Sprites
 
         public void Update(GameTime gameTime)
         {
+            if (!isVisible)
+            {
+                return;
+            }
             if (isRight)
             {
                 pelletX += 5;
@@ -67,6 +72,10 @@ namespace Project1.Sprites
 
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically, Color color)
         {
+            if (!isVisible)
+            {
+                return;
+            }
 
             SpriteEffects spriteEffects = SpriteEffects.None;
 
@@ -97,6 +106,12 @@ namespace Project1.Sprites
         public Rectangle getRectangle()
         {
             return hitbox;
+        }
+        public void removePellet()
+        {
+            pelletY += 1000;
+            hitbox.Y += 1000;
+            isVisible = false;
         }
         
     }

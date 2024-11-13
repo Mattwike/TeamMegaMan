@@ -46,9 +46,9 @@ namespace Project1.GameObjects
         {
             return State.getRectangle();
         }
-        public void changeColor()
+        public void removePellet()
         {
-            
+            State.removePellet();
         }
 
     }
