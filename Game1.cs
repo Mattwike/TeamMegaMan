@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Media;
 using Project1.GameControllers;
 using Project1.Levels;
 using System.IO;
+using System;
 
 
 
@@ -122,6 +123,7 @@ namespace Project1
 
         protected override void Update(GameTime gameTime)
         {
+           Boolean paused = _keyboardController.isPaused();
             if (!_keyboardController.isPaused())
             {
                 // Use the keyboard controller to get input and update MegaMan and enemies
@@ -166,12 +168,14 @@ namespace Project1
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);  // Clear the screen
 
+            
+            _spriteBatch.Begin(transformMatrix: camera.GetTransform());
+
             foreach (var block in levelBlocks)
             {
                 block.Draw(_spriteBatch);
             }
-            _spriteBatch.Begin(transformMatrix: camera.GetTransform());
-            
+
             // Draw MegaMan and displayed enemy as before
             megaman.Draw(_spriteBatch, movementSpeed);
             sniperjoe.Draw(_spriteBatch, false, false);

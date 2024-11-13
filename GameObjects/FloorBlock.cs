@@ -59,9 +59,9 @@ namespace Project1.GameObjects
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
+            
             spriteBatch.Draw(texture, position, sourceRectangle, Color.White);
-            spriteBatch.End();
+            
         }
     }
 }
