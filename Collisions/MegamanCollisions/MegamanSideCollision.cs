@@ -14,33 +14,35 @@ using Project1.Collisions;
 
 namespace Project1.CollisionEffects
 {
-	public class MegamanSideCollision : IResponse
-	{
+    public class MegamanSideCollision : IResponse
+    {
+        private MegamanCollisonHandler Handler;
 
-		MegamanCollisonHandler Handler;
+        public MegamanSideCollision(MegamanCollisonHandler handler)
+        {
+            Handler = handler;
+        }
 
-		public MegamanSideCollision(MegamanCollisonHandler handler) 
-		{
-			Handler = handler;
-		}
+        public void Execute()
+        {
+            Rectangle adjustedMegamanBox = new Rectangle(
+                Handler.megaman.MegamanBox.X, 
+                Handler.megaman.MegamanBox.Y, 
+                Handler.megaman.MegamanBox.Width, 
+                Handler.megaman.MegamanBox.Height - 1 
+            );
 
-		public void Execute()
-		{
-			//Rectangle detectbox = new Rectangle();
-			//detectbox = Handler.megaman.MegamanBox;
-			//detectbox = detectbox.Bottom - 3;
-            CollisionDirection side = CollisionDetector.DetectCollisionType(Handler.megaman.MegamanBox, Handler.block.boundingBox);
+            CollisionDirection side = CollisionDetector.DetectCollisionType(adjustedMegamanBox, Handler.block.boundingBox);
 
             if (side == CollisionDirection.Left)
-			{
+            {
                 Handler.megaman.x = Handler.block.boundingBox.Left - Handler.megaman.MegamanBox.Width;
-
             }
-
-			else if(side == CollisionDirection.Right)
-			{
-				Handler.megaman.x = Handler.block.boundingBox.Right;
+            else if (side == CollisionDirection.Right)
+            {
+                Handler.megaman.x = Handler.block.boundingBox.Right;
             }
-		}
-	}
+        }
+    }
+
 }
