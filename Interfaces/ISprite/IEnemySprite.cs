@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Project1.GameObjects;
 using System;
+using System.Collections.Generic;
 
 public interface IEnemySprite
 {
@@ -13,7 +15,7 @@ public interface IEnemySprite
 
     public Rectangle getRectangle();
 
-    public void TakeDamage();
+    public void TakeDamage(List<EnemyDrop> enemyDropList);
 
     public int GetHealth();
 }
