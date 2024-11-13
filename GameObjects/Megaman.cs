@@ -7,6 +7,7 @@ using Project1.Enum;
 using Microsoft.Xna.Framework.Input;
 using System.Linq;
 using Project1.Collisions;
+using System.ComponentModel.Design.Serialization;
 
 
 
@@ -46,6 +47,9 @@ namespace Project1.GameObjects
         public float y { get; set; }
 
         public bool isfacingLeft { get; set; }
+
+        public int megamanHealth = 100;
+        public int megamanScore = 0;
 
         public Megaman()
         {
@@ -116,6 +120,7 @@ namespace Project1.GameObjects
         {
             if (isVulnerable)
             {
+                megamanHealth -= 50;
                 isVulnerable = false;
                 invulnerabilityTimer = 0;
                 currentColor = Color.White;
@@ -174,6 +179,18 @@ namespace Project1.GameObjects
                     gravity = 4.5f;
                 }
             }
+        }
+        public int GetHealth()
+        {
+            return megamanHealth;
+        }
+        public int GetScore()
+        {
+            return megamanScore;
+        }
+        public void UpdateScore(int increase)
+        {
+            megamanScore += increase;
         }
     }
 }

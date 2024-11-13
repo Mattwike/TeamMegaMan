@@ -20,7 +20,9 @@ namespace Project1
         private MouseController _mouseController;
         private List<ISprite> sprites;  // Keeping this for future use if needed
         List<Pellet> pellets;
+        List<EnemyDrop> enemyDropList;
         private Megaman megaman;
+        private int megamanHealth = 100;
         private SniperJoe sniperjoe;
         private GenericEnemy displayedEnemy;
 
@@ -37,12 +39,21 @@ namespace Project1
         int width;
         int interval = 0;
 
+        private SpriteFont font;
+        private SpriteFont GameOverFont;
+        int scoreX = 10;
+        bool MegamanDied = false;
+
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             pellets = new List<Pellet>();
+            enemyDropList = new List<EnemyDrop>();
+            
         }
+        
 
         protected override void Initialize()
         {
@@ -64,6 +75,8 @@ namespace Project1
             EnemySpriteFactory.Instance.LoadAllTextures(Content);
             pelletSpriteFactory.Instance.LoadAllTextures(Content);
             pelletSpriteFactory.Instance.CreatePellet();
+            EnemyDropSpriteFactory.Instance.LoadAllTextures(Content);
+            EnemyDropSpriteFactory.Instance.CreateEnemyDrop();
 
             //load Block Textures
             BlockSpriteFactory.Instance.LoadAllTextures(Content);
@@ -92,7 +105,7 @@ namespace Project1
 
             megaman.reachedCheckpoint();
 
-            _keyboardController = new KeyboardController(this,  megaman, displayedEnemy, pellets);
+            _keyboardController = new KeyboardController(this, megaman, displayedEnemy, pellets);
             _keyboardController.Initialize();
             _mouseController.Initialize(height, width);
 
@@ -103,11 +116,13 @@ namespace Project1
         {
             // Create the SpriteBatch used for rendering
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            font = Content.Load<SpriteFont>("ScoreFont");
+            GameOverFont = Content.Load<SpriteFont>("GameOverFont");
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (!_keyboardController.isPaused())
+            if (!_keyboardController.isPaused() && !MegamanDied)
             {
                 // Use the keyboard controller to get input and update MegaMan and enemies
                 _keyboardController.Update(_graphics, movementSpeed, 40, gameTime);
@@ -123,8 +138,8 @@ namespace Project1
                 megaman.Update(gameTime, interval);
                 sniperjoe.Update(gameTime);
                 displayedEnemy.Update(gameTime);
-                CollidionHandler.HandleMegamanCollisions(megaman, blockList, projectiles);
-                CollidionHandler.HandleEnemyCollisions(sniperjoe, blockList, pellets);
+                CollidionHandler.HandleMegamanCollisions(megaman, blockList, projectiles, enemyDropList);
+                CollidionHandler.HandleEnemyCollisions(sniperjoe, blockList, pellets, enemyDropList);
 
 
                 _keyboardController.checkExit();
@@ -135,34 +150,69 @@ namespace Project1
                     pellet.Update(gameTime);
                     //CollidionHandler.HandleMegamanPelletCollisions(pellet, sniperjoe);
                 }
-
+                foreach (var enemyDrop in enemyDropList)
+                {
+                    enemyDrop.Update(gameTime);
+                }
                 camera.Position = new Vector2(megaman.x, camera.Position.Y);
+                scoreX = (int)megaman.x;
+
+                if (megaman.GetHealth() <= 0)
+                {
+                    MegamanDied = true;
+                }
 
                 base.Update(gameTime);
             }
+            else
+            {
+                _keyboardController.checkExit();
+            }
+            
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);  // Clear the screen
-
-            _spriteBatch.Begin(transformMatrix: camera.GetTransform());
-
-            // Draw MegaMan and displayed enemy as before
-            megaman.Draw(_spriteBatch, movementSpeed);
-            sniperjoe.Draw(_spriteBatch, false, false);
-            displayedEnemy.Draw(_spriteBatch);
-            floor.Draw(_spriteBatch);
-            floor2.Draw(_spriteBatch);
-            wall.Draw(_spriteBatch);
-            Ceiling.Draw(_spriteBatch);
-
-            foreach (var pellet in pellets)
+            if (MegamanDied)
             {
-                pellet.Draw(_spriteBatch, movementSpeed);
-            }
 
-            _spriteBatch.End();
+                GraphicsDevice.Clear(Color.Black);
+                _spriteBatch.Begin(transformMatrix: camera.GetTransform());
+                _spriteBatch.DrawString(GameOverFont, "GAME OVER", new Vector2(scoreX - 370, -50), Color.Red);
+                _spriteBatch.End();
+            }
+            else
+            {
+                GraphicsDevice.Clear(Color.CornflowerBlue);  // Clear the screen
+
+                _spriteBatch.Begin(transformMatrix: camera.GetTransform());
+
+                // Draw MegaMan and displayed enemy as before
+                megaman.Draw(_spriteBatch, movementSpeed);
+                sniperjoe.Draw(_spriteBatch, false, false);
+                displayedEnemy.Draw(_spriteBatch);
+                floor.Draw(_spriteBatch);
+                floor2.Draw(_spriteBatch);
+                wall.Draw(_spriteBatch);
+                Ceiling.Draw(_spriteBatch);
+                _spriteBatch.DrawString(font, megaman.GetHealth().ToString(), new Vector2(scoreX-370, -200), Color.White);
+                _spriteBatch.DrawString(font, megaman.GetScore().ToString(), new Vector2(scoreX, -200), Color.White);
+
+                foreach (var pellet in pellets)
+                {
+                    pellet.Draw(_spriteBatch, movementSpeed);
+                }
+                foreach (var enemyDrop in enemyDropList)
+                {
+                    enemyDrop.Draw(_spriteBatch, movementSpeed);
+                }
+                _spriteBatch.End();
+            }
+            
+
+            
+
+            
 
             // Draw Bombomb directly
             //bombomb.Draw(_spriteBatch, false, false);  // Draw Bombomb without flipping
