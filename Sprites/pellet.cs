@@ -2,10 +2,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Project1.GameObjects;
+//using System.Drawing;
 
 namespace Project1.Sprites
 {
-    public class pellet : ISprite
+    public class pellet : IPelletSprite
     {
 
         int pelletSizeX;
@@ -16,6 +17,8 @@ namespace Project1.Sprites
         private Megaman megaman;
         int interval;
         bool isRight;
+        Rectangle hitbox;
+        bool isVisible = true;
 
         public pellet(Texture2D texture)
         {
@@ -32,32 +35,47 @@ namespace Project1.Sprites
             if (isRight)
             {
                 pelletX = (int)Megaman.x + 20 + megamanSize / 2;
+                hitbox.X = pelletX;
             }
             else
             {
                 pelletX = (int)Megaman.x - 20 + megamanSize / 2;
+                hitbox.X= pelletX;
             }
 
             pelletY = (int)Megaman.y + 12;
+            hitbox.Y = pelletY;
+            hitbox.Width = 10;
+            hitbox.Height = 10;
             this.isRight = isRight;
 
         }
 
         public void Update(GameTime gameTime)
         {
+            if (!isVisible)
+            {
+                return;
+            }
             if (isRight)
             {
                 pelletX += 5;
+                hitbox.X += 5;
             }
             else
             {
                 pelletX -= 5;
+                hitbox.X -= 5;
             }
 
         }
 
-        public void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically)
+        public void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically, Color color)
         {
+            if (!isVisible)
+            {
+                return;
+            }
 
             SpriteEffects spriteEffects = SpriteEffects.None;
 
@@ -83,13 +101,18 @@ namespace Project1.Sprites
 
 
 
-            _spriteBatch.Begin();
             _spriteBatch.Draw(pelletSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
-            _spriteBatch.End();
         }
         public Rectangle getRectangle()
         {
-            return new Rectangle();
+            return hitbox;
         }
+        public void removePellet()
+        {
+            pelletY += 1000;
+            hitbox.Y += 1000;
+            isVisible = false;
+        }
+        
     }
 }

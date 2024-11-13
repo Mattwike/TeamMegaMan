@@ -11,4 +11,9 @@ public interface IEnemySprite
 
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize);
 
+    public Rectangle getRectangle();
+
+    public void TakeDamage();
+
+    public int GetHealth();
 }

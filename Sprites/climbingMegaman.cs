@@ -34,7 +34,7 @@ namespace Project1.Sprites
         }
 
 
-        public void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically)
+        public void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically, Color currentColor)
         {
 
             SpriteEffects spriteEffects = SpriteEffects.None;
@@ -62,9 +62,7 @@ namespace Project1.Sprites
                 sourceRectangle = new Rectangle(32, 81, 16, 29);
             }
 
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(megaManSheet, MegamanBox, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
-            _spriteBatch.End();
+            _spriteBatch.Draw(megaManSheet, MegamanBox, sourceRectangle, currentColor, 0f, Vector2.Zero, spriteEffects, 0f);
         }
 
         public Rectangle getRectangle()

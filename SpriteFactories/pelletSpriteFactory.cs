@@ -29,7 +29,7 @@ namespace Project1.SpriteFactories
             pelletSheet = content.Load<Texture2D>("PelletSpriteSheet");
         }
 
-        public ISprite CreatePellet()
+        public IPelletSprite CreatePellet()
         {
             return new pellet(pelletSheet);
         }

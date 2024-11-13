@@ -15,13 +15,16 @@ namespace Project1.GameObjects
     {
         public bool is_running = false;
         public bool is_shooting = false;
-        public bool is_damaged = false;
+        public bool is_damaged;
         public bool is_jumping = false;
         public bool is_falling = false;
         public bool is_climbing = false;
         public bool reached_top = false;
-        //private bool is_damaged = false;
-        public float initialY;
+        private float origionalx;
+        private float origionaly;
+        public bool isVulnerable;
+        private double invulnerabilityTimer = 0;
+        private int timeInvunerable = 20000;
         public float gravity = 4.5f;
         public int MegamanSize;
         public Rectangle MegamanBox;
@@ -33,6 +36,7 @@ namespace Project1.GameObjects
         private int count = 100;
         public bool istouchingfloor;
         public float velocity = 1f;
+        public Color currentColor = Color.White;
 
         public IMegamanState State;
 
@@ -46,6 +50,8 @@ namespace Project1.GameObjects
         public Megaman()
         {
             State = new IdleMegamanState(this);
+            isVulnerable = true;
+            is_damaged = false;
         }
 
         public void SetDirection(bool isFacingLeft)
@@ -53,19 +59,72 @@ namespace Project1.GameObjects
             isfacingLeft = isFacingLeft;
         }
 
+        public void reachedCheckpoint()
+        {
+            origionalx = x;
+            origionaly = y;
+        }
+
+        public void reset()
+        {
+            x = origionalx;
+            y = origionaly;
+        }
+
         public void ChangeDirection()
         {
             State.ChangeDirection();
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, int interval)
         {
-
-            //MegamanBox = State.getRectangle();
             MegamanBox = new Rectangle((int)x, (int)y, MegamanSize, MegamanSize);
             State.Update(gameTime);
-  
+
+            if (!isVulnerable)
+            {
+                invulnerabilityTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (invulnerabilityTimer >= timeInvunerable)
+                {
+                    isVulnerable = true;
+                    invulnerabilityTimer = 0;
+                }
+                if (!isVulnerable)
+                {
+                    invulnerabilityTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
+
+                    
+                    if ((int)(invulnerabilityTimer / 100) % 2 == 0)
+                    {
+                        currentColor = Color.White;
+                    }
+                    else
+                    {
+                        currentColor = Color.Blue; 
+                    }
+
+                    if (invulnerabilityTimer >= timeInvunerable * 100)
+                    {
+                        isVulnerable = true;
+                        invulnerabilityTimer = 0;
+                        currentColor = Color.Blue; 
+                       
+                    }
+                }
+            }
         }
+
+        public void TakeDamage()
+        {
+            if (isVulnerable)
+            {
+                isVulnerable = false;
+                invulnerabilityTimer = 0;
+                currentColor = Color.White;
+            }
+            is_damaged = true;
+        }
+
 
         public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
         {
@@ -78,7 +137,7 @@ namespace Project1.GameObjects
 
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
         {
-            State.Draw(_spriteBatch, movementSpeed);
+            State.Draw(_spriteBatch, movementSpeed, currentColor);
             //floor.Draw(_spriteBatch);
         }
         
@@ -88,7 +147,6 @@ namespace Project1.GameObjects
             if (!is_jumping && !is_falling && pressedKeys.Contains(Keys.Space))
             {
                 is_jumping = true;
-                initialY = y;
                 gravity = 4.5f;
 
             }
@@ -110,7 +168,7 @@ namespace Project1.GameObjects
             {
                 if (!istouchingfloor)
                 {
-                    y += gravity;
+
                     gravity += .25f;
                 }
                 else

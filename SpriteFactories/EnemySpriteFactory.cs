@@ -65,4 +65,11 @@ public class EnemySpriteFactory
     {
         return new Mambu(enemySheet);
     }
+
+    public IEnemySprite CreateSniperJoe()
+    {
+        return new SniperJoe(enemySheet); 
+    }
+
+
 }
