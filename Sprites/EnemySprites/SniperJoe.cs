@@ -66,15 +66,17 @@ public class SniperJoe : IEnemySprite
 
     public void Update(GameTime gameTime)
     {
-
-        if (health <= 0)
-        {
-            isVisible = false;
-        }
         if (!isVisible)
         {
             return;
         }
+        if (health <= 0)
+        {
+            y += 1000;
+            hitbox.Y += 1000;
+            isVisible = false;
+        }
+        
         SniperJoeBox = new Rectangle((int)x, (int)y, 26, 24);
         hitbox.X = (int)x;
         hitbox.Y = (int)y;

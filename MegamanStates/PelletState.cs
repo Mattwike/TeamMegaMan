@@ -10,7 +10,7 @@ namespace Project1.States.MegamanState
     {
         private Megaman megaman;
         private Pellet pellet;
-        public ISprite Sprite;
+        public IPelletSprite Sprite;
 
         public PelletState(Pellet pellet)
         {
@@ -37,6 +37,11 @@ namespace Project1.States.MegamanState
         public Rectangle getRectangle()
         {
             return Sprite.getRectangle();
+        }
+
+        public void removePellet()
+        {
+            Sprite.removePellet();
         }
     }
 }

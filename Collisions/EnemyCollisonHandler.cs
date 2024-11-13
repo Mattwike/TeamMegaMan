@@ -60,7 +60,7 @@ namespace Project1.Collisions
             CollisionDirection Direction = collisionDirection;
             if (Direction != CollisionDirection.None)
             {
-                pellet.y = -1000;
+                pellet.removePellet();
                 sniperjoe.TakeDamage();
 
             }
