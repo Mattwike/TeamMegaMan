@@ -93,10 +93,10 @@ namespace Project1.States.MegamanState
 			Sprite.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval, false);
 		}
 
-		public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
+		public void Draw(SpriteBatch _spriteBatch, float movementSpeed, Color currentColor)
 		{
 
-			Sprite.Draw(_spriteBatch, 0, megaman.isfacingLeft, false);
+			Sprite.Draw(_spriteBatch, 0, megaman.isfacingLeft, false, currentColor);
 		}
 
         public Rectangle getRectangle()

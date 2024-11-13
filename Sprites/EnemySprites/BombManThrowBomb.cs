@@ -28,15 +28,14 @@ public class BombManThrowBomb : IEnemySprite
     private float gravity = 4.5f;
     private float bombSpeed = 5f;
 
+    public Rectangle hitbox;
+    public int health;
+
     public BombManThrowBomb(Texture2D texture)
     {
         enemySheet = texture;
         x = 100;
         y = 200;
-
-     
-
-
     }
 
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
@@ -58,6 +57,11 @@ public class BombManThrowBomb : IEnemySprite
 
         bombInAir = false;
         bombExploding = false;
+
+        hitbox.X = 100;
+        hitbox.Y = 200;
+        hitbox.Width = 50;
+        hitbox.Height = 50;
 
     }
 
@@ -181,7 +185,6 @@ public class BombManThrowBomb : IEnemySprite
 
 
 
-        _spriteBatch.Begin();
 
         if(bombInAir)
         {
@@ -193,8 +196,19 @@ public class BombManThrowBomb : IEnemySprite
         }
 
         _spriteBatch.Draw(enemySheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
-        _spriteBatch.End();
 
    
+    }
+    public Rectangle getRectangle()
+    {
+        return hitbox;
+    }
+    public int GetHealth()
+    {
+        return health;
+    }
+    public void TakeDamage()
+    {
+        health -= 10;
     }
 }

@@ -11,6 +11,7 @@ using Project1.States.MegamanState;
 using Project1.Commands;
 using Project1.Sprites;
 
+
 public class KeyboardController : IController
 {
     private Game1 game;
@@ -23,6 +24,8 @@ public class KeyboardController : IController
     private KeyboardState previousKeyState;
     int interval = 0;
     bool mouseClicked = false;
+    private bool paused = false;
+    private KeyboardState previousKeyboardState;
 
     public KeyboardController(Game1 gameInstance, Megaman megaman, GenericEnemy displayedEnemy, List<Pellet> pellets)
     {
@@ -30,6 +33,30 @@ public class KeyboardController : IController
         this.megaman = megaman;
         this.displayedEnemy = displayedEnemy;
         this.pellets = pellets;
+    }
+
+    public bool isPaused()
+    {
+        KeyboardState keyState = Keyboard.GetState();
+
+        if (keyState.IsKeyDown(Keys.Escape) && previousKeyboardState.IsKeyUp(Keys.Escape))
+        {
+            paused = !paused;
+        }
+
+        previousKeyboardState = keyState;
+
+        return paused;
+    }
+
+    public void checkExit()
+    {
+        KeyboardState keyState = Keyboard.GetState();
+
+        if (keyState.IsKeyDown(Keys.Q))
+        {
+            game.Exit();
+        }
     }
 
     public void Initialize()
@@ -59,7 +86,7 @@ public class KeyboardController : IController
         megaman.is_shooting = false;
         megaman.is_damaged = false;
 
-        if (!megaman.is_jumping && !megaman.is_falling && !megaman.istouchingfloor)
+        if (!megaman.is_jumping && !megaman.istouchingfloor && !megaman.is_climbing)
         {
             megaman.y += megaman.gravity;
         }
@@ -71,15 +98,20 @@ public class KeyboardController : IController
             commandDict[Keys.P].Execute(_graphics, movementSpeed, megamanSize, 0);
         }
         interval++;
-         
-        if (pressedKeys.Contains(Keys.Q))
+       
+
+        if (pressedKeys.Contains(Keys.R))
         {
-            game.Exit();
+            megaman.reset();
         }
         // Check for key presses and execute the corresponding commands
 
         megaman.Jump(pressedKeys);
-        
+
+        if (megaman.is_falling)
+        {
+            commandDict[Keys.D6].Execute(_graphics, movementSpeed, megamanSize, interval);
+        }
 
         if ((megaman.is_jumping || megaman.is_falling) && (Mouse.GetState().LeftButton == ButtonState.Pressed))
         {
@@ -209,9 +241,14 @@ public class KeyboardController : IController
             Idle.Execute(_graphics, movementSpeed, megamanSize, interval);
         }
 
+        if (!megaman.isVulnerable)
+        {
+            commandDict[Keys.D7].Execute(_graphics, movementSpeed, megamanSize, interval);
+        }
+
         previousKeyState = keyboardState;
 
-        megaman.Update(gameTime);
+        megaman.Update(gameTime, interval);
         displayedEnemy.Update(gameTime);
     }
 }

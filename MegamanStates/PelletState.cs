@@ -10,7 +10,7 @@ namespace Project1.States.MegamanState
     {
         private Megaman megaman;
         private Pellet pellet;
-        public ISprite Sprite;
+        public IPelletSprite Sprite;
 
         public PelletState(Pellet pellet)
         {
@@ -31,7 +31,17 @@ namespace Project1.States.MegamanState
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
         {
 
-            Sprite.Draw(_spriteBatch, movementSpeed, false, false);
+            Sprite.Draw(_spriteBatch, movementSpeed, false, false, Color.White);
+        }
+
+        public Rectangle getRectangle()
+        {
+            return Sprite.getRectangle();
+        }
+
+        public void removePellet()
+        {
+            Sprite.removePellet();
         }
     }
 }

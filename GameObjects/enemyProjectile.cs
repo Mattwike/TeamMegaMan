@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Project1.GameObjects
 {
-    public class Pellet
+    public class enemyProjectile
     {
 
         public IPelletState State;
@@ -16,9 +16,9 @@ namespace Project1.GameObjects
 
         public bool isfacingLeft { get; set; }
 
-        public Pellet()
+        public enemyProjectile()
         {
-            State = new PelletState(this);
+            
         }
 
         public void SetDirection(bool isFacingLeft)
@@ -40,15 +40,6 @@ namespace Project1.GameObjects
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
         {
             State.Draw(_spriteBatch, movementSpeed);
-        }
-
-        public Rectangle getRectangle()
-        {
-            return State.getRectangle();
-        }
-        public void removePellet()
-        {
-            State.removePellet();
         }
 
     }

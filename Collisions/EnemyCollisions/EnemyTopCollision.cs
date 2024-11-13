@@ -14,20 +14,22 @@ using Project1.Collisions;
 
 namespace Project1.CollisionEffects
 {
-	public class MegamanBottomCollision : IResponse
+	public class EnemyTopCollision : IResponse
 	{
 
-		MegamanCollisonHandler Handler;
+        EnemyCollisonHandler Handler;
 
-		public MegamanBottomCollision(MegamanCollisonHandler handler) 
+		public EnemyTopCollision(EnemyCollisonHandler handler) 
 		{
 			Handler = handler;
 		}
 
 		public void Execute()
 		{
-			Handler.megaman.is_falling = true;
-            Handler.megaman.y = Handler.block.boundingBox.Y + Handler.block.boundingBox.Height - 2;
-        }
+			Handler.sniperjoe.istouchingfloor = true;
+			Handler.sniperjoe.y = Handler.block.boundingBox.Y - Handler.sniperjoe.SniperJoeBox.Height;
+			Handler.sniperjoe.isFalling = false;
+            Handler.sniperjoe.gravity = 0;
+		}
 	}
 }

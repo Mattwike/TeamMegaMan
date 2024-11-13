@@ -29,6 +29,9 @@ public class Mambu : IEnemySprite
     private float projectileSpeed = 2f;  // Speed of the projectiles
     private int movementSpeed = 2;  // Movement speed for Mambu
 
+    public Rectangle hitbox;
+    public int health;
+
     // Constructor to initialize Mambu with its texture
     public Mambu(Texture2D texture)
     {
@@ -137,7 +140,6 @@ public class Mambu : IEnemySprite
         if (flipVertically)
             spriteEffects |= SpriteEffects.FlipVertically;
 
-        spriteBatch.Begin();
 
         // Define the destination rectangle where the sprite will be drawn on the screen
         Rectangle destinationRectangle = new Rectangle((int)x, (int)y, width, height);
@@ -151,7 +153,6 @@ public class Mambu : IEnemySprite
             projectile.Draw(spriteBatch, false, false);
         }
 
-        spriteBatch.End();
     }
 
     // Method to shoot 8 projectiles in a circular pattern, using locked position for centralized origin
@@ -183,5 +184,17 @@ public class Mambu : IEnemySprite
             // Add the projectile to the projectiles list
             projectiles.Add(projectile);
         }
+    }
+    public Rectangle getRectangle()
+    {
+        return hitbox;
+    }
+    public int GetHealth()
+    {
+        return health;
+    }
+    public void TakeDamage()
+    {
+        health -= 10;
     }
 }

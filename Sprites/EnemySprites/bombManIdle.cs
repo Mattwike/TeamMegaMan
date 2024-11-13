@@ -13,6 +13,8 @@ public class bombManIdle : IEnemySprite
     private Texture2D enemySheet;
     int enemySizeX;
     int enemySizeY;
+    public Rectangle hitbox;
+    public int health;
     public bombManIdle(Texture2D texture)
     {
         enemySheet = texture;
@@ -28,6 +30,10 @@ public class bombManIdle : IEnemySprite
         delayMax = 10;
         enemySizeX = 50;
         enemySizeY = 50;
+        hitbox.X = 400;
+        hitbox.Y = 40;
+        hitbox.Width = 50;
+        hitbox.Height = 50;
     }
 
     public void Update(GameTime gameTime)
@@ -79,8 +85,18 @@ public class bombManIdle : IEnemySprite
             sourceRectangle = new Rectangle(0, 21, 28, 41);
         }
 
-        _spriteBatch.Begin();
         _spriteBatch.Draw(enemySheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
-        _spriteBatch.End();
+    }
+    public Rectangle getRectangle()
+    {
+        return hitbox;
+    }
+    public int GetHealth()
+    {
+        return health;
+    }
+    public void TakeDamage()
+    {
+        health -= 10;
     }
 }

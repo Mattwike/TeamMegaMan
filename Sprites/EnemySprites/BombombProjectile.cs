@@ -19,6 +19,9 @@ public class BombombProjectile : IEnemySprite
     int delayCounter;
     int delayMax;
 
+    public Rectangle hitbox;
+    public int health;
+
     public BombombProjectile(Texture2D texture, float startX, float startY, int screenWidth, float speedX)
     {
         projectileSheet = texture;
@@ -64,11 +67,9 @@ public class BombombProjectile : IEnemySprite
             spriteEffects |= SpriteEffects.FlipVertically;
         }
 
-        _spriteBatch.Begin();
         Rectangle destinationRectangle = new Rectangle((int)x, (int)y, projectileSizeX, projectileSizeY);
         Rectangle sourceRectangle = projectileFrames[currentFrame];
         _spriteBatch.Draw(projectileSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
-        _spriteBatch.End();
     }
 
     public void Update(GameTime gameTime)
@@ -96,5 +97,17 @@ public class BombombProjectile : IEnemySprite
     {
         // Check if the projectile is off-screen based on screen width and height
         return x < 0 || x > screenWidth || y > 300;  // Make sure y > screenHeight to detect bottom screen boundary
+    }
+    public Rectangle getRectangle()
+    {
+        return hitbox;
+    }
+    public int GetHealth()
+    {
+        return health;
+    }
+    public void TakeDamage()
+    {
+        health -= 10;
     }
 }

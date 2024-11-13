@@ -18,6 +18,8 @@ public class jumpingFlea : IEnemySprite
     float gravity;
     bool jumping;
     bool falling;
+    public Rectangle hitbox;
+    public int health;
 
     public jumpingFlea(Texture2D texture)
     {
@@ -130,8 +132,18 @@ public class jumpingFlea : IEnemySprite
             falling = true;
         }
 
-        _spriteBatch.Begin();
         _spriteBatch.Draw(enemySheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
-        _spriteBatch.End();
+    }
+    public Rectangle getRectangle()
+    {
+        return hitbox;
+    }
+    public int GetHealth()
+    {
+        return health;
+    }
+    public void TakeDamage()
+    {
+        health -= 10;
     }
 }
