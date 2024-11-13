@@ -1,63 +1,97 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Project1.Interfaces;
+using Project1.SpriteFactories;
 
-public class Floor : IBlocks
+namespace Project1.GameObjects
 {
-    //Floor modeled as a list of blocks arranged in a straight line.
-    private int numBlocks;
-    private Vector2 pos;
-    public Rectangle boundingBox { get; private set; }
-
-    int blockWidth = 16;
-    int blockHeight = 16;
-
-    List<IBlock> blocksInFloorSegment;
-
-    public Floor(int numOfBlocks, Vector2 startPos)
+    public class Floor : IBlocks
     {
-        this.numBlocks = numOfBlocks;
-        pos = startPos;
+        // Fields for original floor creation
+        private int numBlocks;
+        private Vector2 pos;
+        private List<IBlocks> blocksInFloorSegment;
 
-        blocksInFloorSegment = new List<IBlock>(numOfBlocks);
-        for (int i = 0; i < numOfBlocks; i++)
+        // Fields for single block creation
+        private Vector2 position;
+        private Texture2D texture;
+        public Rectangle boundingBox { get; private set; }
+
+        private int blockWidth = 16;
+        private int blockHeight = 16;
+
+        // Original constructor (Restored)
+        public Floor(int numOfBlocks, Vector2 startPos)
         {
-            blocksInFloorSegment.Add(BlockSpriteFactory.Instance.CreateFloorMiddle());
-        }
+            this.numBlocks = numOfBlocks;
+            pos = startPos;
 
+            blocksInFloorSegment = new List<IBlocks>(numOfBlocks);
 
-        if (blocksInFloorSegment.Count > 0)
-        {
-
-            blocksInFloorSegment[0] = BlockSpriteFactory.Instance.CreateFloorEndLeft();
-            for (int i = 1; i < numOfBlocks - 1; i++)
+            // Initialize the blocks in the floor segment
+            for (int i = 0; i < numOfBlocks; i++)
             {
-                blocksInFloorSegment[i] = BlockSpriteFactory.Instance.CreateFloorMiddle();
+                Vector2 blockPosition = new Vector2(pos.X + i * blockWidth, pos.Y);
+                BlockType blockType = BlockType.FloorMiddle;
+
+                if (i == 0)
+                    blockType = BlockType.FloorEndLeft;
+                else if (i == numBlocks - 1)
+                    blockType = BlockType.FloorEndRight;
+
+                IBlocks block = new FloorBlock(blockPosition, blockType);
+                blocksInFloorSegment.Add(block);
             }
-            blocksInFloorSegment[numOfBlocks - 1] = BlockSpriteFactory.Instance.CreateFloorEndRight();
 
-            boundingBox = new Rectangle((int)pos.X, (int)pos.Y, blockWidth * numOfBlocks, blockHeight);
+            // Calculate bounding box
+            boundingBox = new Rectangle((int)pos.X, (int)pos.Y, blockWidth * numBlocks, blockHeight);
         }
 
-    }
-
-    public void Draw(SpriteBatch spriteBatch)
-    {
-        int blockNum = 0;
-        foreach (IBlock block in blocksInFloorSegment)
+        // New constructor for level loader
+        public Floor(Vector2 position)
         {
-            block.Draw(spriteBatch, blockNum, blockWidth, pos);
-            blockNum++;
+            this.position = position;
+            this.texture = BlockSpriteFactory.Instance.GetFloorTexture();
+            boundingBox = new Rectangle((int)position.X, (int)position.Y, blockWidth, blockHeight);
         }
-       
-        
 
+        public void Initialize()
+        {
+            // Initialization logic if necessary
+        }
+
+        // Implement Update method from IBlocks
+        public void Update()
+        {
+            // Update logic for the floor
+            if (blocksInFloorSegment != null)
+            {
+                foreach (var block in blocksInFloorSegment)
+                {
+                    block.Update();
+                }
+            }
+            else
+            {
+                // Update logic for single block
+            }
+        }
+
+        // Implement Draw method from IBlocks
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            if (blocksInFloorSegment != null)
+            {
+                foreach (IBlocks block in blocksInFloorSegment)
+                {
+                    block.Draw(spriteBatch);
+                }
+            }
+            else
+            {
+                spriteBatch.Draw(texture, position, Color.White);
+            }
+        }
     }
-
-
 }

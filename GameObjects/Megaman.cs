@@ -7,8 +7,7 @@ using Project1.Enum;
 using Microsoft.Xna.Framework.Input;
 using System.Linq;
 using Project1.Collisions;
-
-
+using Project1.Levels;
 
 namespace Project1.GameObjects
 {
@@ -45,6 +44,8 @@ namespace Project1.GameObjects
         public float y { get; set; }
 
         public bool isfacingLeft { get; set; }
+        private LevelParser levelparser;
+
 
         public Megaman()
         {
@@ -129,6 +130,7 @@ namespace Project1.GameObjects
         {
             floor = new Floor(count, start);
             detector = new CollisionDetector();
+            levelparser = new LevelParser();
             MegamanSize = megamanSize;
             State.Initialize(_graphics, movementSpeed, megamanSize, interval);
         }
