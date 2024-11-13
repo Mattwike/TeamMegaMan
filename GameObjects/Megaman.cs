@@ -72,6 +72,8 @@ namespace Project1.GameObjects
         {
             x = origionalx;
             y = origionaly;
+            megamanHealth = 100;
+            isVulnerable = true;
         }
 
         public void ChangeDirection()

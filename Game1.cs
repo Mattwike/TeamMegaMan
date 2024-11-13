@@ -130,7 +130,7 @@ namespace Project1
 
             bool paused = _keyboardController.isPaused();
 
-            if (!_keyboardController.isPaused() && !MegamanDied)
+            if (!_keyboardController.isPaused())
             {
                 // Use the keyboard controller to get input and update MegaMan and enemies
                 _keyboardController.Update(_graphics, movementSpeed, 40, gameTime);
@@ -163,9 +163,13 @@ namespace Project1
                 camera.Position = new Vector2(megaman.x, camera.Position.Y);
                 scoreX = (int)megaman.x;
 
-                if (megaman.GetHealth() <= 0)
+                if (megaman.GetHealth() <= 0 || megaman.y > 400)
                 {
                     MegamanDied = true;
+                }
+                else
+                {
+                    MegamanDied = false;
                 }
 
                 base.Update(gameTime);
