@@ -11,6 +11,7 @@ using Project1.States.MegamanState;
 using Project1.Commands;
 using Project1.Sprites;
 
+
 public class KeyboardController : IController
 {
     private Game1 game;
@@ -85,7 +86,7 @@ public class KeyboardController : IController
         megaman.is_shooting = false;
         megaman.is_damaged = false;
 
-        if (!megaman.is_jumping && !megaman.istouchingfloor)
+        if (!megaman.is_jumping && !megaman.istouchingfloor && !megaman.is_climbing)
         {
             megaman.y += megaman.gravity;
         }
@@ -238,6 +239,11 @@ public class KeyboardController : IController
             }
             var Idle = new IdleMegamanCommand(megaman);
             Idle.Execute(_graphics, movementSpeed, megamanSize, interval);
+        }
+
+        if (!megaman.isVulnerable)
+        {
+            commandDict[Keys.D7].Execute(_graphics, movementSpeed, megamanSize, interval);
         }
 
         previousKeyState = keyboardState;

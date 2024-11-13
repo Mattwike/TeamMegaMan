@@ -17,7 +17,7 @@ namespace Project1.GameObjects
     {
         public bool is_running = false;
         public bool is_shooting = false;
-        public bool is_damaged = false;
+        public bool is_damaged;
         public bool is_jumping = false;
         public bool is_falling = false;
         public bool is_climbing = false;
@@ -27,7 +27,6 @@ namespace Project1.GameObjects
         public bool isVulnerable;
         private double invulnerabilityTimer = 0;
         private int timeInvunerable = 20000;
-        //private bool is_damaged = false;
         public float gravity = 4.5f;
         public int MegamanSize;
         public Rectangle MegamanBox;
@@ -55,6 +54,7 @@ namespace Project1.GameObjects
         {
             State = new IdleMegamanState(this);
             isVulnerable = true;
+            is_damaged = false;
         }
 
         public void SetDirection(bool isFacingLeft)
@@ -96,21 +96,22 @@ namespace Project1.GameObjects
                 {
                     invulnerabilityTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
 
-                    // Toggle color every 100 milliseconds for blinking effect
+                    
                     if ((int)(invulnerabilityTimer / 100) % 2 == 0)
                     {
                         currentColor = Color.White;
                     }
                     else
                     {
-                        currentColor = Color.Blue; // Replace with Megaman’s normal color
+                        currentColor = Color.Blue; 
                     }
 
                     if (invulnerabilityTimer >= timeInvunerable * 100)
                     {
                         isVulnerable = true;
                         invulnerabilityTimer = 0;
-                        currentColor = Color.Blue; // Set to Megaman's normal color when vulnerability returns
+                        currentColor = Color.Blue; 
+                       
                     }
                 }
             }
@@ -124,8 +125,8 @@ namespace Project1.GameObjects
                 isVulnerable = false;
                 invulnerabilityTimer = 0;
                 currentColor = Color.White;
-                //implement damage and damage spritesh
             }
+            is_damaged = true;
         }
 
 
