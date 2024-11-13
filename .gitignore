@@ -1,0 +1,7 @@
+.vs
+# Ignore build artifacts
+bin/
+obj/
+Content/obj/
+Content/*.mgcontent
+Content/*.mgstats
