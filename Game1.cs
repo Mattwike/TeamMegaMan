@@ -8,6 +8,9 @@ using Project1.Interfaces;
 using Project1.Collisions;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
+using Microsoft.Xna.Framework.Media;
+using Project1.GameControllers;
+
 
 
 namespace Project1
@@ -28,6 +31,7 @@ namespace Project1
         private Floor floor2;
         private Floor wall;
         private Floor Ceiling;
+        private soundController soundcontroller;
 
         float movementSpeed;
         private GraphicsDeviceManager _graphics;
@@ -48,7 +52,7 @@ namespace Project1
         {
             // TODO: Add your initialization logic here
             camera = new Camera(GraphicsDevice.Viewport);
-            
+            soundcontroller = new soundController(Content);
 
             Texture2D SniperJoeSheet;
             SniperJoeSheet = Content.Load<Texture2D>("enemy");
@@ -56,7 +60,6 @@ namespace Project1
 
             width = _graphics.PreferredBackBufferWidth / 2;
             height = _graphics.PreferredBackBufferHeight / 2;
-
             _mouseController = new MouseController();
 
             // Load all textures for MegaMan and Enemies
@@ -95,6 +98,7 @@ namespace Project1
             _keyboardController = new KeyboardController(this,  megaman, displayedEnemy, pellets);
             _keyboardController.Initialize();
             _mouseController.Initialize(height, width);
+            soundcontroller.Initialize();
 
             base.Initialize();
         }
@@ -103,32 +107,33 @@ namespace Project1
         {
             // Create the SpriteBatch used for rendering
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            soundcontroller.LoadContent();
         }
 
         protected override void Update(GameTime gameTime)
         {
+            bool paused = _keyboardController.isPaused();
+
             if (!_keyboardController.isPaused())
             {
                 // Use the keyboard controller to get input and update MegaMan and enemies
                 _keyboardController.Update(_graphics, movementSpeed, 40, gameTime);
                 List<IBlocks> blockList = new List<IBlocks>();
-                List<IEnemySprite> projectiles = new List<IEnemySprite>();
-                projectiles.AddRange(sniperjoe.projectiles);
+                List<IEnemySprite> enemies = new List<IEnemySprite>();
+                enemies.Add(sniperjoe);
+                enemies.AddRange(sniperjoe.projectiles);
                 blockList.Add(floor);
                 blockList.Add(floor2);
                 blockList.Add(wall);
                 blockList.Add(Ceiling);
 
+
                 // Update Bombomb directly
                 megaman.Update(gameTime, interval);
                 sniperjoe.Update(gameTime);
                 displayedEnemy.Update(gameTime);
-                CollidionHandler.HandleMegamanCollisions(megaman, blockList, projectiles);
+                CollidionHandler.HandleMegamanCollisions(megaman, blockList, enemies);
                 CollidionHandler.HandleEnemyCollisions(sniperjoe, blockList, pellets);
-
-
-                _keyboardController.checkExit();
-
 
                 foreach (var pellet in pellets)
                 {
@@ -140,6 +145,9 @@ namespace Project1
 
                 base.Update(gameTime);
             }
+
+            soundcontroller.Update(megaman, paused);
+            _keyboardController.checkExit();
         }
 
         protected override void Draw(GameTime gameTime)
