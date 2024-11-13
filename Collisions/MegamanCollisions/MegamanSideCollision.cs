@@ -26,6 +26,9 @@ namespace Project1.CollisionEffects
 
 		public void Execute()
 		{
+			//Rectangle detectbox = new Rectangle();
+			//detectbox = Handler.megaman.MegamanBox;
+			//detectbox = detectbox.Bottom - 3;
             CollisionDirection side = CollisionDetector.DetectCollisionType(Handler.megaman.MegamanBox, Handler.block.boundingBox);
 
             if (side == CollisionDirection.Left)

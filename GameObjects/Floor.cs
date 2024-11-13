@@ -11,7 +11,7 @@ namespace Project1.GameObjects
         // Fields for original floor creation
         private int numBlocks;
         private Vector2 pos;
-        private List<IBlock> blocksInFloorSegment;
+        private List<IBlocks> blocksInFloorSegment;
 
         // Fields for single block creation
         private Vector2 position;
@@ -27,7 +27,7 @@ namespace Project1.GameObjects
             this.numBlocks = numOfBlocks;
             pos = startPos;
 
-            blocksInFloorSegment = new List<IBlock>(numOfBlocks);
+            blocksInFloorSegment = new List<IBlocks>(numOfBlocks);
 
             // Initialize the blocks in the floor segment
             for (int i = 0; i < numOfBlocks; i++)
@@ -40,7 +40,7 @@ namespace Project1.GameObjects
                 else if (i == numBlocks - 1)
                     blockType = BlockType.FloorEndRight;
 
-                FloorBlock block = new FloorBlock(blockPosition, blockType);
+                IBlocks block = new FloorBlock(blockPosition, blockType);
                 blocksInFloorSegment.Add(block);
             }
 
@@ -54,6 +54,11 @@ namespace Project1.GameObjects
             this.position = position;
             this.texture = BlockSpriteFactory.Instance.GetFloorTexture();
             boundingBox = new Rectangle((int)position.X, (int)position.Y, blockWidth, blockHeight);
+        }
+
+        public void Initialize()
+        {
+            // Initialization logic if necessary
         }
 
         // Implement Update method from IBlocks
@@ -78,7 +83,7 @@ namespace Project1.GameObjects
         {
             if (blocksInFloorSegment != null)
             {
-                foreach (IBlock block in blocksInFloorSegment)
+                foreach (IBlocks block in blocksInFloorSegment)
                 {
                     block.Draw(spriteBatch);
                 }

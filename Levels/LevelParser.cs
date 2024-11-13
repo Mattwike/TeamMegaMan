@@ -15,11 +15,11 @@ namespace Project1.Levels
         private int blockWidth = 16;
         private int blockHeight = 16;
 
-        public List<IBlock> Blocks { get; private set; }
+        public List<IBlocks> Blocks { get; private set; }
 
         public LevelParser()
         {
-            Blocks = new List<IBlock>();
+            Blocks = new List<IBlocks>();
 
             tileActions = new Dictionary<char, Action<int, int>>()
             {

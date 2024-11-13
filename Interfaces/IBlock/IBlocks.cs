@@ -5,10 +5,9 @@ namespace Project1.Interfaces
 {
     public interface IBlocks
     {
-        Rectangle boundingBox { get; }
-
+        void Initialize();
         void Update();
-
         void Draw(SpriteBatch spriteBatch);
+        Rectangle boundingBox { get; }
     }
 }

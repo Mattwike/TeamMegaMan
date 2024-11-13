@@ -13,7 +13,7 @@ namespace Project1.GameObjects
         // Add other block types as needed
     }
 
-    public class FloorBlock : IBlock
+    public class FloorBlock : IBlocks
     {
         public Rectangle boundingBox { get; private set; }
         private Vector2 position;

@@ -23,14 +23,11 @@ namespace Project1
         private Megaman megaman;
         private GenericEnemy displayedEnemy;
 
-        private Floor floor;
-        private Floor floor2;
-        private Floor wall;
-        private Floor Ceiling;
+
 
         private LevelLoader levelLoader;
         private LevelParser levelParser;
-        private List<IBlock> levelBlocks;
+        private List<IBlocks> levelBlocks;
 
 
         float movementSpeed;
@@ -68,14 +65,7 @@ namespace Project1
 
             //load Block Textures
             BlockSpriteFactory.Instance.LoadAllTextures(Content);
-            Vector2 floorPos = new Vector2(0, 180);
-            Vector2 floorPos2 = new Vector2(200, 180);
-            Vector2 wallpos = new Vector2(250, 160);
-            Vector2 Ceilingpos = new Vector2(200, 100);
-            floor = new Floor(10, floorPos);
-            floor2 = new Floor(10, floorPos2);
-            wall = new Floor(3, wallpos);
-            Ceiling = new Floor(10, Ceilingpos);
+     
 
 
             // Initialize the displayed enemy
@@ -122,16 +112,11 @@ namespace Project1
         {
             // Use the keyboard controller to get input and update MegaMan and enemies
             _keyboardController.Update(_graphics, movementSpeed, 40, gameTime);
-            List<IBlocks> blockList = new List<IBlocks>();
-            blockList.Add(floor);
-            blockList.Add(floor2);
-            blockList.Add(wall);
-            blockList.Add(Ceiling);
 
             // Update Bombomb directly
             megaman.Update(gameTime);
             displayedEnemy.Update(gameTime);
-            CollidionHandler.HandleMegamanCollisions(megaman, blockList);
+            CollidionHandler.HandleMegamanCollisions(megaman, levelParser.Blocks);
 
             foreach (var pellet in pellets)
             {
@@ -159,10 +144,7 @@ namespace Project1
             // Draw MegaMan and displayed enemy as before
             megaman.Draw(_spriteBatch, movementSpeed);
             displayedEnemy.Draw(_spriteBatch);
-            floor.Draw(_spriteBatch);
-            floor2.Draw(_spriteBatch);
-            wall.Draw(_spriteBatch);
-            Ceiling.Draw(_spriteBatch);
+
 
             foreach (var pellet in pellets)
             {

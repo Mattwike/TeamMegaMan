@@ -4,7 +4,7 @@ using Project1.Interfaces;
 
 namespace Project1.Sprites.BlockSprites
 {
-    public class FloorEndLeft : IBlock
+    public class FloorEndLeft : IBlocks
     {
         private Texture2D blockSheet;
         private Vector2 position;
