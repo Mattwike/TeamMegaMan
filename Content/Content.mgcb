@@ -19,6 +19,7 @@
 /processorParam:Quality=Best
 /build:06 Bombman Stage.mp3
 
+
 #begin bossSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -54,7 +55,14 @@
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:File.spritefont
+/build:File.spritefont;Font1.spritefont
+
+#begin GameOverFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:GameOverFont.spritefont
 
 #begin MegaMan.png
 /importer:TextureImporter
@@ -97,6 +105,13 @@
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:shooting-101soundboards.mp3
+
+#begin ScoreFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:ScoreFont.spritefont
 
 #begin Text.spritefont
 /importer:FontDescriptionImporter

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Project1.GameObjects;
+using System.Collections.Generic;
 
 public class screwDriver : IEnemySprite
 {
@@ -105,7 +107,7 @@ public class screwDriver : IEnemySprite
     {
         return health;
     }
-    public void TakeDamage()
+    public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
     }

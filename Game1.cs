@@ -26,7 +26,9 @@ namespace Project1
         private MouseController _mouseController;
         private List<ISprite> sprites;  // Keeping this for future use if needed
         List<Pellet> pellets;
+        List<EnemyDrop> enemyDropList;
         private Megaman megaman;
+        private int megamanHealth = 100;
         private SniperJoe sniperjoe;
         private GenericEnemy displayedEnemy;
 
@@ -43,12 +45,21 @@ namespace Project1
         int width;
         int interval = 0;
 
+        private SpriteFont font;
+        private SpriteFont GameOverFont;
+        int scoreX = 10;
+        bool MegamanDied = false;
+
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             pellets = new List<Pellet>();
+            enemyDropList = new List<EnemyDrop>();
+            
         }
+        
 
         protected override void Initialize()
         {
@@ -69,6 +80,8 @@ namespace Project1
             EnemySpriteFactory.Instance.LoadAllTextures(Content);
             pelletSpriteFactory.Instance.LoadAllTextures(Content);
             pelletSpriteFactory.Instance.CreatePellet();
+            EnemyDropSpriteFactory.Instance.LoadAllTextures(Content);
+            EnemyDropSpriteFactory.Instance.CreateEnemyDrop();
 
             //load Block Textures
             BlockSpriteFactory.Instance.LoadAllTextures(Content);
@@ -90,7 +103,7 @@ namespace Project1
 
             megaman.reachedCheckpoint();
 
-            _keyboardController = new KeyboardController(this,  megaman, displayedEnemy, pellets);
+            _keyboardController = new KeyboardController(this, megaman, displayedEnemy, pellets);
             _keyboardController.Initialize();
             _mouseController.Initialize(height, width);
             soundcontroller.Initialize();
@@ -119,11 +132,15 @@ namespace Project1
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             soundcontroller.LoadContent();
             BlockSpriteFactory.Instance.LoadAllTextures(Content);
+            font = Content.Load<SpriteFont>("ScoreFont");
+            GameOverFont = Content.Load<SpriteFont>("GameOverFont");
         }
 
         protected override void Update(GameTime gameTime)
         {
-           Boolean paused = _keyboardController.isPaused();
+
+            bool paused = _keyboardController.isPaused();
+
             if (!_keyboardController.isPaused())
             {
                 // Use the keyboard controller to get input and update MegaMan and enemies
@@ -137,16 +154,29 @@ namespace Project1
                 megaman.Update(gameTime, interval);
                 sniperjoe.Update(gameTime);
                 displayedEnemy.Update(gameTime);
-                CollidionHandler.HandleMegamanCollisions(megaman, levelParser.Blocks, enemies);
-                CollidionHandler.HandleEnemyCollisions(sniperjoe, blockList, pellets);
+                CollidionHandler.HandleMegamanCollisions(megaman, levelParser.Blocks, enemies, enemyDropList);
+                CollidionHandler.HandleEnemyCollisions(sniperjoe, blockList, pellets, enemyDropList);
 
                 foreach (var pellet in pellets)
                 {
                     pellet.Update(gameTime);
                     //CollidionHandler.HandleMegamanPelletCollisions(pellet, sniperjoe);
                 }
-
+                foreach (var enemyDrop in enemyDropList)
+                {
+                    enemyDrop.Update(gameTime);
+                }
                 camera.Position = new Vector2(megaman.x, camera.Position.Y);
+                scoreX = (int)megaman.x;
+
+                if (megaman.GetHealth() <= 0 || megaman.y > 400)
+                {
+                    MegamanDied = true;
+                }
+                else
+                {
+                    MegamanDied = false;
+                }
 
                 base.Update(gameTime);
             }
@@ -166,8 +196,17 @@ namespace Project1
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);  // Clear the screen
+            if (MegamanDied)
+            {
 
+                GraphicsDevice.Clear(Color.Black);
+                _spriteBatch.Begin(transformMatrix: camera.GetTransform());
+                _spriteBatch.DrawString(GameOverFont, "GAME OVER", new Vector2(scoreX - 370, -50), Color.Red);
+                _spriteBatch.End();
+            }
+            else
+            {
+                GraphicsDevice.Clear(Color.CornflowerBlue);  // Clear the screen
             
             _spriteBatch.Begin(transformMatrix: camera.GetTransform());
 
@@ -181,13 +220,25 @@ namespace Project1
             sniperjoe.Draw(_spriteBatch, false, false);
             displayedEnemy.Draw(_spriteBatch);
 
+              _spriteBatch.DrawString(font, megaman.GetHealth().ToString(), new Vector2(scoreX-370, -200), Color.White);
+              _spriteBatch.DrawString(font, megaman.GetScore().ToString(), new Vector2(scoreX, -200), Color.White);
 
-            foreach (var pellet in pellets)
-            {
-                pellet.Draw(_spriteBatch, movementSpeed);
+
+                foreach (var pellet in pellets)
+                {
+                    pellet.Draw(_spriteBatch, movementSpeed);
+                }
+                foreach (var enemyDrop in enemyDropList)
+                {
+                    enemyDrop.Draw(_spriteBatch, movementSpeed);
+                }
+                _spriteBatch.End();
             }
+            
 
-            _spriteBatch.End();
+            
+
+            
 
             // Draw Bombomb directly
             //bombomb.Draw(_spriteBatch, false, false);  // Draw Bombomb without flipping
