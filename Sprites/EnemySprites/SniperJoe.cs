@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Project1.GameObjects;
 using System.Collections.Generic;
 //using System.Drawing;
 
@@ -30,6 +31,7 @@ public class SniperJoe : IEnemySprite
     bool isVisible = true;
 
     private int screenWidth;  // Screen width to manage projectile boundaries
+    GraphicsDeviceManager graphics;
 
     // Constructor with only the texture parameter, like the other enemy classes
     public SniperJoe(Texture2D texture)
@@ -56,12 +58,14 @@ public class SniperJoe : IEnemySprite
         screenWidth = 800;  // Assume a default screen width; adjust if necessary
 
         projectiles = new List<IEnemySprite>();
+        
     }
 
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
     {
         // Any other initialization logic if required
         screenWidth = _graphics.PreferredBackBufferWidth;  // Use the actual screen width if available
+        this.graphics = _graphics;
     }
 
     public void Update(GameTime gameTime)
@@ -246,9 +250,15 @@ public class SniperJoe : IEnemySprite
     {
         return health;
     }
-    public void TakeDamage()
+    public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
+        if (health == 0)
+        {
+            EnemyDrop enemyDrop = new EnemyDrop();
+            enemyDrop.Initialize(graphics, (int)x, (int)y);
+            enemyDropList.Add(enemyDrop);
+        }
     }
 }
 

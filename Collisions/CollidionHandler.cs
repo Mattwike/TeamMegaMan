@@ -24,7 +24,7 @@ namespace Project1.Collisions
 
 		//}
 
-		public static void HandleMegamanCollisions(Megaman megaman, List<IBlocks> blocklist, List<IEnemySprite> enemies)
+		public static void HandleMegamanCollisions(Megaman megaman, List<IBlocks> blocklist, List<IEnemySprite> enemies, List<EnemyDrop> enemyDropList)
 		{
 			MegamanCollisonHandler handler = new MegamanCollisonHandler(megaman);
 
@@ -37,9 +37,13 @@ namespace Project1.Collisions
             {
                 handler.handleEnemyCollision(enemy);
             }
-		}
+            foreach (EnemyDrop enemyDrop in enemyDropList)
+            {
+                handler.handleEnemyDropCollision(enemyDrop);
+            }
+        }
 
-        public static void HandleEnemyCollisions(SniperJoe sniperjoe, List<IBlocks> blocklist, List<Pellet> pellets)
+        public static void HandleEnemyCollisions(SniperJoe sniperjoe, List<IBlocks> blocklist, List<Pellet> pellets, List<EnemyDrop> enemyDropList)
         {
             EnemyCollisonHandler handler = new EnemyCollisonHandler(sniperjoe);
 
@@ -49,10 +53,10 @@ namespace Project1.Collisions
             }
             foreach (Pellet pellet in pellets)
             {
-                handler.handlePelletCollision(pellet);
+                handler.handlePelletCollision(pellet, enemyDropList);
             }
         }
-        public static void HandleMegamanPelletCollisions(Pellet pellet, IEnemySprite enemy)
+        public static void HandleMegamanPelletCollisions(Pellet pellet, IEnemySprite enemy, List<EnemyDrop> enemyDropList)
         {
             PelletCollisionHandler handler = new PelletCollisionHandler(pellet);
 
