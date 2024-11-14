@@ -23,7 +23,9 @@ namespace Project1.Collisions
         private CollisionDetector detector;
         public IBlocks block {get; private set; }
         public IEnemySprite enemy { get; private set; }
+        public EnemyDrop enemyDrop { get; private set; }
         public Rectangle EnemyBox;
+        public Rectangle EnemyDropBox;
 
         Dictionary<Type, Dictionary<CollisionDirection, IResponse>> collisionDict;
 
@@ -63,7 +65,7 @@ namespace Project1.Collisions
         public void handleEnemyCollision(IEnemySprite enemy)
         {
             this.enemy = enemy;
-
+            
             EnemyBox = enemy.getRectangle();
 
             CollisionDirection Direction = CollisionDetector.DetectCollisionType(megaman.MegamanBox, EnemyBox);
@@ -71,9 +73,26 @@ namespace Project1.Collisions
             {
                 if (collisionDict[typeof(IEnemySprite)].ContainsKey(Direction))
                 {
+                    megaman.TakeDamage();
                     collisionDict[typeof(IEnemySprite)][Direction].Execute();
                 }
             }
+        }
+        public void handleEnemyDropCollision(EnemyDrop enemyDrop)
+        {
+            this.enemyDrop = enemyDrop;
+
+            EnemyDropBox = enemyDrop.getRectangle();
+
+            CollisionDirection Direction = CollisionDetector.DetectCollisionType(megaman.MegamanBox, EnemyDropBox);
+            
+            if (Direction != CollisionDirection.None)
+            {
+                enemyDrop.removeEnemyDrop();
+                megaman.UpdateScore(100);
+                
+            }
+            
         }
 
     }
