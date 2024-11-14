@@ -64,17 +64,13 @@
 /processorParam:TextureFormat=Compressed
 /build:GameOverFont.spritefont
 
-#begin link.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
+
+#begin GameOverFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:link.png
+/processorParam:TextureFormat=Compressed
+/build:GameOverFont.spritefont
 
 #begin MegaMan.png
 /importer:TextureImporter
@@ -88,7 +84,7 @@
 /processorParam:TextureFormat=Color
 /build:MegaMan.png
 
-#begin megamanBlocks.png
+#begin megamanblocks2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -98,7 +94,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:megamanBlocks.png
+/build:megamanblocks2.png
 
 #begin mm1weaponsheet.png
 /importer:TextureImporter
