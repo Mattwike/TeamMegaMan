@@ -51,9 +51,6 @@ namespace Project1.GameObjects
         public int megamanHealth = 100;
         public int megamanScore = 0;
 
-        public int megamanHealth = 100;
-        public int megamanScore = 0;
-
         public Megaman()
         {
             State = new IdleMegamanState(this);
