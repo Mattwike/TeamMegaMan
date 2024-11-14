@@ -12,8 +12,6 @@ using Microsoft.Xna.Framework.Media;
 using Project1.GameControllers;
 using Project1.Levels;
 using System.IO;
-using System;
-
 
 
 namespace Project1
@@ -32,10 +30,11 @@ namespace Project1
         private SniperJoe sniperjoe;
         private GenericEnemy displayedEnemy;
 
+        private Floor floor;
+        private Floor floor2;
+        private Floor wall;
+        private Floor Ceiling;
         private soundController soundcontroller;
-        private LevelLoader levelLoader;
-        private LevelParser levelParser;
-        private List<IBlocks> levelBlocks;
 
         float movementSpeed;
         private GraphicsDeviceManager _graphics;
@@ -85,7 +84,14 @@ namespace Project1
 
             //load Block Textures
             BlockSpriteFactory.Instance.LoadAllTextures(Content);
-     
+            Vector2 floorPos = new Vector2(0, 180);
+            Vector2 floorPos2 = new Vector2(200, 180);
+            Vector2 wallpos = new Vector2(250, 160);
+            Vector2 Ceilingpos = new Vector2(200, 100);
+            floor = new Floor(10, floorPos);
+            floor2 = new Floor(10, floorPos2);
+            wall = new Floor(3, wallpos);
+            Ceiling = new Floor(10, Ceilingpos);
 
 
             // Initialize the displayed enemy
@@ -108,21 +114,6 @@ namespace Project1
             _mouseController.Initialize(height, width);
             soundcontroller.Initialize();
 
-            // Initialize the level loader and parser
-            levelLoader = new LevelLoader();
-            levelParser = new LevelParser();
-
-            string levelPath = Path.Combine("Levels", "Level1.txt");
-
-            // Load the level data
-            List<string> levelData = levelLoader.LoadLevel(levelPath);
-
-            // Parse the level data to create blocks
-            levelParser.ParseLevel(levelData);
-
-            // Retrieve the blocks created by the parser
-            levelBlocks = levelParser.Blocks;
-
             base.Initialize();
         }
 
@@ -133,8 +124,6 @@ namespace Project1
             soundcontroller.LoadContent();
             font = Content.Load<SpriteFont>("ScoreFont");
             GameOverFont = Content.Load<SpriteFont>("GameOverFont");
-            BlockSpriteFactory.Instance.LoadAllTextures(Content);
-
         }
 
         protected override void Update(GameTime gameTime)
@@ -150,13 +139,17 @@ namespace Project1
                 List<IEnemySprite> enemies = new List<IEnemySprite>();
                 enemies.Add(sniperjoe);
                 enemies.AddRange(sniperjoe.projectiles);
+                blockList.Add(floor);
+                blockList.Add(floor2);
+                blockList.Add(wall);
+                blockList.Add(Ceiling);
+
 
                 // Update Bombomb directly
                 megaman.Update(gameTime, interval);
                 sniperjoe.Update(gameTime);
                 displayedEnemy.Update(gameTime);
-
-                CollidionHandler.HandleMegamanCollisions(megaman, levelParser.Blocks, enemies, enemyDropList);
+                CollidionHandler.HandleMegamanCollisions(megaman, blockList, enemies, enemyDropList);
                 CollidionHandler.HandleEnemyCollisions(sniperjoe, blockList, pellets, enemyDropList);
 
                 foreach (var pellet in pellets)
@@ -183,24 +176,14 @@ namespace Project1
                 base.Update(gameTime);
             }
 
-
             soundcontroller.Update(megaman, paused);
             _keyboardController.checkExit();
-
-            // Update level blocks if necessary
-            foreach (var block in levelBlocks)
-            {
-                block.Update();
-            }
-
-            base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             if (MegamanDied)
             {
-
 
                 GraphicsDevice.Clear(Color.Black);
                 _spriteBatch.Begin(transformMatrix: camera.GetTransform());
@@ -211,19 +194,17 @@ namespace Project1
             {
                 GraphicsDevice.Clear(Color.CornflowerBlue);  // Clear the screen
 
-            
                 _spriteBatch.Begin(transformMatrix: camera.GetTransform());
-
-                foreach (var block in levelBlocks)
-                {
-                    block.Draw(_spriteBatch);
-                }
 
                 // Draw MegaMan and displayed enemy as before
                 megaman.Draw(_spriteBatch, movementSpeed);
                 sniperjoe.Draw(_spriteBatch, false, false);
                 displayedEnemy.Draw(_spriteBatch);
-                _spriteBatch.DrawString(font, megaman.GetHealth().ToString(), new Vector2(scoreX - 370, -200), Color.White);
+                floor.Draw(_spriteBatch);
+                floor2.Draw(_spriteBatch);
+                wall.Draw(_spriteBatch);
+                Ceiling.Draw(_spriteBatch);
+                _spriteBatch.DrawString(font, megaman.GetHealth().ToString(), new Vector2(scoreX-370, -200), Color.White);
                 _spriteBatch.DrawString(font, megaman.GetScore().ToString(), new Vector2(scoreX, -200), Color.White);
 
                 foreach (var pellet in pellets)
