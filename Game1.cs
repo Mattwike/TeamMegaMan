@@ -134,6 +134,7 @@ namespace Project1
             font = Content.Load<SpriteFont>("ScoreFont");
             GameOverFont = Content.Load<SpriteFont>("GameOverFont");
             BlockSpriteFactory.Instance.LoadAllTextures(Content);
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -154,6 +155,7 @@ namespace Project1
                 megaman.Update(gameTime, interval);
                 sniperjoe.Update(gameTime);
                 displayedEnemy.Update(gameTime);
+
                 CollidionHandler.HandleMegamanCollisions(megaman, levelParser.Blocks, enemies, enemyDropList);
                 CollidionHandler.HandleEnemyCollisions(sniperjoe, blockList, pellets, enemyDropList);
 
@@ -199,6 +201,7 @@ namespace Project1
             if (MegamanDied)
             {
 
+
                 GraphicsDevice.Clear(Color.Black);
                 _spriteBatch.Begin(transformMatrix: camera.GetTransform());
                 _spriteBatch.DrawString(GameOverFont, "GAME OVER", new Vector2(scoreX - 370, -50), Color.Red);
@@ -222,7 +225,6 @@ namespace Project1
                 displayedEnemy.Draw(_spriteBatch);
                 _spriteBatch.DrawString(font, megaman.GetHealth().ToString(), new Vector2(scoreX - 370, -200), Color.White);
                 _spriteBatch.DrawString(font, megaman.GetScore().ToString(), new Vector2(scoreX, -200), Color.White);
-
 
                 foreach (var pellet in pellets)
                 {
