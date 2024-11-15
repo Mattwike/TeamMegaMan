@@ -21,6 +21,7 @@ namespace Project1.GameObjects
         public bool is_falling = false;
         public bool is_climbing = false;
         public bool reached_top = false;
+        public bool is_climable = false;
         private float origionalx;
         private float origionaly;
         public bool isVulnerable;
@@ -29,11 +30,6 @@ namespace Project1.GameObjects
         public float gravity = 4.5f;
         public int MegamanSize;
         public Rectangle MegamanBox;
-        //test
-        public Floor floor;
-        private CollisionDetector detector;
-        //remove this
-        private Vector2 start = new Vector2(0, 200);
         private int count = 100;
         public bool istouchingfloor;
         public float velocity = 1f;
@@ -135,9 +131,6 @@ namespace Project1.GameObjects
 
         public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
         {
-            floor = new Floor(count, start);
-            detector = new CollisionDetector();
-            levelparser = new LevelParser();
             MegamanSize = megamanSize;
             State.Initialize(_graphics, movementSpeed, megamanSize, interval);
         }

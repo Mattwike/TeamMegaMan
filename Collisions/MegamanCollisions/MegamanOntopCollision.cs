@@ -14,27 +14,26 @@ using Project1.Collisions;
 
 namespace Project1.CollisionEffects
 {
-	public class MegamanTopCollision : IResponse
-	{
+    public class MegamanOntopCollision : IResponse
+    {
+        private MegamanCollisonHandler Handler;
 
-		MegamanCollisonHandler Handler;
+        public MegamanOntopCollision(MegamanCollisonHandler handler)
+        {
+            Handler = handler;
+        }
 
-		public MegamanTopCollision(MegamanCollisonHandler handler) 
-		{
-			Handler = handler;
-		}
-
-		public void Execute()
-		{
+        public void Execute()
+        {
             if (Handler.block is FloorBlock floorBlock && floorBlock.IsLadder)
             {
-                return;
+                Handler.megaman.is_climable = true;
             }
-
-            Handler.megaman.istouchingfloor = true;
-			Handler.megaman.y = Handler.block.boundingBox.Y - Handler.megaman.MegamanBox.Height;
-			Handler.megaman.is_falling = false;
-			Handler.megaman.gravity = 4.5f;
-		}
-	}
+            else
+            {
+                Handler.megaman.is_falling = true;
+                Handler.megaman.is_climable = false;
+            }
+        }
+    }
 }

@@ -99,7 +99,7 @@ namespace Project1
             sniperjoe.Initialize(_graphics, 30, 40);
 
             megaman.x = 0;
-            megaman.y = 100;
+            megaman.y = 1113;
 
             megaman.reachedCheckpoint();
 
@@ -168,10 +168,11 @@ namespace Project1
                 {
                     enemyDrop.Update(gameTime);
                 }
-                camera.Position = new Vector2(megaman.x, camera.Position.Y);
+                //camera.Position = new Vector2(megaman.x, camera.Position.Y);
+                camera.Position = new Vector2(megaman.x, 1200);
                 scoreX = (int)megaman.x;
 
-                if (megaman.GetHealth() <= 0 || megaman.y > 400)
+                if (megaman.GetHealth() <= 0 || megaman.y > 1200)
                 {
                     MegamanDied = true;
                 }

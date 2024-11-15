@@ -32,6 +32,11 @@ namespace Project1.CollisionEffects
                 Handler.megaman.MegamanBox.Height - 1 
             );
 
+            if (Handler.block is FloorBlock floorBlock && floorBlock.IsLadder)
+            {
+                return;
+            }
+
             CollisionDirection side = CollisionDetector.DetectCollisionType(adjustedMegamanBox, Handler.block.boundingBox);
 
             if (side == CollisionDirection.Left)

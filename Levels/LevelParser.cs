@@ -26,8 +26,15 @@ namespace Project1.Levels
                 { 'L', (x, y) => CreateFloorBlock(x, y, BlockType.FloorEndLeft) },
                 { 'M', (x, y) => CreateFloorBlock(x, y, BlockType.FloorMiddle) },
                 { 'R', (x, y) => CreateFloorBlock(x, y, BlockType.FloorEndRight) },
-                // Add other mappings as needed
-            };
+                { 'D', (x, y) => CreateFloorBlock(x, y, BlockType.BrickEndRight) },
+                { 'E', (x, y) => CreateFloorBlock(x, y, BlockType.BrickEndLeft) },
+                { 'B', (x, y) => CreateFloorBlock(x, y, BlockType.BrickMiddle) },
+                { '2', (x, y) => CreateFloorBlock(x, y, BlockType.BrickMiddle2) },
+                { '3', (x, y) => CreateFloorBlock(x, y, BlockType.BrickEndLeft2) },
+                { '4', (x, y) => CreateFloorBlock(x, y, BlockType.BrickEndRight2) },
+                { 'C', (x, y) => CreateFloorBlock(x, y, BlockType.LadderBlock) },
+            // Add other mappings as needed
+        };
         }
 
         public void ParseLevel(List<string> levelData)

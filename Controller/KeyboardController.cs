@@ -146,11 +146,12 @@ public class KeyboardController : IController
             megaman.is_damaged = true;
         }
 
-        if (megaman.x < 10 && pressedKeys.Contains(Keys.W) && !megaman.reached_top)
+        if ((megaman.is_climable || megaman.is_climbing) && pressedKeys.Contains(Keys.W))
         {
             commandDict[Keys.OemQuestion].Execute(_graphics, movementSpeed, megamanSize, interval);
             megaman.y -= 3;
             megaman.is_climbing = true;
+            //megaman.is_climbing = true;
         }
 
         if (megaman.is_climbing && pressedKeys.Contains(Keys.D))
@@ -160,9 +161,9 @@ public class KeyboardController : IController
 
         if (megaman.is_climbing && megaman.y < 25)
         {
-            commandDict[Keys.D8].Execute(_graphics, movementSpeed, megamanSize, interval);
-            megaman.is_climbing = false;
-            megaman.reached_top = true;
+            //commandDict[Keys.D8].Execute(_graphics, movementSpeed, megamanSize, interval);
+            //megaman.is_climbing = false;
+            //megaman.reached_top = true;
         }
 
         if (pressedKeys.Contains(Keys.A) && Mouse.GetState().LeftButton == ButtonState.Pressed && !megaman.is_climbing && !megaman.is_jumping && !megaman.is_falling)
