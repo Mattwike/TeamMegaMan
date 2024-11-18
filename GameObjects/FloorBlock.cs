@@ -40,30 +40,39 @@ namespace Project1.GameObjects
             {
                 case BlockType.FloorEndLeft:
                     sourceRectangle = BlockSpriteFactory.Instance.GetFloorEndLeftSource();
+                    IsLadder = false;
                     break;
                 case BlockType.FloorMiddle:
                     sourceRectangle = BlockSpriteFactory.Instance.GetFloorMiddleSource();
+                    IsLadder = false;
                     break;
                 case BlockType.FloorEndRight:
                     sourceRectangle = BlockSpriteFactory.Instance.GetFloorEndRightSource();
+                    IsLadder = false;
                     break;
                 case BlockType.BrickEndRight:
                     sourceRectangle = BlockSpriteFactory.Instance.GetBrickEndRightSource();
+                    IsLadder = false;
                     break;
                 case BlockType.BrickEndLeft:
                     sourceRectangle = BlockSpriteFactory.Instance.GetBrickEndLeftSource();
+                    IsLadder = false;
                     break;
                 case BlockType.BrickMiddle:
                     sourceRectangle = BlockSpriteFactory.Instance.GetBrickMiddleSource();
+                    IsLadder = false;
                     break;
                 case BlockType.BrickMiddle2:
                     sourceRectangle = BlockSpriteFactory.Instance.GetBrickMiddle2Source();
+                    IsLadder = false;
                     break;
                 case BlockType.BrickEndLeft2:
                     sourceRectangle = BlockSpriteFactory.Instance.GetBrickEndLeft2Source();
+                    IsLadder = false;
                     break;
                 case BlockType.BrickEndRight2:
                     sourceRectangle = BlockSpriteFactory.Instance.GetBrickEndRight2Source();
+                    IsLadder = false;
                     break;
                 case BlockType.LadderBlock:
                     sourceRectangle = BlockSpriteFactory.Instance.GetLadderBlockSource();
@@ -71,6 +80,7 @@ namespace Project1.GameObjects
                     break;
                 default:
                     sourceRectangle = BlockSpriteFactory.Instance.GetFloorMiddleSource();
+                    IsLadder = false;
                     break;
             }
 

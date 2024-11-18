@@ -22,8 +22,8 @@ namespace Project1.Sprites
         public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman megaman, int interval, bool isRight)
         {
 
-            megamanSizeX = megamanSize - 5;
-            megamanSizeY = megamanSize;
+            megamanSizeX = 20 - 5;
+            megamanSizeY = 26;
             this.megaman = megaman;
             this.interval = interval;
         }

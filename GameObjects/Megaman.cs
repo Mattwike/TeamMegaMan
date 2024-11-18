@@ -80,7 +80,7 @@ namespace Project1.GameObjects
 
         public void Update(GameTime gameTime, int interval)
         {
-            MegamanBox = new Rectangle((int)x, (int)y, MegamanSize, MegamanSize);
+            MegamanBox = new Rectangle((int)x, (int)y, 18, 24);
             State.Update(gameTime);
 
             if (!isVulnerable)

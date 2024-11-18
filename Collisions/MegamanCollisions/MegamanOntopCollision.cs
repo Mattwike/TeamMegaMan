@@ -28,12 +28,15 @@ namespace Project1.CollisionEffects
             if (Handler.block is FloorBlock floorBlock && floorBlock.IsLadder)
             {
                 Handler.megaman.is_climable = true;
+                Handler.megaman.is_falling = false;
             }
             else
             {
-                Handler.megaman.is_falling = true;
                 Handler.megaman.is_climable = false;
+                Handler.megaman.is_climbing = false;
+                Handler.megaman.is_falling = true;
             }
         }
+
     }
 }

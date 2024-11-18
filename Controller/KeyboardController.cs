@@ -79,6 +79,7 @@ public class KeyboardController : IController
 
     public void Update(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, GameTime gameTime)
     {
+
         KeyboardState keyboardState = Keyboard.GetState();
         Keys[] pressedKeys = keyboardState.GetPressedKeys();
 
@@ -146,12 +147,26 @@ public class KeyboardController : IController
             megaman.is_damaged = true;
         }
 
-        if ((megaman.is_climable || megaman.is_climbing) && pressedKeys.Contains(Keys.W))
+        if (megaman.is_climbing && pressedKeys.Contains(Keys.W))
         {
-            commandDict[Keys.OemQuestion].Execute(_graphics, movementSpeed, megamanSize, interval);
-            megaman.y -= 3;
             megaman.is_climbing = true;
+            megaman.y -= 3;
+            commandDict[Keys.OemQuestion].Execute(_graphics, movementSpeed, megamanSize, interval);
             //megaman.is_climbing = true;
+        }
+        else if (!megaman.is_climable && megaman.is_climbing)
+        {
+            megaman.is_climbing = false;
+        }
+
+        if (megaman.is_climable && pressedKeys.Contains(Keys.W))
+        {
+            megaman.is_climbing=true;
+        }
+        else
+        {
+            megaman.is_climable = false;
+            megaman.is_climbing = false;
         }
 
         if (megaman.is_climbing && pressedKeys.Contains(Keys.D))

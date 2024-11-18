@@ -59,6 +59,11 @@ namespace Project1.Collisions
             }
             else
             {
+                //if (!(block is FloorBlock floorBlock && floorBlock.IsLadder))
+                //{
+                //    megaman.is_climable = false;
+                //}
+
                 megaman.istouchingfloor = false;
             }
         }

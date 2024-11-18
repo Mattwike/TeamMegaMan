@@ -40,7 +40,7 @@ namespace Project1
         float movementSpeed;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
+        int ypose;
         int height;
         int width;
         int interval = 0;
@@ -122,6 +122,8 @@ namespace Project1
 
             // Retrieve the blocks created by the parser
             levelBlocks = levelParser.Blocks;
+            ypose = 920;
+            camera.Zoom(1.85f);
 
             base.Initialize();
         }
@@ -169,8 +171,13 @@ namespace Project1
                     enemyDrop.Update(gameTime);
                 }
                 //camera.Position = new Vector2(megaman.x, camera.Position.Y);
-                camera.Position = new Vector2(megaman.x, 1200);
+                camera.Position = new Vector2(megaman.x, ypose);
                 scoreX = (int)megaman.x;
+
+                if (megaman.is_climbing && ypose < megaman.y)
+                {
+                    ypose -= 3;
+                }
 
                 if (megaman.GetHealth() <= 0 || megaman.y > 1200)
                 {
