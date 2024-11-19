@@ -17,7 +17,7 @@ namespace Project1.Commands
         }
         public void Execute(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
         {
-            enemy.changeSprite(true);
+            enemy.ChangeSprite(true);
 
         }
     }

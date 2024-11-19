@@ -34,9 +34,10 @@ public class Mambu : IEnemySprite
     public int health;
 
     // Constructor to initialize Mambu with its texture
-    public Mambu(Texture2D texture)
+    public Mambu(Texture2D texture, Vector2 position)
     {
         enemyTexture = texture;
+        SetPosition(position);
         projectiles = new List<MambuProjectile>();  // Initialize projectile list
 
         // Set initial position and size (can be changed during initialization)
@@ -197,5 +198,10 @@ public class Mambu : IEnemySprite
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
+    }
+
+    public void SetPosition(Vector2 position)
+    {
+        x = position.X; y = position.Y; 
     }
 }

@@ -34,9 +34,10 @@ public class SniperJoe : IEnemySprite
     GraphicsDeviceManager graphics;
 
     // Constructor with only the texture parameter, like the other enemy classes
-    public SniperJoe(Texture2D texture)
+    public SniperJoe(Texture2D texture, Vector2 position)
     {
         enemySheet = texture;
+        SetPosition(position);
         x = 200;  // Set the starting x position of Sniper Joe
         y = 150;  // Set the starting y position of Sniper Joe
         initialY = y;  // Set the initial Y for jumping reference
@@ -259,6 +260,11 @@ public class SniperJoe : IEnemySprite
             enemyDrop.Initialize(graphics, (int)x, (int)y);
             enemyDropList.Add(enemyDrop);
         }
+    }
+
+    public void SetPosition(Vector2 position)
+    {
+        x = position.X; y = position.Y; initialY = y;
     }
 }
 

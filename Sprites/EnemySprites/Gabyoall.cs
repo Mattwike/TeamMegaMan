@@ -26,10 +26,10 @@ using System.Collections.Generic;
         public int health;
 
         // Constructor to initialize Gabyoall with its texture
-        public Gabyoall(Texture2D texture)
+        public Gabyoall(Texture2D texture, Vector2 position)
         {
             enemyTexture = texture;
-
+            SetPosition(position);
             // Set initial position and size (can be changed during initialization)
             x = 500;  // Example starting x position
             y = 200;  // Example starting y position
@@ -121,6 +121,11 @@ using System.Collections.Generic;
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
+    }
+
+    public void SetPosition(Vector2 position)
+    {
+        x = position.X; y = position.Y;
     }
 }
 

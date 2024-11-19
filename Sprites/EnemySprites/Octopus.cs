@@ -32,10 +32,10 @@ public class Octopus : IEnemySprite
     public int health;
 
     // Constructor to initialize Octopus with its texture
-    public Octopus(Texture2D texture)
+    public Octopus(Texture2D texture, Vector2 position)
     {
         enemyTexture = texture;
-
+        SetPosition(position);
         // Set initial position and size (can be changed during initialization)
         x = 500;  // Example starting x position
         y = 200;  // Example starting y position
@@ -159,6 +159,11 @@ public class Octopus : IEnemySprite
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
+    }
+
+    public void SetPosition(Vector2 position)
+    {
+        x = position.X; y = position.Y;
     }
 }
 

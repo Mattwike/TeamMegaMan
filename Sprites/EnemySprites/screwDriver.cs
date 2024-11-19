@@ -17,9 +17,10 @@ public class screwDriver : IEnemySprite
     public Rectangle hitbox;
     public int health;
 
-    public screwDriver(Texture2D texture)
+    public screwDriver(Texture2D texture, Vector2 position)
     {
         enemySheet = texture;
+        SetPosition(position);
         x = 400;
         y = 30;
     }
@@ -110,5 +111,10 @@ public class screwDriver : IEnemySprite
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
+    }
+
+    public void SetPosition(Vector2 position)
+    {
+        x = position.X; y = position.Y;
     }
 }

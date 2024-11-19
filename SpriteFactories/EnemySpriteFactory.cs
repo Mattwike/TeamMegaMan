@@ -26,16 +26,16 @@ public class EnemySpriteFactory
         bossSheet = content.Load<Texture2D>("bossSheet");
     }
 
-    public IEnemySprite CreateJumpingFlea()
+    public IEnemySprite CreateJumpingFlea(Vector2 position)
     {
-        return new jumpingFlea(enemySheet);
+        return new jumpingFlea(enemySheet, position);
     }
-  
-    public IEnemySprite CreateScrewDriver()
+
+    public IEnemySprite CreateScrewDriver(Vector2 position)
     {
-        return new screwDriver(enemySheet);
+        return new screwDriver(enemySheet, position);
     }
-        
+
     public IEnemySprite CreateBombManIdle()
     {
         return new bombManIdle(bossSheet);
@@ -46,30 +46,29 @@ public class EnemySpriteFactory
         return new BombManThrowBomb(bossSheet);
     }
 
-    public IEnemySprite CreateBombomb()
+    public IEnemySprite CreateBombomb(Vector2 position)
     {
-        return new Bombomb(enemySheet, 400, 200);
+        return new Bombomb(enemySheet, position.X, position.Y, position);
     }
 
-    public IEnemySprite CreateOctopus()
+    public IEnemySprite CreateOctopus(Vector2 position)
     {
-        return new Octopus(enemySheet);
+        return new Octopus(enemySheet, position);
     }
 
-    public IEnemySprite CreateGabyoall()
+    public IEnemySprite CreateGabyoall(Vector2 position)
     {
-        return new Gabyoall(enemySheet);
+        return new Gabyoall(enemySheet, position);
     }
 
-    public IEnemySprite CreateMambu()
+    public IEnemySprite CreateMambu(Vector2 position)
     {
-        return new Mambu(enemySheet);
+        return new Mambu(enemySheet, position);
     }
 
-    public IEnemySprite CreateSniperJoe()
+    public IEnemySprite CreateSniperJoe(Vector2 position)
     {
-        return new SniperJoe(enemySheet); 
+        return new SniperJoe(enemySheet, position);
     }
-
-
 }
+

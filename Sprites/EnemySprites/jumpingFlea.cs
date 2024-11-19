@@ -22,9 +22,10 @@ public class jumpingFlea : IEnemySprite
     public Rectangle hitbox;
     public int health;
 
-    public jumpingFlea(Texture2D texture)
+    public jumpingFlea(Texture2D texture, Vector2 position)
     {
         enemySheet = texture;
+        SetPosition(position);
         x = 350;
         y = 30;
     }
@@ -146,5 +147,10 @@ public class jumpingFlea : IEnemySprite
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
+    }
+
+    public void SetPosition(Vector2 position)
+    {
+        x = position.X; y = position.Y;
     }
 }
