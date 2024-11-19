@@ -21,8 +21,8 @@ public class screwDriver : IEnemySprite
     {
         enemySheet = texture;
         SetPosition(position);
-        x = 400;
-        y = 30;
+        //x = 400;
+        //y = 30;
     }
 
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)

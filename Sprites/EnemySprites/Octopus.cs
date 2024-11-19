@@ -37,8 +37,8 @@ public class Octopus : IEnemySprite
         enemyTexture = texture;
         SetPosition(position);
         // Set initial position and size (can be changed during initialization)
-        x = 500;  // Example starting x position
-        y = 200;  // Example starting y position
+        //x = 500;  // Example starting x position
+        //y = 200;  // Example starting y position
         initialX = x;  // Store the initial x position to use as reference
         width = 16;  // Width of the sprite
         height = 16;  // Height of the sprite
@@ -163,7 +163,7 @@ public class Octopus : IEnemySprite
 
     public void SetPosition(Vector2 position)
     {
-        x = position.X; y = position.Y;
+        x = position.X; y = position.Y; initialX = x;
     }
 }
 

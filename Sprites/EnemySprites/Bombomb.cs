@@ -32,8 +32,8 @@ public class Bombomb : IEnemySprite
     {
         bombombSheet = texture;
         SetPosition(position);
-        x = startX;
-        y = startY;
+        //x = startX;
+        //y = startY;
         initialX = startX;  // Save the initial position for resetting
         initialY = startY;
         jumpHeight = 100;  // 20px jump height

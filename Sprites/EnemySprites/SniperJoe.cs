@@ -38,8 +38,8 @@ public class SniperJoe : IEnemySprite
     {
         enemySheet = texture;
         SetPosition(position);
-        x = 200;  // Set the starting x position of Sniper Joe
-        y = 150;  // Set the starting y position of Sniper Joe
+        //x = 200;  // Set the starting x position of Sniper Joe
+        //y = 150;  // Set the starting y position of Sniper Joe
         initialY = y;  // Set the initial Y for jumping reference
         gravity = 4.5f;  // Set the gravity for the jump
         currentFrame = 0;

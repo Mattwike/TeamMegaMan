@@ -1,156 +1,171 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Project1.GameObjects;
-using Project1.Sprites;
+using Project1.Interfaces;
 using System.Collections.Generic;
 
-public class jumpingFlea : IEnemySprite
-{
-    int currentFrame;    // Make sure to use camelCase consistently
-    int totalFrame;
-    int delayCounter;
-    int delayMax;
-    float x;
-    float y;
-    private Texture2D enemySheet;
-    int enemySizeX;
-    int enemySizeY;
-    float enemySpeed;
-    float gravity;
-    bool jumping;
-    bool falling;
-    public Rectangle hitbox;
-    public int health;
-
-    public jumpingFlea(Texture2D texture, Vector2 position)
+    public class jumpingFlea : IEnemySprite
     {
-        enemySheet = texture;
-        SetPosition(position);
-        x = 350;
-        y = 30;
-    }
+        // Fields
+        private int currentFrame;
+        private int totalFrames;
+        private int delayCounter;
+        private int delayMax;
+        private float x;
+        private float y;
+        private Texture2D enemySheet;
+        private int enemySizeX;
+        private int enemySizeY;
+        private float enemySpeed;
+        private float gravity;
+        private bool jumping;
+        private bool falling;
+        private float initialY; // Stores the initial Y position
+        public Rectangle hitbox;
+        public int health;
 
-    public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
-    {
-        currentFrame = 0;
-        totalFrame = 15;
-        delayCounter = 0;
-        delayMax = 10;
-        enemySizeX = megamanSize;
-        enemySizeY = megamanSize;
-        gravity = 4.5f;
-        enemySpeed = 2f;
-        jumping = false;
-        falling = false;
-      
-    }
-
-    public void Update(GameTime gameTime)
-    {
-        delayCounter++;
-        if (delayCounter >= delayMax)
+        public jumpingFlea(Texture2D texture, Vector2 position)
         {
+            enemySheet = texture;
+            SetPosition(position);
+            initialY = position.Y; // Store the initial Y position
 
-            currentFrame++;
-            if (currentFrame >= totalFrame)
-            {
-                currentFrame = 0;
-            }
-            delayCounter = 0;
+            // Removed hardcoded position overrides
+            // x = 350;
+            // y = 30;
         }
 
-        if (jumping)
+        public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int megamanSize)
         {
-            x += enemySpeed;
-            if (gravity > 0)
+            currentFrame = 0;
+            totalFrames = 15;
+            delayCounter = 0;
+            delayMax = 10;
+            enemySizeX = megamanSize;
+            enemySizeY = megamanSize;
+            gravity = 4.5f;
+            enemySpeed = 2f;
+            jumping = false;
+            falling = false;
+            health = 100; // Initialize health if necessary
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            delayCounter++;
+            if (delayCounter >= delayMax)
             {
-                y -= gravity;
-                gravity -= 0.25f;
+                currentFrame++;
+                if (currentFrame >= totalFrames)
+                {
+                    currentFrame = 0;
+                }
+                delayCounter = 0;
+            }
+
+            if (jumping)
+            {
+                x += enemySpeed;
+                if (gravity > 0)
+                {
+                    y -= gravity;
+                    gravity -= 0.25f;
+                }
+                else
+                {
+                    jumping = false;
+                    falling = true;
+                }
+            }
+            else if (falling)
+            {
+                if (y < initialY)
+                {
+                    y += gravity;
+                    gravity += 0.25f;
+                }
+                else
+                {
+                    y = initialY;
+                    falling = false;
+                    gravity = 4.5f;
+                }
             }
             else
             {
+                // Optional: Logic to initiate jumping again after landing
+                // For example, start jumping again after some delay
+            }
+
+            // Update hitbox position
+            hitbox = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
+        }
+
+        public void Draw(SpriteBatch spriteBatch, bool flipHorizontally, bool flipVertically)
+        {
+            SpriteEffects spriteEffects = SpriteEffects.None;
+
+            if (flipHorizontally)
+            {
+                spriteEffects |= SpriteEffects.FlipHorizontally;
+            }
+
+            if (flipVertically)
+            {
+                spriteEffects |= SpriteEffects.FlipVertically;
+            }
+
+            Rectangle sourceRectangle = Rectangle.Empty;
+            Rectangle destinationRectangle = Rectangle.Empty;
+
+            if (currentFrame < 10)
+            {
+                destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
+                sourceRectangle = new Rectangle(113, 177, 18, 14);
+            }
+            else if (currentFrame == 10)
+            {
+                destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
+                sourceRectangle = new Rectangle(148, 170, 16, 19);
+                jumping = true;
+            }
+            else if (currentFrame > 10 && currentFrame < 13)
+            {
+                destinationRectangle = new Rectangle((int)x, (int)y - 2, enemySizeX, enemySizeY + 2);
+                sourceRectangle = new Rectangle(131, 163, 16, 21);
+            }
+            else if (currentFrame >= 13)
+            {
+                destinationRectangle = new Rectangle((int)x, (int)y - 2, enemySizeX, enemySizeY + 2);
+                sourceRectangle = new Rectangle(131, 163, 16, 21);
                 jumping = false;
                 falling = true;
             }
+
+            spriteBatch.Draw(enemySheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
         }
-        else if (falling)
+
+        public Rectangle getRectangle()
         {
-            if (y < 30)
-            {
-                y += gravity;
-                gravity += 0.25f;
-            }
-            else
-            {
-                y = 30;
-                falling = false;
-                gravity = 4.5f;
-            }
+            return hitbox;
         }
 
+        public int GetHealth()
+        {
+            return health;
+        }
 
+        public void TakeDamage(List<EnemyDrop> enemyDropList)
+        {
+            health -= 10;
+            // Optional: Add logic to handle enemy death
+        }
+
+        public void SetPosition(Vector2 position)
+        {
+            x = position.X;
+            y = position.Y;
+            initialY = position.Y; // Ensure initialY is updated if position changes
+        }
     }
 
-
-    public void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically)
-    {
-
-        SpriteEffects spriteEffects = SpriteEffects.None;
-
-        if (flipHorizontally)
-        {
-            spriteEffects |= SpriteEffects.FlipHorizontally;
-        }
-
-        if (flipVertically)
-        {
-            spriteEffects |= SpriteEffects.FlipVertically;
-        }
-
-        Rectangle sourceRectangle = Rectangle.Empty;
-        Rectangle destinationRectangle = Rectangle.Empty;
-
-        if (currentFrame < 10)
-        {
-            destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
-            sourceRectangle = new Rectangle(113, 177, 18, 14);
-        }
-        else if (currentFrame == 10)
-        {
-            destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
-            sourceRectangle = new Rectangle(148, 170, 16, 19);
-            jumping = true;
-        }
-        else if(currentFrame > 10 && currentFrame < 13)
-        {
-            destinationRectangle = new Rectangle((int)x, (int)y-2, enemySizeX, enemySizeY+2);
-            sourceRectangle = new Rectangle(131, 163, 16, 21);
-            
-        }else if(currentFrame >= 13)
-        {
-            destinationRectangle = new Rectangle((int)x, (int)y - 2, enemySizeX, enemySizeY + 2);
-            sourceRectangle = new Rectangle(131, 163, 16, 21);
-            jumping = false;
-            falling = true;
-        }
-
-        _spriteBatch.Draw(enemySheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
-    }
-    public Rectangle getRectangle()
-    {
-        return hitbox;
-    }
-    public int GetHealth()
-    {
-        return health;
-    }
-    public void TakeDamage(List<EnemyDrop> enemyDropList)
-    {
-        health -= 10;
-    }
-
-    public void SetPosition(Vector2 position)
-    {
-        x = position.X; y = position.Y;
-    }
-}
