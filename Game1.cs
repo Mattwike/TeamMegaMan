@@ -7,7 +7,6 @@ using Project1.GameObjects;
 using Project1.Interfaces;
 using Project1.Collisions;
 using System.Collections.Generic;
-using Project1.GameControllers;
 using Project1.Levels;
 using System.IO;
 
@@ -15,22 +14,18 @@ namespace Project1
 {
     public class Game1 : Game
     {
-        Camera camera;
-
         private KeyboardController _keyboardController;
         private MouseController _mouseController;
         private List<ISprite> sprites;  // Keeping this for future use if needed
-        List<Pellet> pellets;
-        List<EnemyDrop> enemyDropList;
+        private List<Pellet> pellets;
+        private List<EnemyDrop> enemyDropList;  // Added enemyDropList
         private Megaman megaman;
-        private int megamanHealth = 100;
         private GenericEnemy displayedEnemy;
 
-        private Floor floor;
-        private Floor floor2;
-        private Floor wall;
-        private Floor Ceiling;
-        private soundController soundcontroller;
+        private LevelLoader levelLoader;
+        private LevelParser levelParser;
+        private List<IBlocks> levelBlocks;
+        private List<IEnemySprite> levelEnemies;
 
         float movementSpeed;
         private GraphicsDeviceManager _graphics;
@@ -40,31 +35,22 @@ namespace Project1
         int width;
         int interval = 0;
 
-        private SpriteFont font;
-        private SpriteFont GameOverFont;
-        int scoreX = 10;
-        bool MegamanDied = false;
-
-        private LevelParser levelParser;  // Added LevelParser instance
-
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            IsMouseVisible = true;
             pellets = new List<Pellet>();
-            enemyDropList = new List<EnemyDrop>();
+            enemyDropList = new List<EnemyDrop>();  // Initialize enemyDropList
         }
 
         protected override void Initialize()
         {
-            // Initialize camera and sound controller
-            camera = new Camera(GraphicsDevice.Viewport);
-            soundcontroller = new soundController(Content);
-
+            // Initialize movement speed and screen dimensions
             movementSpeed = 3;
-
             width = _graphics.PreferredBackBufferWidth / 2;
             height = _graphics.PreferredBackBufferHeight / 2;
+
             _mouseController = new MouseController();
 
             // Load all textures for MegaMan and Enemies
@@ -72,19 +58,9 @@ namespace Project1
             EnemySpriteFactory.Instance.LoadAllTextures(Content);
             pelletSpriteFactory.Instance.LoadAllTextures(Content);
             pelletSpriteFactory.Instance.CreatePellet();
-            EnemyDropSpriteFactory.Instance.LoadAllTextures(Content);
-            EnemyDropSpriteFactory.Instance.CreateEnemyDrop();
 
             // Load Block Textures
             BlockSpriteFactory.Instance.LoadAllTextures(Content);
-            Vector2 floorPos = new Vector2(0, 180);
-            Vector2 floorPos2 = new Vector2(200, 180);
-            Vector2 wallpos = new Vector2(250, 160);
-            Vector2 Ceilingpos = new Vector2(200, 100);
-            floor = new Floor(10, floorPos);
-            floor2 = new Floor(10, floorPos2);
-            wall = new Floor(3, wallpos);
-            Ceiling = new Floor(10, Ceilingpos);
 
             // Initialize the displayed enemy
             displayedEnemy = new GenericEnemy();
@@ -93,27 +69,31 @@ namespace Project1
             // Initialize the MegaMan character
             megaman = new Megaman();
             megaman.Initialize(_graphics, movementSpeed, 40, interval);
-
             megaman.x = 0;
             megaman.y = 100;
-
-            megaman.reachedCheckpoint();
 
             _keyboardController = new KeyboardController(this, megaman, displayedEnemy, pellets);
             _keyboardController.Initialize();
             _mouseController.Initialize(height, width);
-            soundcontroller.Initialize();
 
-            // Initialize LevelParser and parse level data
+            // Initialize the level loader and parser
+            levelLoader = new LevelLoader();
             levelParser = new LevelParser();
 
-            // Load level data using LevelLoader
-            LevelLoader levelLoader = new LevelLoader("Level1.txt");  // Adjust the path as needed
-            List<string> levelData = levelLoader.LoadLevelData();
+            string levelPath = Path.Combine("Levels", "Level1.txt");
+
+            // Load the level data
+            List<string> levelData = levelLoader.LoadLevel(levelPath);
+
+            // Parse the level data to create blocks and enemies
             levelParser.ParseLevel(levelData);
 
-            // Initialize enemies from the level parser
-            foreach (var enemy in levelParser.Enemies)
+            // Retrieve the blocks and enemies created by the parser
+            levelBlocks = levelParser.Blocks;
+            levelEnemies = levelParser.Enemies;
+
+            // Initialize enemies
+            foreach (var enemy in levelEnemies)
             {
                 enemy.Initialize(_graphics, movementSpeed, 40);  // Adjust parameters as needed
             }
@@ -125,126 +105,77 @@ namespace Project1
         {
             // Create the SpriteBatch used for rendering
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            soundcontroller.LoadContent();
-            font = Content.Load<SpriteFont>("ScoreFont");
-            GameOverFont = Content.Load<SpriteFont>("GameOverFont");
+            BlockSpriteFactory.Instance.LoadAllTextures(Content);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            bool paused = _keyboardController.isPaused();
+            // Use the keyboard controller to get input and update MegaMan and enemies
+            _keyboardController.Update(_graphics, movementSpeed, 40, gameTime);
 
-            if (!paused)
+            // Update MegaMan
+            megaman.Update(gameTime, interval);  // Added 'interval' parameter
+
+            displayedEnemy.Update(gameTime);
+
+            // Update level enemies
+            foreach (var enemy in levelEnemies)
             {
-                // Use the keyboard controller to get input and update MegaMan and enemies
-                _keyboardController.Update(_graphics, movementSpeed, 40, gameTime);
-                List<IBlocks> blockList = new List<IBlocks>();
-                List<IEnemySprite> enemies = new List<IEnemySprite>();
-
-                blockList.Add(floor);
-                blockList.Add(floor2);
-                blockList.Add(wall);
-                blockList.Add(Ceiling);
-                blockList.AddRange(levelParser.Blocks);  // Add blocks from level parser
-
-                enemies.AddRange(levelParser.Enemies);  // Add enemies from level parser
-
-                // Update MegaMan and displayed enemy
-                megaman.Update(gameTime, interval);
-                displayedEnemy.Update(gameTime);
-
-                // Update enemies from the level parser
-                foreach (var enemy in levelParser.Enemies)
-                {
-                    enemy.Update(gameTime);
-                }
-
-                CollidionHandler.HandleMegamanCollisions(megaman, blockList, enemies, enemyDropList);
-                // Handle enemy collisions if needed
-                // CollidionHandler.HandleEnemyCollisions(enemy, blockList, pellets, enemyDropList);
-
-                foreach (var pellet in pellets)
-                {
-                    pellet.Update(gameTime);
-                }
-                foreach (var enemyDrop in enemyDropList)
-                {
-                    enemyDrop.Update(gameTime);
-                }
-                camera.Position = new Vector2(megaman.x, camera.Position.Y);
-                scoreX = (int)megaman.x;
-
-                if (megaman.GetHealth() <= 0 || megaman.y > 400)
-                {
-                    MegamanDied = true;
-                }
-                else
-                {
-                    MegamanDied = false;
-                }
-
-                base.Update(gameTime);
+                enemy.Update(gameTime);
             }
 
-            soundcontroller.Update(megaman, paused);
-            _keyboardController.checkExit();
+            // Handle collisions
+            CollidionHandler.HandleMegamanCollisions(megaman, levelBlocks, levelEnemies, enemyDropList);  // Added 'enemyDropList' parameter
+
+            foreach (var pellet in pellets)
+            {
+                pellet.Update(gameTime);
+            }
+
+            // Update level blocks if necessary
+            foreach (var block in levelBlocks)
+            {
+                block.Update();
+            }
+
+            base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            if (MegamanDied)
+            GraphicsDevice.Clear(Color.CornflowerBlue);  // Clear the screen
+
+            _spriteBatch.Begin();
+
+            // Draw level blocks
+            foreach (var block in levelBlocks)
             {
-                GraphicsDevice.Clear(Color.Black);
-                _spriteBatch.Begin(transformMatrix: camera.GetTransform());
-                _spriteBatch.DrawString(GameOverFont, "GAME OVER", new Vector2(scoreX - 370, -50), Color.Red);
-                _spriteBatch.End();
+                block.Draw(_spriteBatch);
             }
-            else
+
+            // Draw enemies
+            foreach (var enemy in levelEnemies)
             {
-                GraphicsDevice.Clear(Color.CornflowerBlue);  // Clear the screen
-
-                _spriteBatch.Begin(transformMatrix: camera.GetTransform());
-
-                // Draw MegaMan and displayed enemy
-                megaman.Draw(_spriteBatch, movementSpeed);
-                displayedEnemy.Draw(_spriteBatch);
-
-                // Draw blocks
-                floor.Draw(_spriteBatch);
-                floor2.Draw(_spriteBatch);
-                wall.Draw(_spriteBatch);
-                Ceiling.Draw(_spriteBatch);
-
-                // Draw blocks from level parser
-                foreach (var block in levelParser.Blocks)
-                {
-                    block.Draw(_spriteBatch);
-                }
-
-                // Draw enemies from level parser
-                foreach (var enemy in levelParser.Enemies)
-                {
-                    enemy.Draw(_spriteBatch, false, false);
-                }
-
-                // Draw HUD
-                _spriteBatch.DrawString(font, "Health: " + megaman.GetHealth().ToString(), new Vector2(scoreX - 370, -200), Color.White);
-                _spriteBatch.DrawString(font, "Score: " + megaman.GetScore().ToString(), new Vector2(scoreX, -200), Color.White);
-
-                // Draw pellets
-                foreach (var pellet in pellets)
-                {
-                    pellet.Draw(_spriteBatch, movementSpeed);
-                }
-
-                // Draw enemy drops
-                foreach (var enemyDrop in enemyDropList)
-                {
-                    enemyDrop.Draw(_spriteBatch, movementSpeed);
-                }
-
-                _spriteBatch.End();
+                enemy.Draw(_spriteBatch, false, false);
             }
+
+            // Draw MegaMan and displayed enemy
+            megaman.Draw(_spriteBatch, movementSpeed);
+            displayedEnemy.Draw(_spriteBatch);
+
+            // Draw pellets
+            foreach (var pellet in pellets)
+            {
+                pellet.Draw(_spriteBatch, movementSpeed);
+            }
+
+            // Draw enemy drops if any
+            foreach (var enemyDrop in enemyDropList)
+            {
+                enemyDrop.Draw(_spriteBatch, movementSpeed);
+            }
+
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }

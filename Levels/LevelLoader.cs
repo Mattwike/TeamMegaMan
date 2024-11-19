@@ -1,30 +1,25 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.Xna.Framework.Content;
-using System;
 
 namespace Project1.Levels
 {
     public class LevelLoader
     {
-        private string levelFilePath;
-
-        public LevelLoader(string levelFilePath)
-        {
-            this.levelFilePath = levelFilePath;
-        }
-
-        public List<string> LoadLevelData()
+        public List<string> LoadLevel(string filePath)
         {
             List<string> levelData = new List<string>();
 
-            // Adjust the path as necessary
-            string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Content", levelFilePath);
+            // Get the full path to the file relative to the executable
+            string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filePath);
 
-            // Check if file exists
+            // Output the full path for debugging
+            Console.WriteLine($"Attempting to load level file from: {fullPath}");
+
             if (!File.Exists(fullPath))
             {
-                throw new FileNotFoundException($"Level file not found: {fullPath}");
+                Console.WriteLine($"Level file not found: {fullPath}");
+                throw new FileNotFoundException("Level file not found.", fullPath);
             }
 
             using (StreamReader reader = new StreamReader(fullPath))
