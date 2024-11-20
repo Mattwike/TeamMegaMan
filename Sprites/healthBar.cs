@@ -32,15 +32,15 @@ namespace Project1.Sprites
             healthBarSizeY = 100;
             this.megaman = megaman;
 
-            healthBarY = (int)megaman.y - 100;
-            healthBarX = (int)megaman.x - 100;
+            healthBarY = (int)megaman.y - 370;
+            healthBarX = (int)megaman.x - 375;
             
         }
 
         public void Update(GameTime gameTime)
         {
-            healthBarY = (int)megaman.y - 100;
-            healthBarX = (int)megaman.x - 100;
+            healthBarY = (int)megaman.y - 370;
+            healthBarX = (int)megaman.x - 375;
 
         }
 
@@ -51,7 +51,7 @@ namespace Project1.Sprites
 
             Rectangle destinationRectangle;
 
-            sourceRectangle = new Rectangle(10, 130, 10, 50);
+            sourceRectangle = new Rectangle(1, 266, 8, 56);
             destinationRectangle = new Rectangle(healthBarX, healthBarY, healthBarSizeX, healthBarSizeY);
 
 
