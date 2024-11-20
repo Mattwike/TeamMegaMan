@@ -14,7 +14,6 @@ using Project1.Collision;
 using Project1.Enum;
 using Project1.CollisionEffects;
 
-
 namespace Project1.Collisions
 {
     public class MegamanCollisonHandler
@@ -26,6 +25,7 @@ namespace Project1.Collisions
         public EnemyDrop enemyDrop { get; private set; }
         public Rectangle EnemyBox;
         public Rectangle EnemyDropBox;
+        public 
 
         Dictionary<Type, Dictionary<CollisionDirection, IResponse>> collisionDict;
 
@@ -41,6 +41,7 @@ namespace Project1.Collisions
             collisionDict[typeof(IBlocks)].Add(CollisionDirection.Right, new MegamanSideCollision(this));
             collisionDict[typeof(IBlocks)].Add(CollisionDirection.Left, new MegamanSideCollision(this));
             collisionDict[typeof(IBlocks)].Add(CollisionDirection.Bottom, new MegamanBottomCollision(this));
+            collisionDict[typeof(IBlocks)].Add(CollisionDirection.ontop, new MegamanOntopCollision(this));
 
             collisionDict[typeof(IEnemySprite)].Add(CollisionDirection.Left, new MegamanEnemyCollision(this));
             collisionDict[typeof(IEnemySprite)].Add(CollisionDirection.Right, new MegamanEnemyCollision(this));
@@ -58,6 +59,11 @@ namespace Project1.Collisions
             }
             else
             {
+                //if (!(block is FloorBlock floorBlock && floorBlock.IsLadder))
+                //{
+                //    megaman.is_climable = false;
+                //}
+
                 megaman.istouchingfloor = false;
             }
         }

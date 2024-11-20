@@ -26,7 +26,12 @@ namespace Project1.CollisionEffects
 
 		public void Execute()
 		{
-			Handler.megaman.istouchingfloor = true;
+            if (Handler.block is FloorBlock floorBlock && floorBlock.IsLadder)
+            {
+                return;
+            }
+
+            Handler.megaman.istouchingfloor = true;
 			Handler.megaman.y = Handler.block.boundingBox.Y - Handler.megaman.MegamanBox.Height;
 			Handler.megaman.is_falling = false;
 			Handler.megaman.gravity = 4.5f;

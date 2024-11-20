@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Project1.GameObjects;
-//using System.Drawing;
 
 namespace Project1.Sprites
 {
@@ -14,7 +13,6 @@ namespace Project1.Sprites
         int pelletX;
         int pelletY;
         private Texture2D pelletSheet;
-        private Megaman megaman;
         int interval;
         bool isRight;
         Rectangle hitbox;
@@ -25,28 +23,24 @@ namespace Project1.Sprites
             pelletSheet = texture;
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int intervalTime, bool isRight)
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman megaman, int intervalTime, bool isRight)
         {
-
-            pelletSizeX = 10;
-            pelletSizeY = 10;
-            this.megaman = Megaman;
-            interval = intervalTime;
             if (isRight)
             {
-                pelletX = (int)Megaman.x + 20 + megamanSize / 2;
-                hitbox.X = pelletX;
+                pelletX = (int)megaman.x + 20;
             }
             else
             {
-                pelletX = (int)Megaman.x - 20 + megamanSize / 2;
-                hitbox.X= pelletX;
+                pelletX = (int)megaman.x - 20 + megamanSize / 2;
             }
+            pelletY = (int)megaman.y + 5;
 
-            pelletY = (int)Megaman.y + 12;
+            pelletSizeX = 10;
+            pelletSizeY = 7;
+            hitbox.X = pelletX;
             hitbox.Y = pelletY;
-            hitbox.Width = 10;
-            hitbox.Height = 10;
+            hitbox.Width = pelletSizeX;
+            hitbox.Height = pelletSizeY;
             this.isRight = isRight;
 
         }
@@ -79,27 +73,10 @@ namespace Project1.Sprites
 
             SpriteEffects spriteEffects = SpriteEffects.None;
 
-            if (flipHorizontally)
-            {
-                spriteEffects |= SpriteEffects.FlipHorizontally;
-            }
-
-            if (flipVertically)
-            {
-                spriteEffects |= SpriteEffects.FlipVertically;
-            }
-
             Rectangle sourceRectangle;
             Rectangle destinationRectangle;
-
-            // TODO: Add your drawing code here
-
-            //pelletX += 5;
             sourceRectangle = new Rectangle(253, 13, 9, 7);
             destinationRectangle = new Rectangle(pelletX, pelletY, pelletSizeX, pelletSizeY);
-
-
-
 
             _spriteBatch.Draw(pelletSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
         }

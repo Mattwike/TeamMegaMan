@@ -34,6 +34,11 @@ namespace Project1.Collision
 
                     return CollisionDirection.Bottom;
                 }
+
+                if (Intersection.Width == object2.Width)
+                {
+                    return CollisionDirection.ontop;
+                }
             }
             return CollisionDirection.None;
         }

@@ -24,10 +24,18 @@ namespace Project1.Levels
 
             tileActions = new Dictionary<string, Action<int, int>>()
             {
-                // Block mappings
+
                 { "L", (x, y) => CreateFloorBlock(x, y, BlockType.FloorEndLeft) },
                 { "M", (x, y) => CreateFloorBlock(x, y, BlockType.FloorMiddle) },
                 { "R", (x, y) => CreateFloorBlock(x, y, BlockType.FloorEndRight) },
+                { "D", (x, y) => CreateFloorBlock(x, y, BlockType.BrickEndRight) },
+                { "E", (x, y) => CreateFloorBlock(x, y, BlockType.BrickEndLeft) },
+                { "B", (x, y) => CreateFloorBlock(x, y, BlockType.BrickMiddle) },
+                { "2", (x, y) => CreateFloorBlock(x, y, BlockType.BrickMiddle2) },
+                { "3", (x, y) => CreateFloorBlock(x, y, BlockType.BrickEndLeft2) },
+                { "4", (x, y) => CreateFloorBlock(x, y, BlockType.BrickEndRight2) },
+                { "C", (x, y) => CreateFloorBlock(x, y, BlockType.LadderBlock) },
+            // Add other mappings as needed
 
                 // Enemy mappings based on your EnemySpriteFactory
                 { "JF", (x, y) => CreateEnemy("JF", x, y) }, // Jumping Flea
@@ -38,6 +46,8 @@ namespace Project1.Levels
                 { "MA", (x, y) => CreateEnemy("MA", x, y) }, // Mambu
                 { "SJ", (x, y) => CreateEnemy("SJ", x, y) }, // Sniper Joe
                 // Add other mappings as per your EnemySpriteFactory
+
+
             };
 
             // Calculate the maximum token length to optimize parsing
@@ -50,6 +60,8 @@ namespace Project1.Levels
                 }
             }
         }
+       
+        
 
         public void ParseLevel(List<string> levelData)
         {

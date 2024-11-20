@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Project1.Interfaces
 {
-    interface IResponse
+    public interface IResponse
     {
         void Execute();
     }

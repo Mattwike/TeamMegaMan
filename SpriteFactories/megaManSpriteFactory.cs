@@ -23,7 +23,7 @@ namespace Project1.SpriteFactories
 	    {
 	    }
 
-	    public void LoadAllTextures(ContentManager content)
+	    public void LoadAllTextures(ContentManager content) 
 	    {
 		    megaManSheet = content.Load<Texture2D>("Megaman");
 	    }

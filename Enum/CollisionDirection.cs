@@ -6,6 +6,7 @@ namespace Project1.Enum
         Left, 
         Right,
         Bottom,
+        ontop,
         None
     }
 }

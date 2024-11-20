@@ -5,7 +5,7 @@ using Project1.GameObjects;
 
 namespace Project1.Sprites
 {
-    public class runningShootingMegaman : ISprite
+    public class runningMegaman : ISprite
     {
 
         int megamanSizeX;
@@ -15,18 +15,18 @@ namespace Project1.Sprites
         private Rectangle MegamanBox;
         int interval;
 
-        public runningShootingMegaman(Texture2D texture)
+        public runningMegaman(Texture2D texture)
         {
             megaManSheet = texture;
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int intervalTime, bool isRight)
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int interval, bool isRight)
         {
 
-            megamanSizeX = megamanSize + 10;
-            megamanSizeY = megamanSize;
+            megamanSizeX = 20 + 3;
+            megamanSizeY = 26;
             this.megaman = Megaman;
-            interval = intervalTime;
+            this.interval = interval;
         }
 
         public void Update(GameTime gameTime)
@@ -51,39 +51,31 @@ namespace Project1.Sprites
 
             Rectangle sourceRectangle;
 
-            // TODO: Add your drawing code here
             if (interval % 24 < 6)
             {
-                
-                sourceRectangle = new Rectangle(14, 46, 31, 24);
+                sourceRectangle = new Rectangle(188, 12, 24, 22);
                 MegamanBox = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX, megamanSizeY);
             }
 
             else if (interval % 24 < 12)
             {
-                sourceRectangle = new Rectangle(50, 48, 29, 22);
-                MegamanBox = new Rectangle((int)megaman.x, (int)megaman.y + 2, megamanSizeX - 2, megamanSizeY - 2);
-            }
-
-            else if (interval % 24 < 18)
-            {
-                sourceRectangle = new Rectangle(84, 46, 26, 24);
-                MegamanBox = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX - 5, megamanSizeY);
+                sourceRectangle = new Rectangle(218, 10, 16, 24);
+                MegamanBox = new Rectangle((int)megaman.x, (int)megaman.y - 2, megamanSizeX - 8, megamanSizeY + 2);
             }
 
             else
             {
-                sourceRectangle = new Rectangle(113, 48, 30, 22);
-                MegamanBox = new Rectangle((int)megaman.x, (int)megaman.y+2, megamanSizeX - 1, megamanSizeY - 2);
+                sourceRectangle = new Rectangle(239, 12, 21, 22);
+                MegamanBox = new Rectangle((int)megaman.x, (int)megaman.y, megamanSizeX - 3, megamanSizeY);
             }
 
             _spriteBatch.Draw(megaManSheet, MegamanBox, sourceRectangle, currentColor, 0f, Vector2.Zero, spriteEffects, 0f);
+
         }
 
         public Rectangle getRectangle()
         {
             return MegamanBox;
         }
-
     }
 }

@@ -13,6 +13,13 @@ namespace Project1.SpriteFactories
         private Rectangle floorEndLeftSource;
         private Rectangle floorMiddleSource;
         private Rectangle floorEndRightSource;
+        private Rectangle BrickEndRightSource;
+        private Rectangle BrickEndLeftSource;
+        private Rectangle BrickMiddleSource;
+        private Rectangle BrickMiddle2Source;
+        private Rectangle BrickEndRight2Source;
+        private Rectangle BrickEndLeft2Source;
+        private Rectangle LadderBlockSource;
 
         public static BlockSpriteFactory Instance => instance;
 
@@ -25,7 +32,14 @@ namespace Project1.SpriteFactories
             // Define the source rectangles based on the positions of the sprites in your texture atlas
             floorEndLeftSource = new Rectangle(77, 1, 16, 16);  
             floorMiddleSource = new Rectangle(94, 1, 16, 16);   
-            floorEndRightSource = new Rectangle(111, 1, 16, 16); 
+            floorEndRightSource = new Rectangle(111, 1, 16, 16);
+            BrickEndRightSource = new Rectangle(111, 18, 16, 16);
+            BrickEndLeftSource = new Rectangle(77, 18, 16, 16);
+            BrickMiddleSource = new Rectangle(94, 18, 16, 16);
+            BrickMiddle2Source = new Rectangle(94, 35, 16, 16);
+            BrickEndLeft2Source = new Rectangle(77, 35, 16, 16);
+            BrickEndRight2Source = new Rectangle(111, 35, 16, 16);
+            LadderBlockSource = new Rectangle(20, 69, 16, 16);
 
             // Add source rectangles for other block types as needed
         }
@@ -54,6 +68,41 @@ namespace Project1.SpriteFactories
         public Rectangle GetFloorEndRightSource()
         {
             return floorEndRightSource;
+        }
+
+        public Rectangle GetBrickEndLeftSource()
+        {
+            return BrickEndLeftSource;
+        }
+
+        public Rectangle GetBrickEndRightSource()
+        {
+            return BrickEndRightSource;
+        }
+
+        public Rectangle GetBrickMiddleSource()
+        {
+            return BrickMiddleSource;
+        }
+
+        public Rectangle GetBrickMiddle2Source()
+        {
+            return BrickMiddle2Source;
+        }
+
+        public Rectangle GetBrickEndRight2Source()
+        {
+            return BrickEndRight2Source;
+        }
+
+        public Rectangle GetBrickEndLeft2Source()
+        {
+            return BrickEndLeft2Source;
+        }
+
+        public Rectangle GetLadderBlockSource()
+        {
+            return LadderBlockSource;
         }
 
         // Add methods for other block types as needed
