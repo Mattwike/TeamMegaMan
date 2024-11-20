@@ -34,7 +34,7 @@ namespace Project1.Sprites
             interval = intervalTime;
             if (isRight)
             {
-                pelletX = (int)Megaman.x + 20 + megamanSize / 2;
+                pelletX = (int)Megaman.x + 20;
                 hitbox.X = pelletX;
             }
             else
@@ -43,7 +43,7 @@ namespace Project1.Sprites
                 hitbox.X= pelletX;
             }
 
-            pelletY = (int)Megaman.y + 12;
+            pelletY = (int)Megaman.y + 2;
             hitbox.Y = pelletY;
             hitbox.Width = 10;
             hitbox.Height = 10;

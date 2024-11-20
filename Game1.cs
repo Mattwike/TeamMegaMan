@@ -21,6 +21,7 @@ namespace Project1
     public class Game1 : Game
     {
         Camera camera;
+        HealthBar healthBar;
 
         private KeyboardController _keyboardController;
         private MouseController _mouseController;
@@ -82,6 +83,8 @@ namespace Project1
             pelletSpriteFactory.Instance.CreatePellet();
             EnemyDropSpriteFactory.Instance.LoadAllTextures(Content);
             EnemyDropSpriteFactory.Instance.CreateEnemyDrop();
+            healthBarSpriteFactory.Instance.LoadAllTextures(Content);
+            healthBarSpriteFactory.Instance.CreateHealthBar();
 
             //load Block Textures
             BlockSpriteFactory.Instance.LoadAllTextures(Content);
@@ -107,6 +110,9 @@ namespace Project1
             _keyboardController.Initialize();
             _mouseController.Initialize(height, width);
             soundcontroller.Initialize();
+
+            healthBar = new HealthBar();
+            healthBar.Initialize(_graphics, megaman);
 
             // Initialize the level loader and parser
             levelLoader = new LevelLoader();
@@ -152,6 +158,8 @@ namespace Project1
                 List<IEnemySprite> enemies = new List<IEnemySprite>();
                 enemies.Add(sniperjoe);
                 enemies.AddRange(sniperjoe.projectiles);
+
+                healthBar.Update(gameTime, ypose);
 
                 // Update Bombomb directly
                 megaman.Update(gameTime, interval);
@@ -231,8 +239,10 @@ namespace Project1
                 megaman.Draw(_spriteBatch, movementSpeed);
                 sniperjoe.Draw(_spriteBatch, false, false);
                 displayedEnemy.Draw(_spriteBatch);
-                _spriteBatch.DrawString(font, megaman.GetHealth().ToString(), new Vector2(scoreX - 370, -200), Color.White);
-                _spriteBatch.DrawString(font, megaman.GetScore().ToString(), new Vector2(scoreX, -200), Color.White);
+                _spriteBatch.DrawString(font, megaman.GetHealth().ToString(), new Vector2(scoreX-150, ypose-50), Color.White);
+                _spriteBatch.DrawString(font, megaman.GetScore().ToString(), new Vector2(scoreX, ypose+30), Color.White);
+
+                healthBar.Draw(_spriteBatch);
 
                 foreach (var pellet in pellets)
                 {

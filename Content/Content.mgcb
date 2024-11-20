@@ -19,7 +19,6 @@
 /processorParam:Quality=Best
 /build:06 Bombman Stage.mp3
 
-
 #begin bossSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -64,14 +63,6 @@
 /processorParam:TextureFormat=Compressed
 /build:GameOverFont.spritefont
 
-
-#begin GameOverFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:GameOverFont.spritefont
-
 #begin MegaMan.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -96,6 +87,18 @@
 /processorParam:TextureFormat=Color
 /build:megamanblocks2.png
 
+#begin MegamanHealthBarSprites.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MegamanHealthBarSprites.png
+
 #begin mm1weaponsheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -108,18 +111,18 @@
 /processorParam:TextureFormat=Color
 /build:mm1weaponsheet.png;PelletSpriteSheet.png
 
-#begin shooting-101soundboards.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:shooting-101soundboards.mp3
-
 #begin ScoreFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:ScoreFont.spritefont
+
+#begin shooting-101soundboards.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:shooting-101soundboards.mp3
 
 #begin Text.spritefont
 /importer:FontDescriptionImporter
