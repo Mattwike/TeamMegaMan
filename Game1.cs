@@ -200,7 +200,7 @@ namespace Project1
             }
 
 
-            soundcontroller.Update(megaman, paused, pellets);
+            soundcontroller.Update(megaman, paused, pellets, MegamanDied);
             _keyboardController.checkExit();
 
             // Update level blocks if necessary
@@ -216,11 +216,14 @@ namespace Project1
         {
             if (MegamanDied)
             {
+                //int bufferNum = 1000000 / megaman.GetScore();
+                pellets.Clear();
 
-
-                GraphicsDevice.Clear(Color.Black);
+                GraphicsDevice.Clear(Color.DodgerBlue);
                 _spriteBatch.Begin(transformMatrix: camera.GetTransform());
-                _spriteBatch.DrawString(GameOverFont, "GAME OVER", new Vector2(scoreX-202, ypose+105), Color.Red);
+                _spriteBatch.DrawString(GameOverFont, "GAME OVER", new Vector2(scoreX-50, ypose+105), Color.White);
+                _spriteBatch.DrawString(GameOverFont, megaman.GetScore().ToString(), new Vector2(scoreX-5, ypose + 135), Color.White);
+                _spriteBatch.DrawString(GameOverFont, "PRESS R TO RESTART LEVEL", new Vector2(scoreX - 110, ypose + 210), Color.White);
                 _spriteBatch.End();
             }
             else

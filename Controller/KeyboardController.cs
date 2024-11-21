@@ -238,7 +238,7 @@ public class KeyboardController : IController
         }
         if (!megaman.is_shooting && !megaman.is_running && !megaman.is_falling && !megaman.is_jumping && !megaman.is_climbing && !megaman.is_damaged)
         {
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed && interval % 10 == 0)
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
                 if (interval %10 == 0)
                 {
