@@ -164,7 +164,7 @@ namespace Project1
                 displayedEnemy.Update(gameTime);
 
                 CollidionHandler.HandleMegamanCollisions(megaman, levelParser.Blocks, levelEnemies, enemyDropList);
-                //CollidionHandler.HandleEnemyCollisions(, blockList, pellets, enemyDropList);
+                //CollidionHandler.HandleEnemyCollisions(levelEnemies, blockList, pellets, enemyDropList);
 
                 foreach (var pellet in pellets)
                 {
