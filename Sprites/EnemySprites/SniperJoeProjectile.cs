@@ -5,8 +5,8 @@ using System.Collections.Generic;
 
 public class SniperJoeProjectile : IEnemySprite
 {
-	float x;
-	float y;
+	//float x;
+	//float y;
 	float speedX;  // Horizontal speed for the projectile
 	private Texture2D projectileSheet;
 	int projectileSizeX;
@@ -22,11 +22,21 @@ public class SniperJoeProjectile : IEnemySprite
 	public Rectangle hitbox;
 	public int health;
 
-	public SniperJoeProjectile(Texture2D texture, float startX, float startY, int screenWidth)
+    public int y { get; set; }
+    public int x { get; set; }
+    public bool isFalling { get; set; }
+    public bool istouchingfloor { get; set; }
+    public float gravity { get; set; }
+    public float Gravity
+    {
+        set { gravity = 4.5f; }
+
+    }
+    public SniperJoeProjectile(Texture2D texture, float startX, float startY, int screenWidth)
 	{
 		projectileSheet = texture;
-		x = startX;
-		y = startY;
+		x = (int)startX;
+		y = (int)startY;
 		this.screenWidth = screenWidth;
 
 		this.speedX = -5f;  // Sniper Joe projectiles always move to the left
@@ -75,7 +85,7 @@ public class SniperJoeProjectile : IEnemySprite
 	public void Update(GameTime gameTime)
 	{
 		// Move the projectile horizontally at a constant speed (to the left)
-		x += speedX;
+		x += (int)speedX;
 
 		// Frame delay logic (if needed for animation)
 		delayCounter++;
@@ -107,5 +117,9 @@ public class SniperJoeProjectile : IEnemySprite
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
+    }
+    public void isTouchingFloor()
+    {
+        //istouchingfloor = false;
     }
 }

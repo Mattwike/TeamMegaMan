@@ -5,8 +5,8 @@ using System.Collections.Generic;
 
 public class BombombProjectile : IEnemySprite
 {
-    float x;
-    float y;
+    //float x;
+    //float y;
     float speedX;  // Horizontal speed (constant left or right)
     float speedY;  // Vertical speed (constant falling)
     private Texture2D projectileSheet;
@@ -24,11 +24,22 @@ public class BombombProjectile : IEnemySprite
     public Rectangle hitbox;
     public int health;
 
+    public int y { get; set; }
+    public int x { get; set; }
+    public bool isFalling { get; set; }
+    public bool istouchingfloor { get; set; }
+    public float gravity { get; set; }
+    public float Gravity
+    {
+        set { gravity = 4.5f; }
+
+    }
+
     public BombombProjectile(Texture2D texture, float startX, float startY, int screenWidth, float speedX)
     {
         projectileSheet = texture;
-        x = startX;
-        y = startY;
+        x = (int)startX;
+        y = (int)startY;
         this.screenWidth = screenWidth;
         this.screenHeight = 600;  // Default screen height (set as 600), modify this based on your screen size
 
@@ -77,8 +88,8 @@ public class BombombProjectile : IEnemySprite
     public void Update(GameTime gameTime)
     {
         // Move the projectile horizontally and vertically at constant speeds
-        x += speedX;  // Move left or right based on speedX
-        y += speedY;  // Move down at a constant speed
+        x += (int)speedX;  // Move left or right based on speedX
+        y += (int)speedY;  // Move down at a constant speed
 
         // No increase in horizontal or vertical speed, maintain constant motion
 
@@ -111,5 +122,9 @@ public class BombombProjectile : IEnemySprite
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
+    }
+    public void isTouchingFloor()
+    {
+        //istouchingfloor = false;
     }
 }

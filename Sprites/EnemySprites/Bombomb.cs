@@ -9,8 +9,8 @@ public class Bombomb : IEnemySprite
     int totalFrame;
     int delayCounter;
     int delayMax;
-    float x;  // x-coordinate of Bombomb
-    float y;  // y-coordinate of Bombomb
+    //float x;  // x-coordinate of Bombomb
+    //float y;  // y-coordinate of Bombomb
     float initialX;  // Store the initial x position
     float initialY;  // Store the initial y position
     float jumpHeight;  // Height of the jump
@@ -27,6 +27,17 @@ public class Bombomb : IEnemySprite
 
     public Rectangle hitbox;
     public int health;
+
+    public int y { get; set; }
+    public int x { get; set; }
+    public bool isFalling { get; set; }
+    public bool istouchingfloor { get; set; }
+    public float gravity { get; set; }
+    public float Gravity
+    {
+        set { gravity = 4.5f; }
+
+    }
 
     public Bombomb(Texture2D texture, float startX, float startY, Vector2 position)
     {
@@ -164,8 +175,8 @@ public class Bombomb : IEnemySprite
     private void ResetBombomb()
     {
         // Reset Bombomb to its initial position
-        x = initialX;
-        y = initialY;
+        x = (int)initialX;
+        y = (int)initialY;
 
         // Clear all projectiles
         projectiles.Clear();
@@ -190,6 +201,10 @@ public class Bombomb : IEnemySprite
 
     public void SetPosition(Vector2 position)
     {
-        x = position.X; y = position.Y; initialY = y;
+        x = (int)position.X; y = (int)position.Y; initialY = y;
+    }
+    public void isTouchingFloor()
+    {
+        //istouchingfloor = false;
     }
 }

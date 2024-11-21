@@ -43,9 +43,9 @@ namespace Project1.Collisions
             }
         }
 
-        public static void HandleEnemyCollisions(SniperJoe sniperjoe, List<IBlocks> blocklist, List<Pellet> pellets, List<EnemyDrop> enemyDropList)
+        public static void HandleEnemyCollisions(IEnemySprite enemy, List<IBlocks> blocklist, List<Pellet> pellets, List<EnemyDrop> enemyDropList)
         {
-            EnemyCollisonHandler handler = new EnemyCollisonHandler(sniperjoe);
+            EnemyCollisonHandler handler = new EnemyCollisonHandler(enemy);
 
             foreach (IBlocks block in blocklist)
             {

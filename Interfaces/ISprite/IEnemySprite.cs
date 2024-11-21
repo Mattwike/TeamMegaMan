@@ -7,6 +7,11 @@ using System.Collections.Generic;
 
 public interface IEnemySprite
 {
+    int y { get; set; }
+    int x { get; set; }
+    bool isFalling {  get; set; }
+    bool istouchingfloor { get; set; }
+    float gravity { get; set; }
     void Update(GameTime gameTime);
 
     void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically);
@@ -18,4 +23,6 @@ public interface IEnemySprite
     public void TakeDamage(List<EnemyDrop> enemyDropList);
 
     public int GetHealth();
+
+    public void isTouchingFloor();
 }

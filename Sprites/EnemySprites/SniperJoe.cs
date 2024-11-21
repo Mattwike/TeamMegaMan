@@ -10,21 +10,21 @@ public class SniperJoe : IEnemySprite
     private int totalFrame;  // Total frames in the animation loop
     private int delayCounter;  // Counter for delaying frame changes
     private int delayMax;  // Maximum delay before advancing to the next frame
-    public float x;  // X-coordinate of Sniper Joe's position
-    public float y;  // Y-coordinate of Sniper Joe's position
+    //public float x;  // X-coordinate of Sniper Joe's position
+    //public float y;  // Y-coordinate of Sniper Joe's position
     private float initialY;  // The initial Y-position for Sniper Joe's jump
-    public float gravity;  // The gravity effect for jumping
+    //public float gravity;  // The gravity effect for jumping
     private Texture2D enemySheet;  // Texture for the Sniper Joe sprite
     private Texture2D projectileTexture;  // Texture for the projectile
     private int enemySizeX;  // Width of Sniper Joe's sprite
     private int enemySizeY;  // Height of Sniper Joe's sprite
     public bool isJumping;  // Flag to check if Sniper Joe is jumping
-    public bool isFalling;  // Flag to check if Sniper Joe is falling
+    //public bool isFalling;  // Flag to check if Sniper Joe is falling
     private bool justLanded; // Flag to detect landing and advance the frame
     private bool hasShot;  // Flag to track if a projectile has been shot during frame 3
     public List<IEnemySprite> projectiles;  // List to store projectiles
     public Rectangle SniperJoeBox;
-    public bool istouchingfloor;
+    //public bool istouchingfloor;
 
     public Rectangle hitbox;
     public int health;
@@ -32,6 +32,17 @@ public class SniperJoe : IEnemySprite
 
     private int screenWidth;  // Screen width to manage projectile boundaries
     GraphicsDeviceManager graphics;
+
+    public int y { get; set; }
+    public int x { get; set; }
+    public bool isFalling { get; set; }
+    public bool istouchingfloor { get; set; }
+    public float gravity { get; set; }
+    public float Gravity
+    {
+        set { gravity = 4.5f; }
+
+    }
 
     // Constructor with only the texture parameter, like the other enemy classes
     public SniperJoe(Texture2D texture, Vector2 position)
@@ -101,7 +112,7 @@ public class SniperJoe : IEnemySprite
         {
             if (gravity > 0)
             {
-                y -= gravity;  // Move Sniper Joe up
+                y -= (int)gravity;  // Move Sniper Joe up
                 gravity -= 0.25f;  // Reduce gravity to simulate slowing down at the peak
             }
             else
@@ -116,12 +127,12 @@ public class SniperJoe : IEnemySprite
         {
             if (y < initialY)
             {
-                y += gravity;  // Move Sniper Joe down
+                y += (int)gravity;  // Move Sniper Joe down
                 gravity += 0.25f;  // Increase gravity to simulate speeding up while falling
             }
             else
             {
-                y = initialY;  // Reset to the ground level
+                y = (int)initialY;  // Reset to the ground level
                 isFalling = false;
                 justLanded = true;  // Mark that Sniper Joe just landed
                 gravity = 4.5f;  // Reset gravity for the next jump
@@ -264,6 +275,11 @@ public class SniperJoe : IEnemySprite
 
     public void SetPosition(Vector2 position)
     {
-        x = position.X; y = position.Y; initialY = y;
+        x = (int)position.X; y = (int)position.Y; initialY = y;
+    }
+
+    public void isTouchingFloor()
+    {
+        istouchingfloor = false;
     }
 }

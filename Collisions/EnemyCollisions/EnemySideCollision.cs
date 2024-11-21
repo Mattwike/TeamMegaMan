@@ -26,17 +26,17 @@ namespace Project1.CollisionEffects
 
 		public void Execute()
 		{
-            CollisionDirection side = CollisionDetector.DetectCollisionType(Handler.sniperjoe.SniperJoeBox, Handler.block.boundingBox);
+            CollisionDirection side = CollisionDetector.DetectCollisionType(Handler.enemy.getRectangle(), Handler.block.boundingBox);
 
             if (side == CollisionDirection.Left)
 			{
-                Handler.sniperjoe.x = Handler.block.boundingBox.Left - Handler.sniperjoe.SniperJoeBox.Width;
+                Handler.enemy.x = Handler.block.boundingBox.Left - Handler.enemy.getRectangle().Width;
 
             }
 
 			else if(side == CollisionDirection.Right)
 			{
-				Handler.sniperjoe.x = Handler.block.boundingBox.Right;
+				Handler.enemy.x = Handler.block.boundingBox.Right;
             }
 		}
 	}

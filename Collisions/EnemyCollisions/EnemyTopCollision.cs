@@ -26,10 +26,10 @@ namespace Project1.CollisionEffects
 
 		public void Execute()
 		{
-			Handler.sniperjoe.istouchingfloor = true;
-			Handler.sniperjoe.y = Handler.block.boundingBox.Y - Handler.sniperjoe.SniperJoeBox.Height;
-			Handler.sniperjoe.isFalling = false;
-            Handler.sniperjoe.gravity = 0;
+			Handler.enemy.istouchingfloor = true;
+			Handler.enemy.y = Handler.block.boundingBox.Y - Handler.enemy.getRectangle().Height;
+			Handler.enemy.isFalling = false;
+            Handler.enemy.gravity = 0;
 		}
 	}
 }

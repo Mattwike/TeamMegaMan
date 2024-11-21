@@ -17,15 +17,15 @@ namespace Project1.Collisions
 {
     public class EnemyCollisonHandler
     {
-        public SniperJoe sniperjoe;
+        public IEnemySprite enemy;
         private CollisionDetector detector;
         public IBlocks block {get; private set; }
 
         Dictionary<Type, Dictionary<CollisionDirection, IResponse>> collisionDict;
 
-        public EnemyCollisonHandler(SniperJoe sniperjoe)
+        public EnemyCollisonHandler(IEnemySprite enemy)
         {
-            this.sniperjoe = sniperjoe;
+            this.enemy = enemy;
             collisionDict = new Dictionary<Type, Dictionary<CollisionDirection, IResponse>>();
 
             collisionDict.Add(typeof(IBlocks), new Dictionary<CollisionDirection, IResponse>());
@@ -41,7 +41,7 @@ namespace Project1.Collisions
         {
             block = Block;
 
-            CollisionDirection Direction = CollisionDetector.DetectCollisionType(sniperjoe.SniperJoeBox, block.boundingBox);
+            CollisionDirection Direction = CollisionDetector.DetectCollisionType(enemy.getRectangle(), block.boundingBox);
 
             if (collisionDict[typeof(IBlocks)].ContainsKey(Direction))
             {
@@ -49,19 +49,19 @@ namespace Project1.Collisions
             }
             else
             {
-                sniperjoe.istouchingfloor = false;
+                enemy.isTouchingFloor();
             }
 
         }
         public void handlePelletCollision(Pellet pellet, List<EnemyDrop> enemyDropList)
         {
             
-            CollisionDirection collisionDirection = CollisionDetector.DetectCollisionType(pellet.getRectangle(), sniperjoe.getRectangle());
+            CollisionDirection collisionDirection = CollisionDetector.DetectCollisionType(pellet.getRectangle(), enemy.getRectangle());
             CollisionDirection Direction = collisionDirection;
             if (Direction != CollisionDirection.None)
             {
                 pellet.removePellet();
-                sniperjoe.TakeDamage(enemyDropList);
+                enemy.TakeDamage(enemyDropList);
 
             }
         }

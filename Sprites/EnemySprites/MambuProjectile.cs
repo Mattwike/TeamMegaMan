@@ -74,4 +74,9 @@ public class MambuProjectile
     {
         return y;
     }
+
+    public void isTouchingFloor()
+    {
+        //istouchingfloor = false;
+    }
 }

@@ -7,8 +7,8 @@ using System.Collections.Generic;
 public class Mambu : IEnemySprite
 {
     private Texture2D enemyTexture;  // Texture for Mambu
-    private float x;  // X-coordinate of Mambu's position
-    private float y;  // Y-coordinate of Mambu's position
+    //private float x;  // X-coordinate of Mambu's position
+    //private float y;  // Y-coordinate of Mambu's position
     private float initialX;  // Initial X position for resetting
     private float speedX;  // Speed for horizontal movement
     private float originalSpeedX;  // Store original speed for resuming movement
@@ -32,6 +32,17 @@ public class Mambu : IEnemySprite
 
     public Rectangle hitbox;
     public int health;
+
+    public int y { get; set; }
+    public int x { get; set; }
+    public bool isFalling { get; set; }
+    public bool istouchingfloor { get; set; }
+    public float gravity { get; set; }
+    public float Gravity
+    {
+        set { gravity = 4.5f; }
+
+    }
 
     // Constructor to initialize Mambu with its texture
     public Mambu(Texture2D texture, Vector2 position)
@@ -112,12 +123,12 @@ public class Mambu : IEnemySprite
         }
 
         // Move left continuously unless speedX is zero
-        x -= speedX;
+        x -= (int)speedX;
 
         // Reset position when reaching the left side of the screen
         if (x < 0)
         {
-            x = initialX;  // Reset to the initial position on the right side of the screen
+            x = (int)initialX;  // Reset to the initial position on the right side of the screen
         }
 
         // Update all projectiles
@@ -202,6 +213,10 @@ public class Mambu : IEnemySprite
 
     public void SetPosition(Vector2 position)
     {
-        x = position.X; y = position.Y; initialX = x;
+        x = (int)position.X; y = (int)position.Y; initialX = x;
+    }
+    public void isTouchingFloor()
+    {
+        //istouchingfloor = false;
     }
 }

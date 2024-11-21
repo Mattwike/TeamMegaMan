@@ -9,13 +9,24 @@ public class bombManIdle : IEnemySprite
     int totalFrame;
     int delayCounter;
     int delayMax;
-    float x;
-    float y;
+    //float x;
+    //float y;
     private Texture2D enemySheet;
     int enemySizeX;
     int enemySizeY;
     public Rectangle hitbox;
     public int health;
+
+    public int y { get; set; }
+    public int x { get; set; }
+    public bool isFalling { get; set; }
+    public bool istouchingfloor { get; set; }
+    public float gravity { get; set; }
+    public float Gravity
+    {
+        set { gravity = 4.5f; }
+
+    }
     public bombManIdle(Texture2D texture)
     {
         enemySheet = texture;
@@ -99,5 +110,9 @@ public class bombManIdle : IEnemySprite
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
+    }
+    public void isTouchingFloor()
+    {
+        //istouchingfloor = false;
     }
 }

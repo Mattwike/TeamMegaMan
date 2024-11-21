@@ -7,8 +7,8 @@ using System.Collections.Generic;
 public class Octopus : IEnemySprite
 {
     private Texture2D enemyTexture;  // Texture for Octopus
-    private float x;  // X-coordinate of Octopus's position
-    private float y;  // Y-coordinate of Octopus's position
+    //private float x;  // X-coordinate of Octopus's position
+    //private float y;  // Y-coordinate of Octopus's position
     private float initialX;  // Initial X position for back-and-forth movement reference
     private float speedX;  // Speed for horizontal movement
     private int screenWidth;  // Screen width to manage boundaries
@@ -30,6 +30,17 @@ public class Octopus : IEnemySprite
 
     public Rectangle hitbox;
     public int health;
+
+    public int y { get; set; }
+    public int x { get; set; }
+    public bool isFalling { get; set; }
+    public bool istouchingfloor { get; set; }
+    public float gravity { get; set; }
+    public float Gravity
+    {
+        set { gravity = 4.5f; }
+
+    }
 
     // Constructor to initialize Octopus with its texture
     public Octopus(Texture2D texture, Vector2 position)
@@ -98,7 +109,7 @@ public class Octopus : IEnemySprite
         else
         {
             // Move back and forth within the movementRange (e.g., 50 pixels left and right)
-            x += speedX;
+            x += (int)speedX;
 
             // Check if Octopus is 10 pixels away from the side (left or right)
             if (x >= initialX + movementRange - 10 || x <= initialX - movementRange + 10)
@@ -163,6 +174,10 @@ public class Octopus : IEnemySprite
 
     public void SetPosition(Vector2 position)
     {
-        x = position.X; y = position.Y; initialX = x;
+        x = (int)position.X; y = (int)position.Y; initialX = x;
+    }
+    public void isTouchingFloor()
+    {
+        //istouchingfloor = false;
     }
 }

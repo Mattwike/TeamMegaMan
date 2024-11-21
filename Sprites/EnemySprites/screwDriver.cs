@@ -10,13 +10,24 @@ public class screwDriver : IEnemySprite
     int totalFrame;
     int delayCounter;
     int delayMax;
-    float x;
-    float y;
+    //float x;
+    //float y;
     private Texture2D enemySheet;
     int enemySizeX;
     int enemySizeY;
     public Rectangle hitbox;
     public int health;
+
+    public int y { get; set; }
+    public int x { get; set; }
+    public bool isFalling { get; set; }
+    public bool istouchingfloor { get; set; }
+    public float gravity { get; set; }
+    public float Gravity
+    {
+        set { gravity = 4.5f; }
+
+    }
 
     public screwDriver(Texture2D texture, Vector2 position)
     {
@@ -116,6 +127,10 @@ public class screwDriver : IEnemySprite
 
     public void SetPosition(Vector2 position)
     {
-        x = position.X; y = position.Y;
+        x = (int)position.X; y = (int)position.Y;
+    }
+    public void isTouchingFloor()
+    {
+        //istouchingfloor = false;
     }
 }

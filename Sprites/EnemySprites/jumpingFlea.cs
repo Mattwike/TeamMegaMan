@@ -11,18 +11,29 @@ public class jumpingFlea : IEnemySprite
     private int totalFrames;
     private int delayCounter;
     private int delayMax;
-    private float x;
-    private float y;
+    //private float x;
+    //private float y;
     private Texture2D enemySheet;
     private int enemySizeX;
     private int enemySizeY;
     private float enemySpeed;
-    private float gravity;
+    //private float gravity;
     private bool jumping;
     private bool falling;
     private float initialY; // Stores the initial Y position
     public Rectangle hitbox;
     public int health;
+
+    public int y { get; set; }
+    public int x { get; set; }
+    public bool isFalling { get; set; }
+    public bool istouchingfloor { get; set; }
+    public float gravity { get; set; }
+    public float Gravity
+    {
+        set { gravity = 4.5f; }
+
+    }
 
     public jumpingFlea(Texture2D texture, Vector2 position)
     {
@@ -65,10 +76,10 @@ public class jumpingFlea : IEnemySprite
 
         if (jumping)
         {
-            x += enemySpeed;
+            x += (int)enemySpeed;
             if (gravity > 0)
             {
-                y -= gravity;
+                y -= (int)gravity;
                 gravity -= 0.25f;
             }
             else
@@ -81,12 +92,12 @@ public class jumpingFlea : IEnemySprite
         {
             if (y < initialY)
             {
-                y += gravity;
+                y += (int)gravity;
                 gravity += 0.25f;
             }
             else
             {
-                y = initialY;
+                y = (int)initialY;
                 falling = false;
                 gravity = 4.5f;
             }
@@ -163,8 +174,12 @@ public class jumpingFlea : IEnemySprite
 
     public void SetPosition(Vector2 position)
     {
-        x = position.X;
-        y = position.Y;
+        x = (int)position.X;
+        y = (int)position.Y;
         initialY = position.Y; // Ensure initialY is updated if position changes
+    }
+    public void isTouchingFloor()
+    {
+        //istouchingfloor = false;
     }
 }

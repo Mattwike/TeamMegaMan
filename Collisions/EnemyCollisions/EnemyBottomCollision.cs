@@ -26,8 +26,8 @@ namespace Project1.CollisionEffects
 
 		public void Execute()
 		{
-			Handler.sniperjoe.isFalling = true;
-			Handler.sniperjoe.y = Handler.block.boundingBox.Y + Handler.block.boundingBox.Height + 2;
+			Handler.enemy.isFalling = true;
+			Handler.enemy.y = Handler.block.boundingBox.Y + Handler.block.boundingBox.Height + 2;
         }
 	}
 }

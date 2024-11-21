@@ -131,6 +131,7 @@ namespace Project1
             foreach (var enemy in levelEnemies)
             {
                 enemy.Initialize(_graphics, movementSpeed, 40);  // Adjust parameters as needed
+                
             }
 
             base.Initialize();
@@ -178,6 +179,7 @@ namespace Project1
                 foreach (var enemy in levelEnemies)
                 {
                     enemy.Update(gameTime);
+                    CollidionHandler.HandleEnemyCollisions(enemy, levelBlocks, pellets, enemyDropList);
                 }
                 // Update level blocks if necessary
                 foreach (var block in levelBlocks)
