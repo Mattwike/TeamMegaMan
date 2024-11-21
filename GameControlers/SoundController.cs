@@ -42,21 +42,18 @@ namespace Project1.GameControllers
             // Check if the game is not paused
             if (!isPaused)
             {
-                if (MediaPlayer.State == MediaState.Paused)
-                {
-                    MediaPlayer.Resume();
-                }
 
-                //Play shooting sound if MegaMan is shooting and the sound isn't already playing
-                //if (megaman.is_shooting && !isShootingSoundPlaying)
+                //if (MediaPlayer.State == MediaState.Paused)
                 //{
-                //    shootingSound.Play();
-                //    isShootingSoundPlaying = true;  // Mark that shooting sound is playing
+                //    MediaPlayer.Resume();
                 //}
-                //else if (!megaman.is_shooting && isShootingSoundPlaying)
+                //else if (MediaPlayer.State == MediaState.Playing)
                 //{
-                //    isShootingSoundPlaying = false;  // Stop playing sound when not shooting
+                //    MediaPlayer.Pause();
+                    
                 //}
+
+                
                 int currentPelletNum = pelletNum;
                 if (pellets.Count != currentPelletNum)
                 {
@@ -65,13 +62,7 @@ namespace Project1.GameControllers
                 }
 
 
-                else
-                {
-                    if (MediaPlayer.State == MediaState.Playing)
-                    {
-                        MediaPlayer.Pause();
-                    }
-                }
+                
             }
         }
     }
