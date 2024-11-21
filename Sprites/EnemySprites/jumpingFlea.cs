@@ -23,6 +23,8 @@ public class jumpingFlea : IEnemySprite
     private float initialY; // Stores the initial Y position
     public Rectangle hitbox;
     public int health;
+    bool isVisible = true;
+    GraphicsDeviceManager graphics;
 
     public int y { get; set; }
     public int x { get; set; }
@@ -59,10 +61,15 @@ public class jumpingFlea : IEnemySprite
         jumping = false;
         falling = false;
         health = 100; // Initialize health if necessary
+        this.graphics = graphics;
     }
 
     public void Update(GameTime gameTime)
     {
+        if (!isVisible)
+        {
+            return;
+        }
         delayCounter++;
         if (delayCounter >= delayMax)
         {
@@ -114,6 +121,10 @@ public class jumpingFlea : IEnemySprite
 
     public void Draw(SpriteBatch spriteBatch, bool flipHorizontally, bool flipVertically)
     {
+        if (!isVisible)
+        {
+            return;
+        }
         SpriteEffects spriteEffects = SpriteEffects.None;
 
         if (flipHorizontally)
@@ -169,7 +180,14 @@ public class jumpingFlea : IEnemySprite
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
-        // Optional: Add logic to handle enemy death
+        if (health == 0)
+        {
+            EnemyDrop enemyDrop = new EnemyDrop();
+            enemyDrop.Initialize(graphics, (int)x, (int)y);
+            enemyDropList.Add(enemyDrop);
+            isVisible = false;
+            hitbox.Y += 1000;
+        }
     }
 
     public void SetPosition(Vector2 position)

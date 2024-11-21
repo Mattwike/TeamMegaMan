@@ -270,6 +270,7 @@ public class SniperJoe : IEnemySprite
             EnemyDrop enemyDrop = new EnemyDrop();
             enemyDrop.Initialize(graphics, (int)x, (int)y);
             enemyDropList.Add(enemyDrop);
+            isVisible = false;
         }
     }
 
