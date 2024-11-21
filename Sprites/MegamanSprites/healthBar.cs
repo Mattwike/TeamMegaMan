@@ -29,7 +29,7 @@ namespace Project1.Sprites
         {
 
             healthBarSizeX = 10;
-            healthBarSizeY = 100;
+            healthBarSizeY = 75;
             this.megaman = megaman;
 
             healthBarY = (int)megaman.y - 370;

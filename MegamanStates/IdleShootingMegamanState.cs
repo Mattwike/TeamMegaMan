@@ -7,16 +7,15 @@ using Project1.States.MegamanState;
 
 namespace Project1.States.MegamanState
 {
-    public class RunningShootingRightMegamanState : IMegamanState
+    public class IdleShootingMegamanState : IMegamanState
     {
         private Megaman megaman;
         public ISprite Sprite;
 
-        public RunningShootingRightMegamanState(Megaman Megaman)
+        public IdleShootingMegamanState(Megaman Megaman)
         {
             megaman = Megaman;
-            megaman.SetDirection(false);
-            Sprite = megaManSpriteFactory.Instance.CreateRunningShootingMegaman();
+            Sprite = megaManSpriteFactory.Instance.CreateIdleShootingMegaman();
         }
 
         public void BeClimbingMegamanState()
@@ -61,15 +60,10 @@ namespace Project1.States.MegamanState
 
         public void BeRunningShootingRightMegamanState()
         {
-
+            megaman.State = new RunningShootingRightMegamanState(megaman);
         }
 
         public void BeRunningShootingLeftMegamanState()
-        {
-            megaman.State = new RunningShootingLeftMegamanState(megaman);
-        }
-
-        public void ChangeDirection()
         {
             megaman.State = new RunningShootingLeftMegamanState(megaman);
         }
@@ -79,14 +73,19 @@ namespace Project1.States.MegamanState
             megaman.State = new FallingMegamanState(megaman);
         }
 
-        public void BeFallingShootingMegamanState()
-        {
-            megaman.State = new FallingShootingMegamanState(megaman);
-        }
-
         public void BeIdleShootingMegamanState()
         {
             megaman.State = new IdleShootingMegamanState(megaman);
+        }
+
+        public void BeFallingShootingMegamanState()
+        {
+
+        }
+
+        public void ChangeDirection()
+        {
+
         }
 
         public void Update(GameTime gameTime)

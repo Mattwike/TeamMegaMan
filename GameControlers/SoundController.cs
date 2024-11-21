@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Media;
 using Project1.GameObjects;
 using Microsoft.Xna.Framework.Audio;
+using System.Collections.Generic;
 
 namespace Project1.GameControllers
 {
@@ -10,8 +11,9 @@ namespace Project1.GameControllers
     {
         private ContentManager _content;
         private Song song; // Background music
-        private Song shootingSound; // Shooting sound effect
+        private SoundEffect shootingSound; // Shooting sound effect
         private bool isShootingSoundPlaying;
+        private int pelletNum = 0;
 
         public soundController(ContentManager content)
         {
@@ -30,12 +32,12 @@ namespace Project1.GameControllers
 
         public void LoadContent()
         {
-            // Load the shooting sound effect here
-            //shootingSound = _content.Load<SoundEffect>("shooting-101soundboards");
+            //Load the shooting sound effect here
+            shootingSound = _content.Load<SoundEffect>("tx0_fire1");
 
         }
 
-        public void Update(Megaman megaman, bool isPaused)
+        public void Update(Megaman megaman, bool isPaused, List<Pellet> pellets)
         {
             // Check if the game is not paused
             if (!isPaused)
@@ -48,19 +50,27 @@ namespace Project1.GameControllers
                 //Play shooting sound if MegaMan is shooting and the sound isn't already playing
                 //if (megaman.is_shooting && !isShootingSoundPlaying)
                 //{
-                //    MediaPlayer.Play(song)
+                //    shootingSound.Play();
                 //    isShootingSoundPlaying = true;  // Mark that shooting sound is playing
                 //}
                 //else if (!megaman.is_shooting && isShootingSoundPlaying)
                 //{
                 //    isShootingSoundPlaying = false;  // Stop playing sound when not shooting
                 //}
-            }
-            else
-            {
-                if (MediaPlayer.State == MediaState.Playing)
+                int currentPelletNum = pelletNum;
+                if (pellets.Count != currentPelletNum)
                 {
-                    MediaPlayer.Pause();
+                    pelletNum = pellets.Count;
+                    shootingSound.Play();
+                }
+
+
+                else
+                {
+                    if (MediaPlayer.State == MediaState.Playing)
+                    {
+                        MediaPlayer.Pause();
+                    }
                 }
             }
         }

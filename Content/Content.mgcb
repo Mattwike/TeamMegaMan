@@ -131,3 +131,9 @@
 /processorParam:TextureFormat=Compressed
 /build:Text.spritefont
 
+#begin tx0_fire1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:tx0_fire1.wav
+

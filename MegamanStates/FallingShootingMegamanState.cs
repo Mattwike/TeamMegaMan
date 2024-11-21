@@ -78,6 +78,11 @@ namespace Project1.States.MegamanState
 
         }
 
+        public void BeIdleShootingMegamanState()
+        {
+            megaman.State = new IdleShootingMegamanState(megaman);
+        }
+
         public void ChangeDirection()
         {
 

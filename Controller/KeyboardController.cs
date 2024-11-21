@@ -75,6 +75,7 @@ public class KeyboardController : IController
         commandDict.Add(Keys.D7, new DamagedMegamanCommand(megaman));
         commandDict.Add(Keys.D6, new FallingMegamanCommand(megaman));
         commandDict.Add(Keys.D5, new FallingShootingMegamanCommand(megaman));
+        commandDict.Add(Keys.D4, new IdleShootingMegamanCommand(megaman));
     }
 
     public void Update(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, GameTime gameTime)
@@ -239,22 +240,30 @@ public class KeyboardController : IController
         {
             if (Mouse.GetState().LeftButton == ButtonState.Pressed && interval % 10 == 0)
             {
-                if (megaman.isfacingLeft)
+                if (interval %10 == 0)
                 {
-                    pellet = new Pellet();
-                    pellet.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval, false);
-                    pellets.Add(pellet);
+                    if (megaman.isfacingLeft)
+                    {
+                        pellet = new Pellet();
+                        pellet.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval, false);
+                        pellets.Add(pellet);
+                    }
+                    else
+                    {
+                        pellet = new Pellet();
+                        pellet.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval, true);
+                        pellets.Add(pellet);
+                    }
                 }
-                else
-                {
-                    pellet = new Pellet();
-                    pellet.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval, true);
-                    pellets.Add(pellet);
-                }
-               
+                var Idle = new IdleShootingMegamanCommand(megaman);
+                Idle.Execute(_graphics, movementSpeed, megamanSize, interval);
             }
-            var Idle = new IdleMegamanCommand(megaman);
-            Idle.Execute(_graphics, movementSpeed, megamanSize, interval);
+            else
+            {
+                var Idle = new IdleMegamanCommand(megaman);
+                Idle.Execute(_graphics, movementSpeed, megamanSize, interval);
+            }
+            
         }
 
         if (!megaman.isVulnerable)

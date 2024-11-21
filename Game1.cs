@@ -200,7 +200,7 @@ namespace Project1
             }
 
 
-            soundcontroller.Update(megaman, paused);
+            soundcontroller.Update(megaman, paused, pellets);
             _keyboardController.checkExit();
 
             // Update level blocks if necessary
@@ -220,7 +220,7 @@ namespace Project1
 
                 GraphicsDevice.Clear(Color.Black);
                 _spriteBatch.Begin(transformMatrix: camera.GetTransform());
-                _spriteBatch.DrawString(GameOverFont, "GAME OVER", new Vector2(scoreX - 370, -50), Color.Red);
+                _spriteBatch.DrawString(GameOverFont, "GAME OVER", new Vector2(scoreX-202, ypose+105), Color.Red);
                 _spriteBatch.End();
             }
             else

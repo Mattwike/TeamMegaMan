@@ -73,5 +73,10 @@ namespace Project1.SpriteFactories
             return new fallingShootingMegaman(megaManSheet);
         }
 
+        public ISprite CreateIdleShootingMegaman()
+        {
+            return new idleShootingMegaman(megaManSheet);
+        }
+
     }
 }
