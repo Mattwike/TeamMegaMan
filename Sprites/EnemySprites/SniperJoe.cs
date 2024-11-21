@@ -34,11 +34,12 @@ public class SniperJoe : IEnemySprite
     GraphicsDeviceManager graphics;
 
     // Constructor with only the texture parameter, like the other enemy classes
-    public SniperJoe(Texture2D texture)
+    public SniperJoe(Texture2D texture, Vector2 position)
     {
         enemySheet = texture;
-        x = 200;  // Set the starting x position of Sniper Joe
-        y = 150;  // Set the starting y position of Sniper Joe
+        SetPosition(position);
+        //x = 200;  // Set the starting x position of Sniper Joe
+        //y = 150;  // Set the starting y position of Sniper Joe
         initialY = y;  // Set the initial Y for jumping reference
         gravity = 4.5f;  // Set the gravity for the jump
         currentFrame = 0;
@@ -58,7 +59,7 @@ public class SniperJoe : IEnemySprite
         screenWidth = 800;  // Assume a default screen width; adjust if necessary
 
         projectiles = new List<IEnemySprite>();
-        
+
     }
 
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
@@ -80,12 +81,12 @@ public class SniperJoe : IEnemySprite
             hitbox.Y += 1000;
             isVisible = false;
         }
-        
+
         SniperJoeBox = new Rectangle((int)x, (int)y, 26, 24);
         hitbox.X = (int)x;
         hitbox.Y = (int)y;
         hitbox.Width = 26;
-        hitbox.Height = 24;    
+        hitbox.Height = 24;
 
         // Check if Sniper Joe is in the third frame (index 2), and initiate the jump
         if (currentFrame == 3 && !isJumping && !isFalling && !justLanded)
@@ -260,5 +261,9 @@ public class SniperJoe : IEnemySprite
             enemyDropList.Add(enemyDrop);
         }
     }
-}
 
+    public void SetPosition(Vector2 position)
+    {
+        x = position.X; y = position.Y; initialY = y;
+    }
+}

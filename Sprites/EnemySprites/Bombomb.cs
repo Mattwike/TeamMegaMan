@@ -28,11 +28,12 @@ public class Bombomb : IEnemySprite
     public Rectangle hitbox;
     public int health;
 
-    public Bombomb(Texture2D texture, float startX, float startY)
+    public Bombomb(Texture2D texture, float startX, float startY, Vector2 position)
     {
         bombombSheet = texture;
-        x = startX;
-        y = startY;
+        SetPosition(position);
+        //x = startX;
+        //y = startY;
         initialX = startX;  // Save the initial position for resetting
         initialY = startY;
         jumpHeight = 100;  // 20px jump height
@@ -69,7 +70,7 @@ public class Bombomb : IEnemySprite
         isVisible = true; // Make Bombomb visible when initialized
         projectiles.Clear();  // Clear any existing projectiles
 
-        
+
     }
 
     public void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically)
@@ -185,5 +186,10 @@ public class Bombomb : IEnemySprite
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
+    }
+
+    public void SetPosition(Vector2 position)
+    {
+        x = position.X; y = position.Y; initialY = y;
     }
 }

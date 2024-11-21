@@ -34,14 +34,15 @@ public class Mambu : IEnemySprite
     public int health;
 
     // Constructor to initialize Mambu with its texture
-    public Mambu(Texture2D texture)
+    public Mambu(Texture2D texture, Vector2 position)
     {
         enemyTexture = texture;
+        SetPosition(position);
         projectiles = new List<MambuProjectile>();  // Initialize projectile list
 
         // Set initial position and size (can be changed during initialization)
-        x = 500;  // Example starting x position
-        y = 200;  // Example starting y position
+        //x = 500;  // Example starting x position
+        //y = 200;  // Example starting y position
         initialX = x;  // Store the initial x position for resetting
         width = 16;  // Width of the first frame
         height = 16;  // Height of the first frame
@@ -76,7 +77,7 @@ public class Mambu : IEnemySprite
         width = size;  // Set sprite size based on the passed size
         height = size;  // Keep height same as width for aspect ratio
 
-        speedX = movementSpeed/4f;  // Adjust horizontal speed based on movement speed parameter
+        speedX = movementSpeed / 4f;  // Adjust horizontal speed based on movement speed parameter
         originalSpeedX = speedX;  // Store the original speed for resuming
     }
 
@@ -197,5 +198,10 @@ public class Mambu : IEnemySprite
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
+    }
+
+    public void SetPosition(Vector2 position)
+    {
+        x = position.X; y = position.Y; initialX = x;
     }
 }

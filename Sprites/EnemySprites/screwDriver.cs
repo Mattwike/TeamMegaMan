@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Project1.GameObjects;
 using System.Collections.Generic;
@@ -17,11 +18,12 @@ public class screwDriver : IEnemySprite
     public Rectangle hitbox;
     public int health;
 
-    public screwDriver(Texture2D texture)
+    public screwDriver(Texture2D texture, Vector2 position)
     {
         enemySheet = texture;
-        x = 400;
-        y = 30;
+        SetPosition(position);
+        //x = 400;
+        //y = 30;
     }
 
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
@@ -86,7 +88,7 @@ public class screwDriver : IEnemySprite
             destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
             sourceRectangle = new Rectangle(206, 250, 18, 18);
         }
-        else if(currentFrame < 40)
+        else if (currentFrame < 40)
         {
             destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
             sourceRectangle = new Rectangle(223, 250, 18, 18);
@@ -110,5 +112,10 @@ public class screwDriver : IEnemySprite
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
+    }
+
+    public void SetPosition(Vector2 position)
+    {
+        x = position.X; y = position.Y;
     }
 }

@@ -13,6 +13,9 @@ namespace Project1.Levels
             // Get the full path to the file relative to the executable
             string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filePath);
 
+            // Output the full path for debugging
+            Console.WriteLine($"Attempting to load level file from: {fullPath}");
+
             if (!File.Exists(fullPath))
             {
                 Console.WriteLine($"Level file not found: {fullPath}");

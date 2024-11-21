@@ -30,13 +30,13 @@ namespace Project1
         List<EnemyDrop> enemyDropList;
         private Megaman megaman;
         private int megamanHealth = 100;
-        private SniperJoe sniperjoe;
         private GenericEnemy displayedEnemy;
 
         private soundController soundcontroller;
         private LevelLoader levelLoader;
         private LevelParser levelParser;
         private List<IBlocks> levelBlocks;
+        private List<IEnemySprite> levelEnemies;
 
         float movementSpeed;
         private GraphicsDeviceManager _graphics;
@@ -68,8 +68,6 @@ namespace Project1
             camera = new Camera(GraphicsDevice.Viewport);
             soundcontroller = new soundController(Content);
 
-            Texture2D SniperJoeSheet;
-            SniperJoeSheet = Content.Load<Texture2D>("enemy");
             movementSpeed = 3;
 
             width = _graphics.PreferredBackBufferWidth / 2;
@@ -97,9 +95,7 @@ namespace Project1
 
             // Initialize the MegaMan character
             megaman = new Megaman();
-            sniperjoe = new SniperJoe(SniperJoeSheet);
             megaman.Initialize(_graphics, movementSpeed, 40, interval);
-            sniperjoe.Initialize(_graphics, 30, 40);
 
             megaman.x = 0;
             megaman.y = 1113;
@@ -128,8 +124,14 @@ namespace Project1
 
             // Retrieve the blocks created by the parser
             levelBlocks = levelParser.Blocks;
+            levelEnemies = levelParser.Enemies;
             ypose = 920;
             camera.Zoom(1.85f);
+
+            foreach (var enemy in levelEnemies)
+            {
+                enemy.Initialize(_graphics, movementSpeed, 40);  // Adjust parameters as needed
+            }
 
             base.Initialize();
         }
@@ -154,20 +156,15 @@ namespace Project1
             {
                 // Use the keyboard controller to get input and update MegaMan and enemies
                 _keyboardController.Update(_graphics, movementSpeed, 40, gameTime);
-                List<IBlocks> blockList = new List<IBlocks>();
-                List<IEnemySprite> enemies = new List<IEnemySprite>();
-                enemies.Add(sniperjoe);
-                enemies.AddRange(sniperjoe.projectiles);
 
                 healthBar.Update(gameTime, ypose);
 
                 // Update Bombomb directly
                 megaman.Update(gameTime, interval);
-                sniperjoe.Update(gameTime);
                 displayedEnemy.Update(gameTime);
 
-                CollidionHandler.HandleMegamanCollisions(megaman, levelParser.Blocks, enemies, enemyDropList);
-                CollidionHandler.HandleEnemyCollisions(sniperjoe, blockList, pellets, enemyDropList);
+                CollidionHandler.HandleMegamanCollisions(megaman, levelParser.Blocks, levelEnemies, enemyDropList);
+                //CollidionHandler.HandleEnemyCollisions(, blockList, pellets, enemyDropList);
 
                 foreach (var pellet in pellets)
                 {
@@ -177,6 +174,15 @@ namespace Project1
                 foreach (var enemyDrop in enemyDropList)
                 {
                     enemyDrop.Update(gameTime);
+                }
+                foreach (var enemy in levelEnemies)
+                {
+                    enemy.Update(gameTime);
+                }
+                // Update level blocks if necessary
+                foreach (var block in levelBlocks)
+                {
+                    block.Update();
                 }
                 //camera.Position = new Vector2(megaman.x, camera.Position.Y);
                 camera.Position = new Vector2(megaman.x, ypose);
@@ -202,12 +208,6 @@ namespace Project1
 
             soundcontroller.Update(megaman, paused, pellets);
             _keyboardController.checkExit();
-
-            // Update level blocks if necessary
-            foreach (var block in levelBlocks)
-            {
-                block.Update();
-            }
 
             base.Update(gameTime);
         }
@@ -237,7 +237,6 @@ namespace Project1
 
                 // Draw MegaMan and displayed enemy as before
                 megaman.Draw(_spriteBatch, movementSpeed);
-                sniperjoe.Draw(_spriteBatch, false, false);
                 displayedEnemy.Draw(_spriteBatch);
                 _spriteBatch.DrawString(font, megaman.GetHealth().ToString(), new Vector2(scoreX-150, ypose-50), Color.White);
                 _spriteBatch.DrawString(font, megaman.GetScore().ToString(), new Vector2(scoreX, ypose+30), Color.White);
@@ -251,6 +250,10 @@ namespace Project1
                 foreach (var enemyDrop in enemyDropList)
                 {
                     enemyDrop.Draw(_spriteBatch, movementSpeed);
+                }
+                foreach (var enemy in levelEnemies)
+                {
+                    enemy.Draw(_spriteBatch, false, false);
                 }
                 _spriteBatch.End();
             }
