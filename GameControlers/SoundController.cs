@@ -14,6 +14,7 @@ namespace Project1.GameControllers
         private SoundEffect shootingSound; // Shooting sound effect
         private bool isShootingSoundPlaying;
         private int pelletNum = 0;
+        private bool paused = false;
 
         public soundController(ContentManager content)
         {
@@ -37,22 +38,16 @@ namespace Project1.GameControllers
 
         }
 
-        public void Update(Megaman megaman, bool isPaused, List<Pellet> pellets)
+        public void Update(Megaman megaman, bool isPaused, List<Pellet> pellets, bool megamanDead)
         {
             // Check if the game is not paused
-            if (!isPaused)
+            if (!isPaused && !megamanDead)
             {
-
-                //if (MediaPlayer.State == MediaState.Paused)
-                //{
-                //    MediaPlayer.Resume();
-                //}
-                //else if (MediaPlayer.State == MediaState.Playing)
-                //{
-                //    MediaPlayer.Pause();
-                    
-                //}
-
+                if (paused)
+                {
+                    MediaPlayer.Resume();
+                    paused = false;
+                }
                 
                 int currentPelletNum = pelletNum;
                 if (pellets.Count != currentPelletNum)
@@ -63,6 +58,11 @@ namespace Project1.GameControllers
 
 
                 
+            }
+            else
+            {
+                paused = true;
+                MediaPlayer.Pause();
             }
         }
     }

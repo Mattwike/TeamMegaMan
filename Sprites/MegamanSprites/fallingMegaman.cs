@@ -13,6 +13,7 @@ namespace Project1.Sprites
         private Megaman megaman;
         int interval;
         private Rectangle MegamanBox;
+        private Rectangle Hitbox;
 
         public fallingMegaman(Texture2D texture)
         {
@@ -23,15 +24,20 @@ namespace Project1.Sprites
         public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int intervalTime, bool isRight)
         {
 
-            megamanSizeX = 20 + 10;
-            megamanSizeY = 26 + 14;
+            megamanSizeX = 20 + 5;
+            megamanSizeY = 26 + 7;
             this.megaman = Megaman;
             interval = intervalTime;
+
+            Hitbox.Width = megamanSizeX;
+            Hitbox.Height = megamanSizeY;
+
         }
 
         public void Update(GameTime gameTime)
         {
-
+            Hitbox.X = (int)megaman.x;
+            Hitbox.Y = (int)megaman.y;
         }
 
 
@@ -61,7 +67,7 @@ namespace Project1.Sprites
 
         public Rectangle getRectangle()
         {
-            return MegamanBox;
+            return Hitbox;
         }
     }
 }
