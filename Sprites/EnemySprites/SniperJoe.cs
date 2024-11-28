@@ -23,7 +23,7 @@ public class SniperJoe : IEnemySprite
     private bool justLanded; // Flag to detect landing and advance the frame
     private bool hasShot;  // Flag to track if a projectile has been shot during frame 3
     public List<IEnemySprite> projectiles;  // List to store projectiles
-    public Rectangle SniperJoeBox;
+    //public Rectangle SniperJoeBox;
     //public bool istouchingfloor;
 
     public Rectangle hitbox;
@@ -99,7 +99,7 @@ public class SniperJoe : IEnemySprite
             isVisible = false;
         }
 
-        SniperJoeBox = new Rectangle((int)x, (int)y, 26, 24);
+        hitbox = new Rectangle((int)x, (int)y, 26, 24);
         hitbox.X = (int)x;
         hitbox.Y = (int)y;
         hitbox.Width = 26;
@@ -258,7 +258,7 @@ public class SniperJoe : IEnemySprite
 
     public Rectangle getRectangle()
     {
-        return this.SniperJoeBox;
+        return hitbox;
     }
 
     public int GetHealth()
@@ -274,6 +274,8 @@ public class SniperJoe : IEnemySprite
             enemyDrop.Initialize(graphics, (int)x, (int)y);
             enemyDropList.Add(enemyDrop);
             isVisible = false;
+            hitbox.Y += 1000;
+            y += 1000;
         }
     }
 
