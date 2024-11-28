@@ -44,7 +44,7 @@ namespace Project1.GameObjects
         private LevelParser levelparser;
 
 
-        public int megamanHealth = 100;
+        public int megamanHealth = 140;
         public int megamanScore = 0;
 
         public Megaman()
@@ -120,7 +120,7 @@ namespace Project1.GameObjects
         {
             if (isVulnerable)
             {
-                megamanHealth -= 50;
+                megamanHealth -= 20;
                 isVulnerable = false;
                 invulnerabilityTimer = 0;
                 currentColor = Color.White;

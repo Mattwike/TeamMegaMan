@@ -50,8 +50,38 @@ namespace Project1.Sprites
             SpriteEffects spriteEffects = SpriteEffects.None;
 
             Rectangle destinationRectangle;
-
-            sourceRectangle = new Rectangle(1, 266, 8, 56);
+            if (megaman.GetHealth() >= 140)
+            {
+                sourceRectangle = new Rectangle(1, 266, 8, 56);
+            }
+            else if (megaman.GetHealth() >= 120)
+            {
+                sourceRectangle = new Rectangle(1 + 18, 266, 8, 56);
+            }
+            else if (megaman.GetHealth() >= 100)
+            {
+                sourceRectangle = new Rectangle(1 + 18 * 2, 266, 8, 56);
+            }
+            else if (megaman.GetHealth() >= 80)
+            {
+                sourceRectangle = new Rectangle(1 + 18 * 3, 266, 8, 56);
+            }
+            else if (megaman.GetHealth() >=60)
+            {
+                sourceRectangle = new Rectangle(1 + 18 * 4, 266, 8, 56);
+            }
+            else if (megaman.GetHealth() >= 40)
+            {
+                sourceRectangle = new Rectangle(1 + 18 * 5, 266, 8, 56);
+            }
+            else if (megaman.GetHealth() >= 20)
+            {
+                sourceRectangle = new Rectangle(1 + 18 * 6, 266, 8, 56);
+            }
+            else
+            {
+                sourceRectangle = new Rectangle(1 + 18 * 7, 266, 8, 56);
+            }
             destinationRectangle = new Rectangle(healthBarX, healthBarY, healthBarSizeX, healthBarSizeY);
 
 
