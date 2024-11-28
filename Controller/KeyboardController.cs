@@ -162,7 +162,7 @@ public class KeyboardController : IController
 
         if (megaman.is_climable && pressedKeys.Contains(Keys.W))
         {
-            megaman.is_climbing=true;
+            megaman.is_climbing = true;
         }
         else
         {

@@ -8,11 +8,10 @@ namespace Project1.Collision
 {
     public class CollisionDetector
     {
-
         public static CollisionDirection DetectCollisionType(Rectangle object1, Rectangle object2)
         {
             Rectangle Intersection = Rectangle.Intersect(object1, object2);
-            if (!Intersection.IsEmpty)
+            if (!Intersection.IsEmpty && (Intersection.Width * Intersection.Height >= 10))
             {
                 if (Intersection.Height > Intersection.Width && object1.X < object2.X)
                 {

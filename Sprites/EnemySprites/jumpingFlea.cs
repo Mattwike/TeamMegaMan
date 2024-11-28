@@ -54,13 +54,13 @@ public class jumpingFlea : IEnemySprite
         totalFrames = 15;
         delayCounter = 0;
         delayMax = 10;
-        enemySizeX = megamanSize;
-        enemySizeY = megamanSize;
+        enemySizeX = 15;
+        enemySizeY = 15;
         gravity = 4.5f;
         enemySpeed = 2f;
         jumping = false;
         falling = false;
-        health = 100; // Initialize health if necessary
+        health = 100;
         this.graphics = graphics;
     }
 
@@ -83,7 +83,7 @@ public class jumpingFlea : IEnemySprite
 
         if (jumping)
         {
-            x += (int)enemySpeed;
+            x -= (int)enemySpeed;
             if (gravity > 0)
             {
                 y -= (int)gravity;
@@ -97,14 +97,13 @@ public class jumpingFlea : IEnemySprite
         }
         else if (falling)
         {
-            if (y < initialY)
+            if (!istouchingfloor)
             {
                 y += (int)gravity;
                 gravity += 0.25f;
             }
             else
             {
-                y = (int)initialY;
                 falling = false;
                 gravity = 4.5f;
             }
@@ -125,7 +124,7 @@ public class jumpingFlea : IEnemySprite
         {
             return;
         }
-        SpriteEffects spriteEffects = SpriteEffects.None;
+        SpriteEffects spriteEffects = SpriteEffects.FlipHorizontally;
 
         if (flipHorizontally)
         {
@@ -198,6 +197,6 @@ public class jumpingFlea : IEnemySprite
     }
     public void isTouchingFloor()
     {
-        //istouchingfloor = false;
+        istouchingfloor = false;
     }
 }

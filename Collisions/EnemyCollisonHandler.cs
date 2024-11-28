@@ -50,6 +50,7 @@ namespace Project1.Collisions
             else
             {
                 enemy.isTouchingFloor();
+
             }
 
         }
@@ -60,7 +61,7 @@ namespace Project1.Collisions
             CollisionDirection Direction = collisionDirection;
             if (Direction != CollisionDirection.None)
             {
-                pellet.removePellet();
+                pellet.removePellet(); 
                 enemy.TakeDamage(enemyDropList);
 
             }

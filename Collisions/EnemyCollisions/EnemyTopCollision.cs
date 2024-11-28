@@ -29,7 +29,7 @@ namespace Project1.CollisionEffects
 			Handler.enemy.istouchingfloor = true;
 			Handler.enemy.y = Handler.block.boundingBox.Y - Handler.enemy.getRectangle().Height;
 			Handler.enemy.isFalling = false;
-            Handler.enemy.gravity = 0;
+			Handler.enemy.gravity = 4;
 		}
 	}
 }
