@@ -125,7 +125,7 @@ namespace Project1
             // Retrieve the blocks created by the parser
             levelBlocks = levelParser.Blocks;
             levelEnemies = levelParser.Enemies;
-            ypose = 920;
+            ypose = (int) megaman.y - 210;
             camera.Zoom(1.85f);
 
             foreach (var enemy in levelEnemies)
@@ -186,13 +186,13 @@ namespace Project1
                 {
                     block.Update();
                 }
-                camera.Position = new Vector2(megaman.x, megaman.y - 210);
+                camera.Position = new Vector2(megaman.x, ypose);
                 //camera.Position = new Vector2(megaman.x, ypose);
                 scoreX = (int)megaman.x;
 
-                if (megaman.is_climbing && ypose < megaman.y)
+                if (!megaman.is_jumping && !megaman.is_falling)
                 {
-                    ypose -= 3;
+                    ypose = (int) megaman.y - 210;
                 }
 
                 if (megaman.GetHealth() <= 0 || megaman.y > 1200)
