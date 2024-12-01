@@ -186,8 +186,8 @@ namespace Project1
                 {
                     block.Update();
                 }
-                //camera.Position = new Vector2(megaman.x, camera.Position.Y);
-                camera.Position = new Vector2(megaman.x, ypose);
+                camera.Position = new Vector2(megaman.x, megaman.y - 210);
+                //camera.Position = new Vector2(megaman.x, ypose);
                 scoreX = (int)megaman.x;
 
                 if (megaman.is_climbing && ypose < megaman.y)

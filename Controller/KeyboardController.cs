@@ -167,7 +167,6 @@ public class KeyboardController : IController
         else
         {
             megaman.is_climable = false;
-            megaman.is_climbing = false;
         }
 
         if (megaman.is_climbing && pressedKeys.Contains(Keys.D))
