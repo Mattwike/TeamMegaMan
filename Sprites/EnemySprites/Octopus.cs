@@ -3,13 +3,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Project1.GameObjects;
 using System.Collections.Generic;
 
-
 public class Octopus : IEnemySprite
 {
     private Texture2D enemyTexture;  // Texture for Octopus
-    //private float x;  // X-coordinate of Octopus's position
-    //private float y;  // Y-coordinate of Octopus's position
-    private float initialX;  // Initial X position for back-and-forth movement reference
+    private float initialPositionX;  // Initial X position for back-and-forth movement reference
+    private float positionX;  // Precise X position (float)
     private float speedX;  // Speed for horizontal movement
     private int screenWidth;  // Screen width to manage boundaries
     private int screenHeight; // Screen height to manage boundaries
@@ -31,15 +29,14 @@ public class Octopus : IEnemySprite
     public Rectangle hitbox;
     public int health;
 
-    public int y { get; set; }
-    public int x { get; set; }
+    public int y { get; set; }  // Keep as int to match interface
+    public int x { get; set; }  // Keep as int to match interface
     public bool isFalling { get; set; }
     public bool istouchingfloor { get; set; }
     public float gravity { get; set; }
     public float Gravity
     {
         set { gravity = 4.5f; }
-
     }
 
     // Constructor to initialize Octopus with its texture
@@ -48,7 +45,8 @@ public class Octopus : IEnemySprite
         enemyTexture = texture;
         SetPosition(position);
 
-        initialX = x;  // Store the initial x position to use as reference
+        positionX = x;  // Initialize positionX to integer x
+        initialPositionX = positionX;  // Store the initial x position to use as reference
         width = 16;  // Width of the sprite
         height = 16;  // Height of the sprite
 
@@ -74,17 +72,21 @@ public class Octopus : IEnemySprite
     // Initialize method to set position, screen boundaries, and other properties
     public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int size)
     {
-        //x = 500;  // Example initial X-position
-        //y = 200;  // Example initial Y-position
-        initialX = x;  // Store the initial x position as reference
+        // Removed the line that overwrote initialPositionX
+        // initialPositionX = positionX;  // This was overwriting the correct initialPositionX
 
         screenWidth = graphics.PreferredBackBufferWidth;  // Set screen boundaries
         screenHeight = graphics.PreferredBackBufferHeight;
 
-        width = size;  // Set sprite size based on the passed size
-        height = size;  // Keep height same as width for aspect ratio
+        width = 26;  // Set sprite size based on the passed size
+        height = 26;  // Keep height same as width for aspect ratio
 
         speedX = movementSpeed / 5f;  // Adjust horizontal speed based on movement speed parameter
+
+        if (speedX == 0)
+        {
+            speedX = 1f;  // Ensure speedX is not zero
+        }
     }
 
     // Update method to handle movement and animation logic
@@ -96,7 +98,7 @@ public class Octopus : IEnemySprite
             delayTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (delayTimer >= delayInterval)
             {
-                // After 2 seconds, resume movement and reset the timer
+                // After delay interval, resume movement and reset the timer
                 isPaused = false;
                 delayTimer = 0;
 
@@ -106,22 +108,25 @@ public class Octopus : IEnemySprite
         }
         else
         {
-            // Move back and forth within the movementRange (e.g., 50 pixels left and right)
-            x += (int)speedX;
+            // Move back and forth within the movementRange
+            positionX += speedX;  // Update positionX with speedX
+
+            // Update x to the integer value of positionX
+            x = (int)positionX;
 
             // Check if Octopus is 10 pixels away from the side (left or right)
-            if (x >= initialX + movementRange - 10 || x <= initialX - movementRange + 10)
+            if (positionX >= initialPositionX + movementRange - 10 || positionX <= initialPositionX - movementRange + 10)
             {
                 currentFrame = 1;  // Switch to frame 2 when 10 pixels away
             }
 
             // Check if Octopus reached either side of the range
-            if (x >= initialX + movementRange || x <= initialX - movementRange)
+            if (positionX >= initialPositionX + movementRange || positionX <= initialPositionX - movementRange)
             {
                 // Reverse horizontal direction and pause at the edge
                 speedX = -speedX;
                 isPaused = true;  // Trigger the pause at the edge
-                currentFrame = 0;  // Switch to frame 3 when reaching the edge
+                currentFrame = 0;  // Switch to frame 1 when reaching the edge
             }
 
             // Update animation frame only when not paused
@@ -135,6 +140,9 @@ public class Octopus : IEnemySprite
                 frameCounter = 0;  // Reset the frame counter
             }
         }
+
+        // Update hitbox position
+        hitbox = new Rectangle(x, y, width, height);
     }
 
     // Draw method to render Octopus on the screen
@@ -149,22 +157,23 @@ public class Octopus : IEnemySprite
         if (flipVertically)
             spriteEffects |= SpriteEffects.FlipVertically;
 
-
         // Define the destination rectangle where the sprite will be drawn on the screen
-        Rectangle destinationRectangle = new Rectangle((int)x, (int)y, width, height);
+        Rectangle destinationRectangle = new Rectangle(x, y, width, height);
 
         // Draw the sprite using its texture and current frame rectangle
         spriteBatch.Draw(enemyTexture, destinationRectangle, frames[currentFrame], Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
-
     }
+
     public Rectangle getRectangle()
     {
         return hitbox;
     }
+
     public int GetHealth()
     {
         return health;
     }
+
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
@@ -172,8 +181,12 @@ public class Octopus : IEnemySprite
 
     public void SetPosition(Vector2 position)
     {
-        x = (int)position.X; y = (int)position.Y; initialX = x;
+        x = (int)position.X;
+        y = (int)position.Y;
+        positionX = position.X;  // Initialize positionX to the precise X value
+        initialPositionX = positionX;  // Set initialPositionX correctly
     }
+
     public void isTouchingFloor()
     {
         //istouchingfloor = false;

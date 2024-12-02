@@ -7,9 +7,8 @@ using System.Collections.Generic;
 public class Mambu : IEnemySprite
 {
     private Texture2D enemyTexture;  // Texture for Mambu
-    //private float x;  // X-coordinate of Mambu's position
-    //private float y;  // Y-coordinate of Mambu's position
-    private float initialX;  // Initial X position for resetting
+    private float positionX;  // Precise X-coordinate
+    private float initialPositionX;  // Initial X position for resetting
     private float speedX;  // Speed for horizontal movement
     private float originalSpeedX;  // Store original speed for resuming movement
     private int screenWidth;  // Screen width to manage boundaries
@@ -41,7 +40,6 @@ public class Mambu : IEnemySprite
     public float Gravity
     {
         set { gravity = 4.5f; }
-
     }
 
     // Constructor to initialize Mambu with its texture
@@ -51,10 +49,8 @@ public class Mambu : IEnemySprite
         SetPosition(position);
         projectiles = new List<MambuProjectile>();  // Initialize projectile list
 
-        // Set initial position and size (can be changed during initialization)
-        //x = 500;  // Example starting x position
-        //y = 200;  // Example starting y position
-        initialX = x;  // Store the initial x position for resetting
+        positionX = x;  // Initialize precise position
+        initialPositionX = positionX;  // Store the initial x position for resetting
         width = 16;  // Width of the first frame
         height = 16;  // Height of the first frame
 
@@ -78,16 +74,21 @@ public class Mambu : IEnemySprite
     // Initialize method to set position, screen boundaries, and other properties
     public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int size)
     {
-        initialX = x;  // Store the initial x position as reference
+        // Removed the line that overwrote initialPositionX
 
         screenWidth = graphics.PreferredBackBufferWidth;  // Set screen boundaries
         screenHeight = graphics.PreferredBackBufferHeight;
 
-        width = size;  // Set sprite size based on the passed size
-        height = size;  // Keep height same as width for aspect ratio
+        width = 24;  // Set sprite size based on the passed size
+        height = 24;  // Keep height same as width for aspect ratio
 
         speedX = movementSpeed / 4f;  // Adjust horizontal speed based on movement speed parameter
         originalSpeedX = speedX;  // Store the original speed for resuming
+
+        if (speedX == 0)
+        {
+            speedX = 1f;  // Ensure speedX is not zero
+        }
     }
 
     // Update method to handle movement, frame switching, and projectile shooting
@@ -96,7 +97,7 @@ public class Mambu : IEnemySprite
         frameTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         // Switch frames and handle frame timing
-        if (currentFrame == 0 && frameTimer >= 2f)  // 2 seconds on Frame 1 (previously 5 seconds)
+        if (currentFrame == 0 && frameTimer >= 2f)  // 2 seconds on Frame 1
         {
             currentFrame = 1;  // Switch to Frame 2
             frameTimer = 0;  // Reset frame timer
@@ -121,12 +122,16 @@ public class Mambu : IEnemySprite
         }
 
         // Move left continuously unless speedX is zero
-        x -= (int)speedX;
+        positionX -= speedX;  // Update precise position
+
+        // Update integer x position
+        x = (int)positionX;
 
         // Reset position when reaching the left side of the screen
-        if (x < 0)
+        if (positionX < 0)
         {
-            x = (int)initialX;  // Reset to the initial position on the right side of the screen
+            positionX = initialPositionX;  // Reset to the initial position on the right side of the screen
+            x = (int)positionX;
         }
 
         // Update all projectiles
@@ -137,6 +142,9 @@ public class Mambu : IEnemySprite
 
         // Remove projectiles that are off-screen
         projectiles.RemoveAll(p => p.IsOffScreen());
+
+        // Update hitbox position
+        hitbox = new Rectangle(x, y, width, height);
     }
 
     // Draw method to render Mambu and its projectiles on the screen
@@ -151,9 +159,8 @@ public class Mambu : IEnemySprite
         if (flipVertically)
             spriteEffects |= SpriteEffects.FlipVertically;
 
-
         // Define the destination rectangle where the sprite will be drawn on the screen
-        Rectangle destinationRectangle = new Rectangle((int)x, (int)y, width, height);
+        Rectangle destinationRectangle = new Rectangle(x, y, width, height);
 
         // Draw the sprite using its texture and current frame rectangle
         spriteBatch.Draw(enemyTexture, destinationRectangle, frames[currentFrame], Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
@@ -163,7 +170,6 @@ public class Mambu : IEnemySprite
         {
             projectile.Draw(spriteBatch, false, false);
         }
-
     }
 
     // Method to shoot 8 projectiles in a circular pattern, using locked position for centralized origin
@@ -196,6 +202,7 @@ public class Mambu : IEnemySprite
             projectiles.Add(projectile);
         }
     }
+
     public Rectangle getRectangle()
     {
         return hitbox;
@@ -211,7 +218,10 @@ public class Mambu : IEnemySprite
 
     public void SetPosition(Vector2 position)
     {
-        x = (int)position.X; y = (int)position.Y; initialX = x;
+        x = (int)position.X;
+        y = (int)position.Y;
+        positionX = position.X;  // Initialize precise position
+        initialPositionX = positionX;  // Set initial position for resetting
     }
     public void isTouchingFloor()
     {

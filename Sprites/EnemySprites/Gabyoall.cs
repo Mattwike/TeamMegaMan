@@ -6,9 +6,8 @@ using System.Collections.Generic;
 public class Gabyoall : IEnemySprite
 {
     private Texture2D enemyTexture;  // Texture for Gabyoall
-    //private float x;  // X-coordinate of Gabyoall's position
-    //private float y;  // Y-coordinate of Gabyoall's position
-    private float initialX;  // Initial X position for back-and-forth movement reference
+    private float positionX;  // Precise X-coordinate
+    private float initialPositionX;  // Initial X position for back-and-forth movement reference
     private float speedX;  // Speed for horizontal movement
     private int screenWidth;  // Screen width to manage boundaries
     private int screenHeight; // Screen height to manage boundaries
@@ -33,7 +32,6 @@ public class Gabyoall : IEnemySprite
     public float Gravity
     {
         set { gravity = 4.5f; }
-
     }
 
     // Constructor to initialize Gabyoall with its texture
@@ -41,10 +39,9 @@ public class Gabyoall : IEnemySprite
     {
         enemyTexture = texture;
         SetPosition(position);
-        // Set initial position and size (can be changed during initialization)
-        //x = 500;  // Example starting x position
-        //y = 200;  // Example starting y position
-        initialX = x;  // Store the initial x position to use as reference
+
+        positionX = x;  // Initialize precise position
+        initialPositionX = positionX;  // Store initial position for movement range
         width = 16;  // Width of the sprite
         height = 8;  // Height of the sprite
 
@@ -64,14 +61,19 @@ public class Gabyoall : IEnemySprite
     // Initialize method to set position, screen boundaries, and other properties
     public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int size)
     {
-        initialX = x;  // Store the initial x position as reference
+        // Removed the line that overwrote initialPositionX
 
         screenWidth = graphics.PreferredBackBufferWidth;  // Set screen boundaries
         screenHeight = graphics.PreferredBackBufferHeight;
 
-        width = size;  // Set sprite size based on the passed size
-        height = size / 2;  // Height is half of the size to keep the aspect ratio
+        width = 24;  // Set sprite size based on the passed size
+        height = 12;  // Height is half of the size to keep the aspect ratio
         speedX = movementSpeed / 10f;  // Adjust horizontal speed based on movement speed parameter
+
+        if (speedX == 0)
+        {
+            speedX = 0.5f;  // Ensure speedX is not zero
+        }
     }
 
     // Update method to handle movement and animation logic
@@ -89,14 +91,20 @@ public class Gabyoall : IEnemySprite
             frameCounter = 0;  // Reset the frame counter
         }
 
-        // Move back and forth within the movementRange (e.g., 50 pixels left and right)
-        x += (int)speedX;
+        // Move back and forth within the movementRange
+        positionX += speedX;  // Update precise position
+
+        // Update integer x position
+        x = (int)positionX;
 
         // Reverse direction when reaching the bounds of the movement range
-        if (x > initialX + movementRange || x < initialX - movementRange)
+        if (positionX > initialPositionX + movementRange || positionX < initialPositionX - movementRange)
         {
             speedX = -speedX;  // Reverse horizontal direction
         }
+
+        // Update hitbox position
+        hitbox = new Rectangle(x, y, width, height);
     }
 
     // Draw method to render Gabyoall on the screen
@@ -111,14 +119,13 @@ public class Gabyoall : IEnemySprite
         if (flipVertically)
             spriteEffects |= SpriteEffects.FlipVertically;
 
-
         // Define the destination rectangle where the sprite will be drawn on the screen
-        Rectangle destinationRectangle = new Rectangle((int)x, (int)y, width, height);
+        Rectangle destinationRectangle = new Rectangle(x, y, width, height);
 
         // Draw the sprite using its texture and current frame rectangle
         spriteBatch.Draw(enemyTexture, destinationRectangle, frames[currentFrame], Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
-
     }
+
     public Rectangle getRectangle()
     {
         return hitbox;
@@ -134,7 +141,10 @@ public class Gabyoall : IEnemySprite
 
     public void SetPosition(Vector2 position)
     {
-        x = (int)position.X; y = (int)position.Y; initialX = x;
+        x = (int)position.X;
+        y = (int)position.Y;
+        positionX = position.X;  // Initialize precise position
+        initialPositionX = positionX;  // Set initial position for movement range
     }
     public void isTouchingFloor()
     {
