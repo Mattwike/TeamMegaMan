@@ -9,6 +9,7 @@ using System.Linq;
 using Project1.Collisions;
 using System.ComponentModel.Design.Serialization;
 using Project1.Levels;
+using Project1.Sprites;
 
 namespace Project1.GameObjects
 {
@@ -69,8 +70,9 @@ namespace Project1.GameObjects
         {
             x = origionalx;
             y = origionaly;
-            megamanHealth = 100;
+            megamanHealth = 140;
             isVulnerable = true;
+            currentColor = Color.White;
         }
 
         public void ChangeDirection()

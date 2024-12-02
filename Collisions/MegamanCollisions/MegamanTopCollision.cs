@@ -14,21 +14,33 @@ using Project1.Collisions;
 
 namespace Project1.CollisionEffects
 {
-	public class MegamanTopCollision : IResponse
-	{
+    public class MegamanTopCollision : IResponse
+    {
 
-		MegamanCollisonHandler Handler;
+        MegamanCollisonHandler Handler;
 
-		public MegamanTopCollision(MegamanCollisonHandler handler) 
-		{
-			Handler = handler;
-		}
+        public MegamanTopCollision(MegamanCollisonHandler handler)
+        {
+            Handler = handler;
+        }
 
-		public void Execute()
-		{
-            if (Handler.block is FloorBlock floorBlock && floorBlock.IsLadder)
+        public void Execute()
+        {
+            //if (Handler.block is FloorBlock floorBlock && (floorBlock.IsLadder || floorBlock.IsPassable))
+            //{
+            //    return;
+            //}
+
+            if (Handler.block is FloorBlock floorBlock)
             {
-                return;
+                if (floorBlock.IsLadder || floorBlock.IsPassable)
+                {
+                    return;
+                }
+                else if (floorBlock.isSpike)
+                {
+                    Handler.megaman.megamanHealth = 0;
+                }
             }
 
             Handler.megaman.istouchingfloor = true;

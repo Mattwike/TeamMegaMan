@@ -20,6 +20,13 @@ namespace Project1.SpriteFactories
         private Rectangle BrickEndRight2Source;
         private Rectangle BrickEndLeft2Source;
         private Rectangle LadderBlockSource;
+        private Rectangle BossRoomSource;
+        private Rectangle BossRoomTopSource;
+        private Rectangle Electric;
+        private Rectangle ElectricConnector;
+        private Rectangle Door;
+        private Rectangle DoorConnector;
+        private Rectangle Spike;
 
         public static BlockSpriteFactory Instance => instance;
 
@@ -40,6 +47,13 @@ namespace Project1.SpriteFactories
             BrickEndLeft2Source = new Rectangle(77, 35, 16, 16);
             BrickEndRight2Source = new Rectangle(111, 35, 16, 16);
             LadderBlockSource = new Rectangle(20, 69, 16, 16);
+            BossRoomSource = new Rectangle(18, 52, 16, 16);
+            BossRoomTopSource = new Rectangle(1, 52, 16, 16);
+            Electric = new Rectangle(70, 52, 16, 16);
+            ElectricConnector = new Rectangle(52, 52, 16, 16);
+            Door = new Rectangle(35, 52, 16, 16);
+            DoorConnector = new Rectangle(36, 69, 16, 16);
+            Spike = new Rectangle(64, 35, 16, 16);
 
             // Add source rectangles for other block types as needed
         }
@@ -103,6 +117,40 @@ namespace Project1.SpriteFactories
         public Rectangle GetLadderBlockSource()
         {
             return LadderBlockSource;
+        }
+
+        public Rectangle GetBossRoomSource()
+        {
+            return BossRoomSource;
+        }
+
+        public Rectangle GetBossRoomTopSource()
+        {
+            return BossRoomTopSource;
+        }
+
+        public Rectangle GetElectricSource()
+        {
+            return Electric;
+        }
+
+        public Rectangle GetElectricConnectorSource()
+        {
+            return ElectricConnector;
+        }
+
+        public Rectangle GetDoorSource()
+        {
+            return Door;
+        }
+
+        public Rectangle GetDoorConnectorSource()
+        {
+            return DoorConnector;
+        }
+        public Rectangle GetSpikeSource()
+        {
+            return Spike;
         }
 
         // Add methods for other block types as needed

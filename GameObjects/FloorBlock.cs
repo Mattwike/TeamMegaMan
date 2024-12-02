@@ -17,6 +17,13 @@ namespace Project1.GameObjects
         BrickEndLeft2,
         BrickEndRight2,
         LadderBlock,
+        BossRoom,
+        BossRoomTop,
+        Electric,
+        ElectricConnector,
+        Door,
+        DoorConnector,
+        Spike,
         // Add other block types as needed
     }
 
@@ -29,6 +36,8 @@ namespace Project1.GameObjects
         private int blockWidth = 16;
         private int blockHeight = 16;
         public bool IsLadder { get; private set; }
+        public bool IsPassable { get; private set; }
+        public bool isSpike { get; private set; }
 
         public FloorBlock(Vector2 position, BlockType blockType)
         {
@@ -41,46 +50,93 @@ namespace Project1.GameObjects
                 case BlockType.FloorEndLeft:
                     sourceRectangle = BlockSpriteFactory.Instance.GetFloorEndLeftSource();
                     IsLadder = false;
+                    IsPassable = false;
                     break;
                 case BlockType.FloorMiddle:
                     sourceRectangle = BlockSpriteFactory.Instance.GetFloorMiddleSource();
                     IsLadder = false;
+                    IsPassable = false;
                     break;
                 case BlockType.FloorEndRight:
                     sourceRectangle = BlockSpriteFactory.Instance.GetFloorEndRightSource();
                     IsLadder = false;
+                    IsPassable = false;
                     break;
                 case BlockType.BrickEndRight:
                     sourceRectangle = BlockSpriteFactory.Instance.GetBrickEndRightSource();
                     IsLadder = false;
+                    IsPassable = false;
                     break;
                 case BlockType.BrickEndLeft:
                     sourceRectangle = BlockSpriteFactory.Instance.GetBrickEndLeftSource();
                     IsLadder = false;
+                    IsPassable = false;
                     break;
                 case BlockType.BrickMiddle:
                     sourceRectangle = BlockSpriteFactory.Instance.GetBrickMiddleSource();
                     IsLadder = false;
+                    IsPassable = false;
                     break;
                 case BlockType.BrickMiddle2:
                     sourceRectangle = BlockSpriteFactory.Instance.GetBrickMiddle2Source();
                     IsLadder = false;
+                    IsPassable = false;
                     break;
                 case BlockType.BrickEndLeft2:
                     sourceRectangle = BlockSpriteFactory.Instance.GetBrickEndLeft2Source();
                     IsLadder = false;
+                    IsPassable = false;
                     break;
                 case BlockType.BrickEndRight2:
                     sourceRectangle = BlockSpriteFactory.Instance.GetBrickEndRight2Source();
                     IsLadder = false;
+                    IsPassable = false;
                     break;
                 case BlockType.LadderBlock:
                     sourceRectangle = BlockSpriteFactory.Instance.GetLadderBlockSource();
                     IsLadder = true;
+                    IsPassable = false;
+                    break;
+                case BlockType.BossRoom:
+                    sourceRectangle = BlockSpriteFactory.Instance.GetBossRoomSource();
+                    IsLadder = false;
+                    IsPassable = true;
+                    break;
+                case BlockType.BossRoomTop:
+                    sourceRectangle = BlockSpriteFactory.Instance.GetBossRoomTopSource();
+                    IsLadder = false;
+                    IsPassable = true;
+                    break;
+                case BlockType.Electric:
+                    sourceRectangle = BlockSpriteFactory.Instance.GetElectricSource();
+                    IsLadder = false;
+                    IsPassable = false;
+                    break;
+                case BlockType.ElectricConnector:
+                    sourceRectangle = BlockSpriteFactory.Instance.GetElectricConnectorSource();
+                    IsLadder = false;
+                    IsPassable = false;
+                    break;
+                case BlockType.Door:
+                    sourceRectangle = BlockSpriteFactory.Instance.GetDoorSource();
+                    IsLadder = false;
+                    IsPassable = true;
+                    break;
+                case BlockType.DoorConnector:
+                    sourceRectangle = BlockSpriteFactory.Instance.GetDoorConnectorSource();
+                    IsLadder = false;
+                    IsPassable = false;
+                    break;
+                case BlockType.Spike:
+                    sourceRectangle = BlockSpriteFactory.Instance.GetSpikeSource();
+                    IsLadder = false;
+                    IsPassable = false;
+                    isSpike = true;
                     break;
                 default:
                     sourceRectangle = BlockSpriteFactory.Instance.GetFloorMiddleSource();
                     IsLadder = false;
+                    IsPassable = false;
                     break;
             }
 

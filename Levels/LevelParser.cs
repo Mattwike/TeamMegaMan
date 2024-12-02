@@ -37,6 +37,13 @@ namespace Project1.Levels
                 { "3", (x, y) => CreateFloorBlock(x, y, BlockType.BrickEndLeft2) },
                 { "4", (x, y) => CreateFloorBlock(x, y, BlockType.BrickEndRight2) },
                 { "C", (x, y) => CreateFloorBlock(x, y, BlockType.LadderBlock) },
+                { "8", (x, y) => CreateFloorBlock(x, y, BlockType.BossRoom) },
+                { "T", (x, y) => CreateFloorBlock(x, y, BlockType.BossRoomTop) },
+                { "6", (x, y) => CreateFloorBlock(x, y, BlockType.ElectricConnector) },
+                { "7", (x, y) => CreateFloorBlock(x, y, BlockType.Electric) },
+                { "5", (x, y) => CreateFloorBlock(x, y, BlockType.Door) },
+                { "P", (x, y) => CreateFloorBlock(x, y, BlockType.DoorConnector) },
+                { "S", (x, y) => CreateFloorBlock(x, y, BlockType.Spike) },
 
 
                 // Enemy mappings based on your EnemySpriteFactory

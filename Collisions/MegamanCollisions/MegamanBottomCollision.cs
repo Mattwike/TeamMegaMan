@@ -26,7 +26,7 @@ namespace Project1.CollisionEffects
 
 		public void Execute()
 		{
-            if (Handler.block is FloorBlock floorBlock && floorBlock.IsLadder)
+            if (Handler.block is FloorBlock floorBlock && (floorBlock.IsLadder || floorBlock.IsPassable))
             {
                 return;
             }

@@ -97,8 +97,12 @@ namespace Project1
             megaman = new Megaman();
             megaman.Initialize(_graphics, movementSpeed, 40, interval);
 
+            //start
             megaman.x = 0;
             megaman.y = 1113;
+
+            //megaman.x = 4700;
+            //megaman.y = 169;
 
             megaman.reachedCheckpoint();
 
@@ -165,7 +169,6 @@ namespace Project1
                 displayedEnemy.Update(gameTime);
 
                 CollidionHandler.HandleMegamanCollisions(megaman, levelParser.Blocks, levelEnemies, enemyDropList);
-                //CollidionHandler.HandleEnemyCollisions(levelEnemies, blockList, pellets, enemyDropList);
 
                 foreach (var pellet in pellets)
                 {
@@ -262,14 +265,6 @@ namespace Project1
                 }
                 _spriteBatch.End();
             }
-            
-
-            
-
-            
-
-            // Draw Bombomb directly
-            //bombomb.Draw(_spriteBatch, false, false);  // Draw Bombomb without flipping
 
             base.Draw(gameTime);
         }

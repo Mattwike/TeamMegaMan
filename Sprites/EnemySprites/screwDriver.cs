@@ -33,8 +33,7 @@ public class screwDriver : IEnemySprite
     {
         enemySheet = texture;
         SetPosition(position);
-        //x = 400;
-        //y = 30;
+
     }
 
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
@@ -43,8 +42,6 @@ public class screwDriver : IEnemySprite
         totalFrame = 50;
         delayCounter = 0;
         delayMax = 5;
-        enemySizeX = megamanSize;
-        enemySizeY = megamanSize;
     }
 
     public void Update(GameTime gameTime)
@@ -81,32 +78,32 @@ public class screwDriver : IEnemySprite
 
         if (currentFrame < 10)
         {
-            destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
+            destinationRectangle = new Rectangle((int)x, (int)y + 6, 16, 10);
             sourceRectangle = new Rectangle(155, 250, 18, 18);
         }
         else if (currentFrame < 15)
         {
-            destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
+            destinationRectangle = new Rectangle((int)x, (int)y + 2, 16, 14);
             sourceRectangle = new Rectangle(172, 250, 18, 18);
         }
         else if (currentFrame < 20)
         {
-            destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
+            destinationRectangle = new Rectangle((int)x, (int)y, 16, 16);
             sourceRectangle = new Rectangle(189, 250, 18, 18);
         }
         else if (currentFrame < 30)
         {
-            destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
+            destinationRectangle = new Rectangle((int)x + 1, (int)y, 15, 16);
             sourceRectangle = new Rectangle(206, 250, 18, 18);
         }
         else if (currentFrame < 40)
         {
-            destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
+            destinationRectangle = new Rectangle((int)x + 1, (int)y, 15, 16);
             sourceRectangle = new Rectangle(223, 250, 18, 18);
         }
         else
         {
-            destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
+            destinationRectangle = new Rectangle((int)x, (int)y, 16, 16);
             sourceRectangle = new Rectangle(189, 250, 18, 18);
         }
 
