@@ -78,8 +78,6 @@ public class Mambu : IEnemySprite
     // Initialize method to set position, screen boundaries, and other properties
     public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int size)
     {
-        x = 500;  // Example initial X-position
-        y = 200;  // Example initial Y-position
         initialX = x;  // Store the initial x position as reference
 
         screenWidth = graphics.PreferredBackBufferWidth;  // Set screen boundaries
