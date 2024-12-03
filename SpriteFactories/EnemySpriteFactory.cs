@@ -70,4 +70,14 @@ public class EnemySpriteFactory
     {
         return new SniperJoe(enemySheet, position);
     }
+
+    public IEnemySprite CreateRedBlaster(Vector2 position)
+    {
+        return new RedBlaster(enemySheet, position);
+    }
+
+    public IEnemySprite CreateKillerBomb(Vector2 position)
+    {
+        return new KillerBomb(enemySheet, position);
+    }
 }
