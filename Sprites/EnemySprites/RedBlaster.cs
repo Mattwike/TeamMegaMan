@@ -44,7 +44,7 @@ public class RedBlaster : IEnemySprite
     private Random random;  // Random number generator for projectile angles
 
     // Constructor
-    public RedBlaster(Texture2D texture, Vector2 position, int screenWidth, int screenHeight)
+    public RedBlaster(Texture2D texture, Vector2 position)
     {
         blasterSheet = texture;
         SetPosition(position);
@@ -69,21 +69,22 @@ public class RedBlaster : IEnemySprite
 
         // Initialize random number generator
         random = new Random();
+    }
 
-        // Set movement speed
-        movementSpeed = 5f;  // Set to desired speed
-
-        // Set screen dimensions
-        this.screenWidth = screenWidth;
-        this.screenHeight = screenHeight;
-
-        // Initialize other variables
+    // Initialize method
+    public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int size)
+    {
         currentFrame = 0;
         totalFrames = redBlasterFrames.Length;
         delayCounter = 0;
         delayMax = 15;  // Adjust as needed for animation speed
         blasterSizeX = 20;
         blasterSizeY = 20;
+
+        screenWidth = graphics.PreferredBackBufferWidth;
+        screenHeight = graphics.PreferredBackBufferHeight;
+
+        this.movementSpeed = Math.Abs(movementSpeed);  // Ensure movementSpeed is positive
     }
 
     // Update method

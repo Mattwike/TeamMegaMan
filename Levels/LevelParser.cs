@@ -55,6 +55,7 @@ namespace Project1.Levels
                 { "MA", (x, y) => CreateEnemy("MA", x, y) }, // Mambu
                 { "SJ", (x, y) => CreateEnemy("SJ", x, y) }, // Sniper Joe
                 { "RB", (x, y) => CreateEnemy("RB", x, y) }, // Red Blaster
+                { "KB", (x, y) => CreateEnemy("KB", x, y) }, // Killer Bomb
                 // Add other mappings as per your EnemySpriteFactory
 
 
@@ -150,6 +151,10 @@ namespace Project1.Levels
 
                 case "RB":
                     enemy = EnemySpriteFactory.Instance.CreateRedBlaster(position);
+                    break;
+
+                case "KB":
+                    enemy = EnemySpriteFactory.Instance.CreateKillerBomb(position);
                     break;
                 // Exclude Bombman-related enemies
                 // Add other enemy cases as needed

@@ -75,4 +75,9 @@ public class EnemySpriteFactory
     {
         return new RedBlaster(enemySheet, position);
     }
+
+    public IEnemySprite CreateKillerBomb(Vector2 position)
+    {
+        return new KillerBomb(enemySheet, position);
+    }
 }
