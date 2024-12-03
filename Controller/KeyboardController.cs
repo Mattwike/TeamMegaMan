@@ -155,6 +155,12 @@ public class KeyboardController : IController
             commandDict[Keys.OemQuestion].Execute(_graphics, movementSpeed, megamanSize, interval);
             //megaman.is_climbing = true;
         }
+        else if(megaman.is_climbing && pressedKeys.Contains(Keys.S))
+        {
+            megaman.is_climbing = true;
+            megaman.y += 3;
+            commandDict[Keys.OemQuestion].Execute(_graphics, movementSpeed, megamanSize, interval);
+        }
         else if (!megaman.is_climable && megaman.is_climbing)
         {
             megaman.is_climbing = false;

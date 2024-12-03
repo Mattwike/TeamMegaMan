@@ -22,7 +22,7 @@ namespace Project1.GameObjects
             sprites = new List<IEnemySprite>
             {
                 EnemySpriteFactory.Instance.CreateScrewDriver(defaultPosition),
-                EnemySpriteFactory.Instance.CreateBombManIdle(),
+                EnemySpriteFactory.Instance.CreateBombMan(defaultPosition),
                 EnemySpriteFactory.Instance.CreateJumpingFlea(defaultPosition),
                 EnemySpriteFactory.Instance.CreateBombManThrowing(),
                 EnemySpriteFactory.Instance.CreateOctopus(defaultPosition),

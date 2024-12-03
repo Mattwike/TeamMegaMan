@@ -33,6 +33,7 @@ public class Octopus : IEnemySprite
     public int x { get; set; }  // Keep as int to match interface
     public bool isFalling { get; set; }
     public bool istouchingfloor { get; set; }
+    public bool hitWall { get; set; }
     public float gravity { get; set; }
     public float Gravity
     {
@@ -78,8 +79,8 @@ public class Octopus : IEnemySprite
         screenWidth = graphics.PreferredBackBufferWidth;  // Set screen boundaries
         screenHeight = graphics.PreferredBackBufferHeight;
 
-        width = 26;  // Set sprite size based on the passed size
-        height = 26;  // Keep height same as width for aspect ratio
+        width = 16;  // Set sprite size based on the passed size
+        height = 16;  // Keep height same as width for aspect ratio
 
         speedX = movementSpeed / 5f;  // Adjust horizontal speed based on movement speed parameter
 
@@ -121,12 +122,14 @@ public class Octopus : IEnemySprite
             }
 
             // Check if Octopus reached either side of the range
-            if (positionX >= initialPositionX + movementRange || positionX <= initialPositionX - movementRange)
+            if (hitWall)
             {
                 // Reverse horizontal direction and pause at the edge
                 speedX = -speedX;
+                hitWall = false;
                 isPaused = true;  // Trigger the pause at the edge
                 currentFrame = 0;  // Switch to frame 1 when reaching the edge
+               
             }
 
             // Update animation frame only when not paused

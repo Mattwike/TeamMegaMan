@@ -22,16 +22,17 @@ public class bombManIdle : IEnemySprite
     public bool isFalling { get; set; }
     public bool istouchingfloor { get; set; }
     public float gravity { get; set; }
+    public bool hitWall { get; set; }
     public float Gravity
     {
         set { gravity = 4.5f; }
 
     }
-    public bombManIdle(Texture2D texture)
+    public bombManIdle(Texture2D texture, Vector2 position)
     {
         enemySheet = texture;
-        x = 400;
-        y = 40;
+        x = (int)position.X;
+        y = (int)position.Y;
     }
 
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
@@ -83,17 +84,17 @@ public class bombManIdle : IEnemySprite
 
         if (currentFrame < 10)
         {
-            destinationRectangle = new Rectangle((int)x, (int)y, enemySizeX, enemySizeY);
+            destinationRectangle = new Rectangle((int)x, (int)y, 24, 24);
             sourceRectangle = new Rectangle(60, 36, 25, 25);
         }
         else if (currentFrame == 10)
         {
-            destinationRectangle = new Rectangle((int)x-8, (int)y-10, enemySizeX+8, enemySizeY+10);
+            destinationRectangle = new Rectangle((int)x-3, (int)y-5, 27, 29);
             sourceRectangle = new Rectangle(31, 30, 29, 31);
         }
         else
         {
-            destinationRectangle = new Rectangle((int)x-6, (int)y-30, enemySizeX+6, enemySizeY+30);
+            destinationRectangle = new Rectangle((int)x-1, (int)y-14, 25, 38);
             sourceRectangle = new Rectangle(0, 21, 28, 41);
         }
 

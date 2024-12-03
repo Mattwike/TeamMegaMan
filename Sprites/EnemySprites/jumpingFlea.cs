@@ -31,6 +31,7 @@ public class jumpingFlea : IEnemySprite
     public bool isFalling { get; set; }
     public bool istouchingfloor { get; set; }
     public float gravity { get; set; }
+    public bool hitWall { get; set; }
     public float Gravity
     {
         set { gravity = 4.5f; }
@@ -60,7 +61,7 @@ public class jumpingFlea : IEnemySprite
         enemySpeed = 2f;
         jumping = false;
         falling = false;
-        health = 100;
+        health = 10;
         this.graphics = graphics;
     }
 

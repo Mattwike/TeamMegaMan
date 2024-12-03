@@ -101,7 +101,7 @@ namespace Project1
             megaman.x = 0;
             megaman.y = 1113;
 
-            //megaman.x = 4700;
+            //megaman.x = 4900;
             //megaman.y = 169;
 
             megaman.reachedCheckpoint();

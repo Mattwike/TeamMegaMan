@@ -37,6 +37,7 @@ public class Mambu : IEnemySprite
     public bool isFalling { get; set; }
     public bool istouchingfloor { get; set; }
     public float gravity { get; set; }
+    public bool hitWall { get; set; }
     public float Gravity
     {
         set { gravity = 4.5f; }

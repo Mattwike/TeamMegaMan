@@ -26,7 +26,13 @@ namespace Project1.CollisionEffects
 
 		public void Execute()
 		{
-			Handler.enemy.istouchingfloor = true;
+
+            if (Handler.block is FloorBlock floorBlock && (floorBlock.IsLadder || floorBlock.IsPassable))
+            {
+                return;
+            }
+
+            Handler.enemy.istouchingfloor = true;
 			Handler.enemy.y = Handler.block.boundingBox.Y - Handler.enemy.getRectangle().Height;
 			Handler.enemy.isFalling = false;
 			Handler.enemy.gravity = 4;

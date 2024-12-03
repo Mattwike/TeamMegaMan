@@ -26,7 +26,13 @@ namespace Project1.CollisionEffects
 
 		public void Execute()
 		{
-			Handler.enemy.isFalling = true;
+
+            if (Handler.block is FloorBlock floorBlock && (floorBlock.IsLadder || floorBlock.IsPassable))
+            {
+                return;
+            }
+
+            Handler.enemy.isFalling = true;
 			Handler.enemy.y = Handler.block.boundingBox.Y + Handler.block.boundingBox.Height + 2;
         }
 	}

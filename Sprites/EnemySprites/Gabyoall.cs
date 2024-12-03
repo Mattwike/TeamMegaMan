@@ -28,6 +28,7 @@ public class Gabyoall : IEnemySprite
     public int x { get; set; }
     public bool isFalling { get; set; }
     public bool istouchingfloor { get; set; }
+    public bool hitWall { get; set; }
     public float gravity { get; set; }
     public float Gravity
     {

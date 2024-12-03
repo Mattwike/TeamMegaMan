@@ -23,6 +23,7 @@ public class KillerBomb : IEnemySprite
 
     // Health and other properties required by IEnemySprite
     public int health { get; private set; }
+    public bool hitWall { get; set; }
 
     public int x
     {
