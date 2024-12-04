@@ -91,7 +91,7 @@ public class Octopus : IEnemySprite
     }
 
     // Update method to handle movement and animation logic
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime, Camera camera)
     {
         if (isPaused)
         {

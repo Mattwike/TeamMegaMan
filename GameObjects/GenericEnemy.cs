@@ -55,9 +55,9 @@ namespace Project1.GameObjects
             }
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, Camera camera)
         {
-            sprites[currentSprite].Update(gameTime);
+            sprites[currentSprite].Update(gameTime, camera);
         }
 
         public void Draw(SpriteBatch _spriteBatch)

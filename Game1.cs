@@ -166,7 +166,7 @@ namespace Project1
 
                 // Update Bombomb directly
                 megaman.Update(gameTime, interval);
-                displayedEnemy.Update(gameTime);
+                //displayedEnemy.Update(gameTime);
 
                 CollidionHandler.HandleMegamanCollisions(megaman, levelParser.Blocks, levelEnemies, enemyDropList);
 
@@ -181,7 +181,8 @@ namespace Project1
                 }
                 foreach (var enemy in levelEnemies)
                 {
-                    enemy.Update(gameTime);
+                    enemy.Update(gameTime, camera);
+
                     CollidionHandler.HandleEnemyCollisions(enemy, levelBlocks, pellets, enemyDropList);
                 }
                 // Update level blocks if necessary

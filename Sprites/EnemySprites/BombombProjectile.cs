@@ -1,25 +1,20 @@
+// BombombProjectile.cs
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Project1.GameObjects;
 using System.Collections.Generic;
+using Project1.GameObjects;  // Adjust this namespace if necessary
 
 public class BombombProjectile : IEnemySprite
 {
-    //float x;
-    //float y;
-    float speedX;  // Horizontal speed (constant left or right)
-    float speedY;  // Vertical speed (constant falling)
-    private Texture2D projectileSheet;
-    int projectileSizeX;
-    int projectileSizeY;
-    int screenWidth;
-    int screenHeight;  // Added: screenHeight variable to check boundaries
-
-    Rectangle[] projectileFrames;
-    int currentFrame;
-    int totalFrame;
-    int delayCounter;
-    int delayMax;
+    // Fields
+    private Texture2D texture;
+    private float posX, posY;
+    public float speedX, speedY;
+    public int width { get; set; }
+    public int height { get; set; }
+    private int screenWidth;
+    private int screenHeight;
 
     public Rectangle hitbox;
     public int health;
@@ -28,71 +23,57 @@ public class BombombProjectile : IEnemySprite
     public int x { get; set; }
     public bool isFalling { get; set; }
     public bool istouchingfloor { get; set; }
-    public bool hitWall { get; set; }
     public float gravity { get; set; }
-    public float Gravity
-    {
-        set { gravity = 4.5f; }
+    public bool hitWall { get; set; }
+    public float Gravity { set { gravity = 4.5f; } }
 
-    }
+    private Rectangle[] projectileFrames;
+    private int currentFrame;
+    private int totalFrame;
+    private int delayCounter;
+    private int delayMax;
 
+    // Constructor
     public BombombProjectile(Texture2D texture, float startX, float startY, int screenWidth, float speedX)
     {
-        projectileSheet = texture;
-        x = (int)startX;
-        y = (int)startY;
+        this.texture = texture;
+        this.posX = startX;
+        this.posY = startY;
         this.screenWidth = screenWidth;
-        this.screenHeight = 600;  // Default screen height (set as 600), modify this based on your screen size
+        this.screenHeight = 600;  // Adjust as needed
 
-        this.speedX = speedX;  // Set horizontal speed (left or right)
-        this.speedY = 2f;    // Set constant falling speed
+        this.speedX = speedX;
+        this.speedY = 2f;
 
-        // Define source frame for projectile (adjust based on sprite sheet)
         projectileFrames = new Rectangle[]
         {
-            new Rectangle(417, 24, 8, 6),  // Projectile frame from sprite sheet
+            new Rectangle(417, 24, 8, 6),  // Adjust based on your sprite sheet
         };
 
         currentFrame = 0;
         totalFrame = projectileFrames.Length;
         delayCounter = 0;
         delayMax = 10;
-        projectileSizeX = projectileFrames[currentFrame].Width;
-        projectileSizeY = projectileFrames[currentFrame].Height;
+        width = projectileFrames[currentFrame].Width;
+        height = projectileFrames[currentFrame].Height;
+
+        health = 10;  // Initial health
     }
 
+    // Initialize method
     public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int size)
     {
-        currentFrame = 0;
-        delayCounter = 0;
+        // Implement if necessary
     }
 
-    public void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically)
+    // Update method with Camera parameter
+    public void Update(GameTime gameTime, Camera camera)
     {
-        SpriteEffects spriteEffects = SpriteEffects.None;
+        posX += speedX;
+        posY += speedY;
 
-        if (flipHorizontally)
-        {
-            spriteEffects |= SpriteEffects.FlipHorizontally;
-        }
-
-        if (flipVertically)
-        {
-            spriteEffects |= SpriteEffects.FlipVertically;
-        }
-
-        Rectangle destinationRectangle = new Rectangle((int)x, (int)y, projectileSizeX, projectileSizeY);
-        Rectangle sourceRectangle = projectileFrames[currentFrame];
-        _spriteBatch.Draw(projectileSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
-    }
-
-    public void Update(GameTime gameTime)
-    {
-        // Move the projectile horizontally and vertically at constant speeds
-        x += (int)speedX;  // Move left or right based on speedX
-        y += (int)speedY;  // Move down at a constant speed
-
-        // No increase in horizontal or vertical speed, maintain constant motion
+        // Update hitbox position
+        hitbox = new Rectangle((int)posX, (int)posY, width, height);
 
         // Frame delay logic (if needed for animation)
         delayCounter++;
@@ -107,25 +88,68 @@ public class BombombProjectile : IEnemySprite
         }
     }
 
-    public bool IsOffScreen()
+    // Draw method
+    public void Draw(SpriteBatch spriteBatch, bool flipHorizontally, bool flipVertically)
     {
-        // Check if the projectile is off-screen based on screen width and height
-        return x < 0 || x > screenWidth || y > 300;  // Make sure y > screenHeight to detect bottom screen boundary
+        SpriteEffects spriteEffects = SpriteEffects.None;
+
+        if (flipHorizontally)
+            spriteEffects |= SpriteEffects.FlipHorizontally;
+        if (flipVertically)
+            spriteEffects |= SpriteEffects.FlipVertically;
+
+        // Define the destination rectangle where the projectile will be drawn on the screen
+        Rectangle destinationRectangle = new Rectangle((int)posX, (int)posY, width, height);
+
+        // Define the source rectangle for the projectile sprite (adjust based on your sprite sheet)
+        Rectangle sourceRectangle = projectileFrames[currentFrame];
+
+        // Draw the projectile using its texture
+        spriteBatch.Draw(texture, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
     }
+
+    // Method to check if the projectile is off the screen, accounting for the camera
+    public bool IsOffScreen(Camera camera)
+    {
+        if (camera == null)
+        {
+            // Default behavior if camera is not provided
+            return (posX < -width || posX > screenWidth + width || posY < -height || posY > screenHeight + height);
+        }
+
+        Rectangle visibleArea = camera.GetVisibleArea();
+        Rectangle projectileRectangle = new Rectangle((int)posX, (int)posY, width, height);
+        return !visibleArea.Intersects(projectileRectangle);
+    }
+
+    // Get the rectangle for collision detection
     public Rectangle getRectangle()
     {
         return hitbox;
     }
+
+    // Get the health of the projectile
     public int GetHealth()
     {
         return health;
     }
+
+    // Handle taking damage
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
     }
+
+    // Set the position of the projectile
+    public void SetPosition(Vector2 position)
+    {
+        posX = position.X;
+        posY = position.Y;
+    }
+
+    // Handle touching the floor (implement as needed)
     public void isTouchingFloor()
     {
-        //istouchingfloor = false;
+        // Implement if necessary
     }
 }

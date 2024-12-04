@@ -279,6 +279,6 @@ public class KeyboardController : IController
         previousKeyState = keyboardState;
 
         megaman.Update(gameTime, interval);
-        displayedEnemy.Update(gameTime);
+        //displayedEnemy.Update(gameTime);
     }
 }

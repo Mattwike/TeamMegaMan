@@ -65,7 +65,7 @@ public class jumpingFlea : IEnemySprite
         this.graphics = graphics;
     }
 
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime, Camera camera)
     {
         if (!isVisible)
         {

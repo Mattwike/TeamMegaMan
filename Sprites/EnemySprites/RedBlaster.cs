@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Project1.GameObjects;
 using System.Collections.Generic;
 using System;
+using Project1.GameObjects;
 
 public class RedBlaster : IEnemySprite
 {
@@ -21,7 +21,7 @@ public class RedBlaster : IEnemySprite
     private bool isVisible;  // Flag to determine if the enemy is visible (alive)
 
     // List of active projectiles
-    private List<IEnemySprite> projectiles;
+    private List<RedBlasterProjectile> projectiles;
 
     // Define source frame dimensions for red blaster animation
     private Rectangle[] redBlasterFrames;
@@ -59,7 +59,7 @@ public class RedBlaster : IEnemySprite
         };
 
         // Initialize the list of projectiles
-        projectiles = new List<IEnemySprite>();
+        projectiles = new List<RedBlasterProjectile>();
 
         positionX = x;
         positionY = y;
@@ -88,12 +88,12 @@ public class RedBlaster : IEnemySprite
         this.movementSpeed = Math.Abs(movementSpeed);  // Ensure movementSpeed is positive
     }
 
-    // Update method
-    public void Update(GameTime gameTime)
+    // Update method with Camera parameter
+    public void Update(GameTime gameTime, Camera camera)
     {
         if (!isVisible)
         {
-            return;  // Do not update if the enemy is not visible (dead)
+            return;
         }
 
         delayCounter++;
@@ -103,31 +103,28 @@ public class RedBlaster : IEnemySprite
             if (currentFrame >= totalFrames)
             {
                 currentFrame = 0;
-                hasShot = false;  // Reset the shooting flag when the animation loops
+                hasShot = false;
             }
             delayCounter = 0;
         }
 
-        // Check if it's time to shoot a projectile (e.g., during the last frame)
         if (currentFrame == totalFrames - 1 && !hasShot)
         {
             ShootProjectile();
-            hasShot = true;  // Ensure the projectile is only shot once per cycle
+            hasShot = true;
         }
 
         // Update all projectiles
         for (int i = projectiles.Count - 1; i >= 0; i--)
         {
-            projectiles[i].Update(gameTime);
+            projectiles[i].Update(gameTime, camera);
 
-            // Remove the projectile if it's off the screen
-            if (((RedBlasterProjectile)projectiles[i]).IsOffScreen())
+            if (projectiles[i].IsOffScreen(camera))
             {
                 projectiles.RemoveAt(i);
             }
         }
 
-        // Update hitbox
         hitbox = new Rectangle(x, y, blasterSizeX, blasterSizeY);
     }
 
@@ -241,7 +238,7 @@ public class RedBlaster : IEnemySprite
     }
 
     // Provide access to the projectiles for collision handling
-    public List<IEnemySprite> GetProjectiles()
+    public List<RedBlasterProjectile> GetProjectiles()
     {
         return projectiles;
     }

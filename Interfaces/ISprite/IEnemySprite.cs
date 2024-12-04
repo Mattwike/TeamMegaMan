@@ -13,7 +13,7 @@ public interface IEnemySprite
     bool istouchingfloor { get; set; }
     float gravity { get; set; }
     public bool hitWall { get; set; }
-    void Update(GameTime gameTime);
+    void Update(GameTime gameTime, Camera camera);
 
     void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically);
 

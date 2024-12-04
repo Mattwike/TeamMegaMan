@@ -49,7 +49,7 @@ public class bombManIdle : IEnemySprite
         hitbox.Height = 50;
     }
 
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime, Camera camera)
     {
         delayCounter++;
         if (delayCounter >= delayMax)

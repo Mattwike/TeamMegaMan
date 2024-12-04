@@ -43,7 +43,7 @@ public class EnemySpriteFactory
 
     public IEnemySprite CreateBombomb(Vector2 position)
     {
-        return new Bombomb(enemySheet, position.X, position.Y, position);
+        return new Bombomb(enemySheet, position.X, position);
     }
 
     public IEnemySprite CreateOctopus(Vector2 position)

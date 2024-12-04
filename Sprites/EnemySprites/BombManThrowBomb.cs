@@ -79,7 +79,7 @@ public class BombManThrowBomb : IEnemySprite
 
     }
 
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime, Camera camera)
     {
         delayCounter++;
         if (delayCounter >= delayMax)
