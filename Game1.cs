@@ -86,7 +86,7 @@ namespace Project1
             EnemyDropSpriteFactory.Instance.CreateEnemyDrop();
             healthBarSpriteFactory.Instance.LoadAllTextures(Content);
             healthBarSpriteFactory.Instance.CreateHealthBar();
-
+            Bombman.Initialize(_graphics, 12, 10);  
             //load Block Textures
             BlockSpriteFactory.Instance.LoadAllTextures(Content);
      

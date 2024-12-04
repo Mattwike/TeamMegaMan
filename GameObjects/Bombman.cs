@@ -22,6 +22,12 @@ namespace Project1.GameObjects
             Position = startPosition;
             Speed = 2.0f;
             stateMachine = new BombmanStateMachine(this);
+            currentSprite = BombmanSpriteFactory.Instance.CreateIdleBombMan(Position);
+        }
+
+        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
+        {
+            currentSprite.Initialize(_graphics, movementSpeed, megamanSize);
         }
 
         public void Update()
