@@ -102,7 +102,7 @@ namespace Project1.States.MegamanState
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed, Color currentColor)
         {
             // Implement draw logic here
-            Sprite.Draw(_spriteBatch, movementSpeed, megaman.isfacingLeft, false, currentColor);
+            Sprite.Draw(_spriteBatch, movementSpeed, true, false, currentColor);
         }
 
         public Rectangle getRectangle()

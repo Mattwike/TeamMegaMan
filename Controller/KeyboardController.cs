@@ -17,7 +17,7 @@ public class KeyboardController : IController
     private Game1 game;
     private Megaman megaman;
     private GenericEnemy displayedEnemy;
-    private Dictionary<Keys, ICommand> commandDict = new Dictionary<Keys, ICommand>();
+    Dictionary<Keys, ICommand> commandDict = new Dictionary<Keys, ICommand>();
     List<Pellet> pellets;
     Pellet pellet;
     private Keys[] priorKeys = new Keys[0];
@@ -26,6 +26,8 @@ public class KeyboardController : IController
     bool mouseClicked = false;
     private bool paused = false;
     private KeyboardState previousKeyboardState;
+    KeyboardMethods keyboardMethods;
+    Game1 gameInstance;
 
     public KeyboardController(Game1 gameInstance, Megaman megaman, GenericEnemy displayedEnemy, List<Pellet> pellets)
     {
@@ -33,6 +35,8 @@ public class KeyboardController : IController
         this.megaman = megaman;
         this.displayedEnemy = displayedEnemy;
         this.pellets = pellets;
+        this.gameInstance = gameInstance;
+        
     }
 
     public bool isPaused()
@@ -61,21 +65,8 @@ public class KeyboardController : IController
 
     public void Initialize()
     {
-    
-        commandDict.Add(Keys.O, new CycleEnemyBackwardCommand(displayedEnemy));
-        commandDict.Add(Keys.P, new CycleEnemyForwardCommand(displayedEnemy));
-
-        commandDict.Add(Keys.A, new RunningLeftMegamanCommand(megaman));
-        commandDict.Add(Keys.D, new RunningRightMegamanCommand(megaman));
-        commandDict.Add(Keys.L, new RunningShootingLeftMegamanCommand(megaman));
-        commandDict.Add(Keys.K, new RunningShootingRightMegamanCommand(megaman));
-        commandDict.Add(Keys.OemQuestion, new ClimbingMegamanCommand(megaman));
-        commandDict.Add(Keys.D9, new ClimbingShootingRightMegamanCommand(megaman));
-        commandDict.Add(Keys.D8, new ClimbingReachedTopMegamanCommand(megaman));
-        commandDict.Add(Keys.D7, new DamagedMegamanCommand(megaman));
-        commandDict.Add(Keys.D6, new FallingMegamanCommand(megaman));
-        commandDict.Add(Keys.D5, new FallingShootingMegamanCommand(megaman));
-        commandDict.Add(Keys.D4, new IdleShootingMegamanCommand(megaman));
+        keyboardMethods = new KeyboardMethods(gameInstance, megaman, pellets);
+        keyboardMethods.Initialize();
     }
 
     public void Update(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, GameTime gameTime)
@@ -84,197 +75,32 @@ public class KeyboardController : IController
         KeyboardState keyboardState = Keyboard.GetState();
         Keys[] pressedKeys = keyboardState.GetPressedKeys();
 
-        megaman.is_running = false;
-        megaman.is_shooting = false;
-        megaman.is_damaged = false;
+        //megaman.is_running = false;
+        //megaman.is_shooting = false;
+        //megaman.is_damaged = false;
 
         if (!megaman.is_jumping && !megaman.istouchingfloor && !megaman.is_climbing)
         {
             megaman.y += megaman.gravity;
         }
-
-        if (keyboardState.IsKeyDown(Keys.O) && previousKeyState.IsKeyUp(Keys.O)) {
-            commandDict[Keys.O].Execute(_graphics, movementSpeed, megamanSize, 0);
-        }
-        if (keyboardState.IsKeyDown(Keys.P) && previousKeyState.IsKeyUp(Keys.P)) {
-            commandDict[Keys.P].Execute(_graphics, movementSpeed, megamanSize, 0);
-        }
+        
         interval++;
        
-
+        //Check reset
         if (pressedKeys.Contains(Keys.R))
         {
             megaman.reset();
         }
-        // Check for key presses and execute the corresponding commands
 
+        // Check each megaman state
         megaman.Jump(pressedKeys);
-
-        if (megaman.is_falling)
-        {
-            commandDict[Keys.D6].Execute(_graphics, movementSpeed, megamanSize, interval);
-        }
-
-        if ((megaman.is_jumping || megaman.is_falling) && (Mouse.GetState().LeftButton == ButtonState.Pressed))
-        {
-            commandDict[Keys.D5].Execute(_graphics, movementSpeed, megamanSize, interval);
-
-            if (interval % 10 == 0)
-            {
-                if (megaman.isfacingLeft)
-                {
-                    pellet = new Pellet();
-                    pellet.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval, false);
-                    pellets.Add(pellet);
-                }
-                else 
-                {
-                    pellet = new Pellet();
-                    pellet.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval, true);
-                    pellets.Add(pellet);
-                }
-            }
-        }
-
-        else if (megaman.is_falling || megaman.is_jumping)
-        {
-            commandDict[Keys.D6].Execute(_graphics, movementSpeed, megamanSize, interval);
-        }
-
-        if (pressedKeys.Contains(Keys.Z) || megaman.is_damaged)
-        {
-
-            commandDict[Keys.D6].Execute(_graphics, movementSpeed, megamanSize, interval);
-            megaman.is_damaged = true;
-        }
-
-        if (megaman.is_climbing && pressedKeys.Contains(Keys.W))
-        {
-            megaman.is_climbing = true;
-            megaman.y -= 3;
-            commandDict[Keys.OemQuestion].Execute(_graphics, movementSpeed, megamanSize, interval);
-            //megaman.is_climbing = true;
-        }
-        else if(megaman.is_climbing && pressedKeys.Contains(Keys.S))
-        {
-            megaman.is_climbing = true;
-            megaman.y += 3;
-            commandDict[Keys.OemQuestion].Execute(_graphics, movementSpeed, megamanSize, interval);
-        }
-        else if (!megaman.is_climable && megaman.is_climbing)
-        {
-            megaman.is_climbing = false;
-        }
-
-        if (megaman.is_climable && pressedKeys.Contains(Keys.W))
-        {
-            megaman.is_climbing = true;
-        }
-        else
-        {
-            megaman.is_climable = false;
-        }
-
-        if (megaman.is_climbing && pressedKeys.Contains(Keys.D))
-        {
-            commandDict[Keys.D9].Execute(_graphics, movementSpeed, megamanSize, interval);
-        }
-
-        if (megaman.is_climbing && megaman.y < 25)
-        {
-            //commandDict[Keys.D8].Execute(_graphics, movementSpeed, megamanSize, interval);
-            //megaman.is_climbing = false;
-            //megaman.reached_top = true;
-        }
-
-        if (pressedKeys.Contains(Keys.A) && Mouse.GetState().LeftButton == ButtonState.Pressed && !megaman.is_climbing && !megaman.is_jumping && !megaman.is_falling)
-        {
-            commandDict[Keys.L].Execute(_graphics, movementSpeed, megamanSize, interval);
-            megaman.x -= 3 * megaman.velocity;
-            megaman.is_running = true;
-            megaman.is_shooting = true;
-            mouseClicked = true;
-
-            if (interval % 10 == 0)
-            {
-                pellet = new Pellet();
-                pellet.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval, false);
-                pellets.Add(pellet);
-            }
-        }
-
-        else if (pressedKeys.Contains(Keys.D) && Mouse.GetState().LeftButton == ButtonState.Pressed && !megaman.is_climbing && !megaman.is_jumping && !megaman.is_falling)
-        {
-            commandDict[Keys.K].Execute(_graphics, movementSpeed, megamanSize, interval);
-            megaman.x += 3 * megaman.velocity;
-            megaman.is_running = true;
-            megaman.is_shooting = true;
-            mouseClicked = true;
-
-            if (interval % 10 == 0)
-            {
-                pellet = new Pellet();
-                pellet.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval, true);
-                pellets.Add(pellet);
-            }
-        }
-
-        if (!megaman.is_shooting && !megaman.is_climbing && pressedKeys.Contains(Keys.A))
-        {
-            if (!megaman.is_jumping && !megaman.is_falling)
-            {
-                commandDict[Keys.A].Execute(_graphics, movementSpeed, megamanSize, interval);
-            }
-
-            megaman.x -= 3 * megaman.velocity;
-            megaman.is_running = true;
-            mouseClicked = true;
-        }
-        else if (!megaman.is_shooting && !megaman.is_climbing && pressedKeys.Contains(Keys.D))
-        {
-            if (!megaman.is_jumping && !megaman.is_falling)
-            {
-                commandDict[Keys.D].Execute(_graphics, movementSpeed, megamanSize, interval);
-            }
-
-            megaman.x += 3 * megaman.velocity;
-            megaman.is_running = true;
-            mouseClicked = true;
-        }
-        if (!megaman.is_shooting && !megaman.is_running && !megaman.is_falling && !megaman.is_jumping && !megaman.is_climbing && !megaman.is_damaged)
-        {
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
-            {
-                if (interval %10 == 0)
-                {
-                    if (megaman.isfacingLeft)
-                    {
-                        pellet = new Pellet();
-                        pellet.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval, false);
-                        pellets.Add(pellet);
-                    }
-                    else
-                    {
-                        pellet = new Pellet();
-                        pellet.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval, true);
-                        pellets.Add(pellet);
-                    }
-                }
-                var Idle = new IdleShootingMegamanCommand(megaman);
-                Idle.Execute(_graphics, movementSpeed, megamanSize, interval);
-            }
-            else
-            {
-                var Idle = new IdleMegamanCommand(megaman);
-                Idle.Execute(_graphics, movementSpeed, megamanSize, interval);
-            }
-            
-        }
-
-        if (!megaman.isVulnerable)
-        {
-            commandDict[Keys.D7].Execute(_graphics, movementSpeed, megamanSize, interval);
-        }
+        keyboardMethods.CheckFalling(megaman, _graphics, movementSpeed, megamanSize, interval, pressedKeys);
+        keyboardMethods.CheckFallingShooting(megaman, _graphics, movementSpeed, megamanSize, interval, pressedKeys);
+        keyboardMethods.CheckClimbing(megaman, _graphics, movementSpeed, megamanSize, interval, pressedKeys);
+        keyboardMethods.CheckRunningShooting(megaman, _graphics, movementSpeed, megamanSize, interval, pressedKeys);
+        keyboardMethods.CheckRunning(megaman, _graphics, movementSpeed, megamanSize, interval, pressedKeys);
+        keyboardMethods.CheckIdle(megaman, _graphics, movementSpeed, megamanSize, interval, pressedKeys);
+        keyboardMethods.CheckVulnerability(megaman, _graphics, movementSpeed, megamanSize, interval);
 
         previousKeyState = keyboardState;
 
