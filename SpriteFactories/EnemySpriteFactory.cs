@@ -36,11 +36,6 @@ public class EnemySpriteFactory
         return new screwDriver(enemySheet, position);
     }
 
-    public IEnemySprite CreateBombManThrowing()
-    {
-        return new BombManThrowBomb(bossSheet);
-    }
-
     public IEnemySprite CreateBombomb(Vector2 position)
     {
         return new Bombomb(enemySheet, position.X, position);
@@ -74,10 +69,5 @@ public class EnemySpriteFactory
     public IEnemySprite CreateKillerBomb(Vector2 position)
     {
         return new KillerBomb(enemySheet, position);
-    }
-
-    public IEnemySprite CreateBombMan(Vector2 position)
-    {
-        return new bombManIdle(bossSheet, position);
     }
 }

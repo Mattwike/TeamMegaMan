@@ -89,7 +89,7 @@ public class RedBlaster : IEnemySprite
     }
 
     // Update method with Camera parameter
-    public void Update(GameTime gameTime, Camera camera)
+    public void Update(GameTime gameTime, Camera camera, int megamanX)
     {
         if (!isVisible)
         {
@@ -117,7 +117,7 @@ public class RedBlaster : IEnemySprite
         // Update all projectiles
         for (int i = projectiles.Count - 1; i >= 0; i--)
         {
-            projectiles[i].Update(gameTime, camera);
+            projectiles[i].Update(gameTime, camera, megamanX);
 
             if (projectiles[i].IsOffScreen(camera))
             {
@@ -137,7 +137,10 @@ public class RedBlaster : IEnemySprite
         }
 
         // Flip the sprite horizontally to face right
-        flipHorizontally = true;
+        if (y > 700)
+        {
+            flipHorizontally = true;
+        }
 
         SpriteEffects spriteEffects = SpriteEffects.None;
 
@@ -148,6 +151,7 @@ public class RedBlaster : IEnemySprite
             spriteEffects |= SpriteEffects.FlipVertically;
 
         // Define destination rectangle
+
         Rectangle destinationRectangle = new Rectangle(x, y, blasterSizeX, blasterSizeY);
         Rectangle sourceRectangle = redBlasterFrames[currentFrame];
 

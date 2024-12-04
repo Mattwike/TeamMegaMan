@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Project1.GameObjects;
 using System.Collections.Generic;
 
-public class bombManIdle : IEnemySprite
+public class Bomb : IEnemySprite
 {
     int currentFrame;
     int totalFrame;
@@ -11,7 +11,7 @@ public class bombManIdle : IEnemySprite
     int delayMax;
     //float x;
     //float y;
-    private Texture2D enemySheet;
+    private Texture2D BossSheet;
     int enemySizeX;
     int enemySizeY;
     public Rectangle hitbox;
@@ -28,9 +28,9 @@ public class bombManIdle : IEnemySprite
         set { gravity = 4.5f; }
 
     }
-    public bombManIdle(Texture2D texture, Vector2 position)
+    public Bomb(Texture2D texture, Vector2 position)
     {
-        enemySheet = texture;
+        BossSheet = texture;
         x = (int)position.X;
         y = (int)position.Y;
     }
@@ -43,10 +43,7 @@ public class bombManIdle : IEnemySprite
         delayMax = 10;
         enemySizeX = 50;
         enemySizeY = 50;
-        hitbox.X = 400;
-        hitbox.Y = 40;
-        hitbox.Width = 50;
-        hitbox.Height = 50;
+
     }
 
     public void Update(GameTime gameTime, Camera camera, int megamanX)
@@ -84,21 +81,21 @@ public class bombManIdle : IEnemySprite
 
         if (currentFrame < 10)
         {
-            destinationRectangle = new Rectangle((int)x, (int)y, 24, 24);
-            sourceRectangle = new Rectangle(60, 36, 25, 25);
+            destinationRectangle = new Rectangle((int)x, (int)y, 14, 14);
+            sourceRectangle = new Rectangle(2, 125, 14, 14);
         }
         else if (currentFrame == 10)
         {
-            destinationRectangle = new Rectangle((int)x-3, (int)y-5, 27, 29);
-            sourceRectangle = new Rectangle(31, 30, 29, 31);
+            destinationRectangle = new Rectangle((int)x, (int)y-2, 14, 12);
+            sourceRectangle = new Rectangle(19, 127, 14, 12);
         }
         else
         {
-            destinationRectangle = new Rectangle((int)x-1, (int)y-14, 25, 38);
-            sourceRectangle = new Rectangle(0, 21, 28, 41);
+            destinationRectangle = new Rectangle((int)x, (int)y, 14, 14);
+            sourceRectangle = new Rectangle(2, 125, 14, 14);
         }
 
-        _spriteBatch.Draw(enemySheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
+        _spriteBatch.Draw(BossSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
     }
     public Rectangle getRectangle()
     {

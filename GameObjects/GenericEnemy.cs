@@ -22,11 +22,8 @@ namespace Project1.GameObjects
             sprites = new List<IEnemySprite>
             {
                 EnemySpriteFactory.Instance.CreateScrewDriver(defaultPosition),
-                EnemySpriteFactory.Instance.CreateBombMan(defaultPosition),
                 EnemySpriteFactory.Instance.CreateJumpingFlea(defaultPosition),
-                EnemySpriteFactory.Instance.CreateBombManThrowing(),
                 EnemySpriteFactory.Instance.CreateOctopus(defaultPosition),
-                EnemySpriteFactory.Instance.CreateBombManThrowing(),
                 EnemySpriteFactory.Instance.CreateMambu(defaultPosition),
                 EnemySpriteFactory.Instance.CreateGabyoall(defaultPosition),
                 EnemySpriteFactory.Instance.CreateBombomb(defaultPosition),
@@ -55,9 +52,9 @@ namespace Project1.GameObjects
             }
         }
 
-        public void Update(GameTime gameTime, Camera camera)
+        public void Update(GameTime gameTime, Camera camera, int megamanX)
         {
-            sprites[currentSprite].Update(gameTime, camera);
+            sprites[currentSprite].Update(gameTime, camera, megamanX);
         }
 
         public void Draw(SpriteBatch _spriteBatch)

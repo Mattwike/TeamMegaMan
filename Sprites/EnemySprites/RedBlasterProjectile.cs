@@ -75,7 +75,7 @@ public class RedBlasterProjectile : IEnemySprite
         // Implement if necessary
     }
 
-    public void Update(GameTime gameTime, Camera camera)
+    public void Update(GameTime gameTime, Camera camera, int megamanX)
     {
         posX += speedX;
         posY += speedY;

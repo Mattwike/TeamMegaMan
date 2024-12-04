@@ -15,7 +15,6 @@ using System.IO;
 using System;
 
 
-
 namespace Project1
 {
     public class Game1 : Game
@@ -37,6 +36,9 @@ namespace Project1
         private LevelParser levelParser;
         private List<IBlocks> levelBlocks;
         private List<IEnemySprite> levelEnemies;
+        //test
+        private Texture2D bossSheet;
+        private Bombman Bombman;
 
         float movementSpeed;
         private GraphicsDeviceManager _graphics;
@@ -58,7 +60,6 @@ namespace Project1
             Content.RootDirectory = "Content";
             pellets = new List<Pellet>();
             enemyDropList = new List<EnemyDrop>();
-            
         }
         
 
@@ -73,17 +74,19 @@ namespace Project1
             width = _graphics.PreferredBackBufferWidth / 2;
             height = _graphics.PreferredBackBufferHeight / 2;
             _mouseController = new MouseController();
-
+            Vector2 position = new Vector2(10f, 1113f);
+            Bombman = new Bombman(bossSheet, position);
             // Load all textures for MegaMan and Enemies
             megaManSpriteFactory.Instance.LoadAllTextures(Content);
             EnemySpriteFactory.Instance.LoadAllTextures(Content);
+            BombmanSpriteFactory.Instance.LoadAllTextures(Content);
             pelletSpriteFactory.Instance.LoadAllTextures(Content);
             pelletSpriteFactory.Instance.CreatePellet();
             EnemyDropSpriteFactory.Instance.LoadAllTextures(Content);
             EnemyDropSpriteFactory.Instance.CreateEnemyDrop();
             healthBarSpriteFactory.Instance.LoadAllTextures(Content);
             healthBarSpriteFactory.Instance.CreateHealthBar();
-
+            Bombman.Initialize(_graphics, 12, 10);  
             //load Block Textures
             BlockSpriteFactory.Instance.LoadAllTextures(Content);
      
@@ -149,7 +152,7 @@ namespace Project1
             font = Content.Load<SpriteFont>("ScoreFont");
             GameOverFont = Content.Load<SpriteFont>("GameOverFont");
             BlockSpriteFactory.Instance.LoadAllTextures(Content);
-
+            bossSheet = Content.Load<Texture2D>("bossSheet");
         }
 
         protected override void Update(GameTime gameTime)
@@ -173,7 +176,6 @@ namespace Project1
                 foreach (var pellet in pellets)
                 {
                     pellet.Update(gameTime);
-                    //CollidionHandler.HandleMegamanPelletCollisions(pellet, sniperjoe);
                 }
                 foreach (var enemyDrop in enemyDropList)
                 {
@@ -181,8 +183,7 @@ namespace Project1
                 }
                 foreach (var enemy in levelEnemies)
                 {
-                    enemy.Update(gameTime, camera);
-
+                    enemy.Update(gameTime, camera, (int)megaman.x);
                     CollidionHandler.HandleEnemyCollisions(enemy, levelBlocks, pellets, enemyDropList);
                 }
                 // Update level blocks if necessary
@@ -207,7 +208,7 @@ namespace Project1
                 {
                     MegamanDied = false;
                 }
-
+                Bombman.Update();
                 base.Update(gameTime);
             }
 
@@ -245,6 +246,7 @@ namespace Project1
                 }
 
                 // Draw MegaMan and displayed enemy as before
+                Bombman.Draw(_spriteBatch);
                 megaman.Draw(_spriteBatch, movementSpeed);
                 displayedEnemy.Draw(_spriteBatch);
                 _spriteBatch.DrawString(font, megaman.GetHealth().ToString(), new Vector2(scoreX-150, ypose-50), Color.White);
@@ -264,6 +266,7 @@ namespace Project1
                 {
                     enemy.Draw(_spriteBatch, false, false);
                 }
+                
                 _spriteBatch.End();
             }
 

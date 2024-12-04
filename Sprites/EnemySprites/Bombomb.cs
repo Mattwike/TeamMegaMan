@@ -75,7 +75,7 @@ public class Bombomb : IEnemySprite
         projectiles.Clear();
     }
 
-    public void Update(GameTime gameTime, Camera camera)
+    public void Update(GameTime gameTime, Camera camera, int megamanX)
     {
         delayCounter++;
         if (delayCounter >= delayMax)
@@ -104,7 +104,7 @@ public class Bombomb : IEnemySprite
         // Update all projectiles
         for (int i = projectiles.Count - 1; i >= 0; i--)
         {
-            projectiles[i].Update(gameTime, camera);
+            projectiles[i].Update(gameTime, camera, megamanX);
 
             if (projectiles[i].IsOffScreen(camera))
             {

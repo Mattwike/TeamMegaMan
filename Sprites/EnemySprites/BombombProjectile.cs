@@ -67,7 +67,7 @@ public class BombombProjectile : IEnemySprite
     }
 
     // Update method with Camera parameter
-    public void Update(GameTime gameTime, Camera camera)
+    public void Update(GameTime gameTime, Camera camera, int megamanX)
     {
         posX += speedX;
         posY += speedY;

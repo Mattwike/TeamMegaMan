@@ -68,7 +68,7 @@ public class SniperJoe : IEnemySprite
     }
 
     // Update method with Camera parameter
-    public void Update(GameTime gameTime, Camera camera)
+    public void Update(GameTime gameTime, Camera camera, int megamanX)
     {
         if ((!istouchingfloor && !isJumping) || isFalling)
         {
@@ -157,7 +157,7 @@ public class SniperJoe : IEnemySprite
         // Update each projectile
         for (int i = projectiles.Count - 1; i >= 0; i--)
         {
-            projectiles[i].Update(gameTime, camera);
+            projectiles[i].Update(gameTime, camera, megamanX);
 
             if (projectiles[i].IsOffScreen(camera))
             {
