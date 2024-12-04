@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Project1.GameObjects;  // Adjust this namespace if necessary
 
-public class BombombProjectile : IEnemySprite
+public class BombombProjectile : IEnemyBomb
 {
     // Fields
     private Texture2D texture;
@@ -21,12 +21,10 @@ public class BombombProjectile : IEnemySprite
 
     public int y { get; set; }
     public int x { get; set; }
-    public bool isFalling { get; set; }
+    //public bool isFalling { get; set; }
     public bool istouchingfloor { get; set; }
     public float gravity { get; set; }
-    public bool hitWall { get; set; }
     public float Gravity { set { gravity = 4.5f; } }
-    public bool hasProjectiles { get; set; }
 
     private Rectangle[] projectileFrames;
     private int currentFrame;
@@ -48,7 +46,7 @@ public class BombombProjectile : IEnemySprite
 
         projectileFrames = new Rectangle[]
         {
-            new Rectangle(417, 24, 8, 6),  // Adjust based on your sprite sheet
+            new Rectangle(417, 24, 8, 6),
         };
 
         currentFrame = 0;
@@ -57,7 +55,6 @@ public class BombombProjectile : IEnemySprite
         delayMax = 10;
         width = projectileFrames[currentFrame].Width;
         height = projectileFrames[currentFrame].Height;
-        hasProjectiles = false;
         health = 10;  // Initial health
     }
 
@@ -129,29 +126,11 @@ public class BombombProjectile : IEnemySprite
         return hitbox;
     }
 
-    // Get the health of the projectile
-    public int GetHealth()
-    {
-        return health;
-    }
-
-    // Handle taking damage
-    public void TakeDamage(List<EnemyDrop> enemyDropList)
-    {
-        health -= 10;
-    }
-
     // Set the position of the projectile
     public void SetPosition(Vector2 position)
     {
         posX = position.X;
         posY = position.Y;
-    }
-
-    // Handle touching the floor (implement as needed)
-    public void isTouchingFloor()
-    {
-        // Implement if necessary
     }
 
     public List<IEnemyProjectile> GetProjectiles()

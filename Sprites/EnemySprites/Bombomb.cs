@@ -113,7 +113,6 @@ public class Bombomb : IEnemySprite
             }
         }
 
-        // **Updated Reset Condition**
         // Checks if Bombomb has exploded and all projectiles have been handled
         if (hasExploded && projectiles.Count == 0)
         {

@@ -261,10 +261,5 @@ public class KeyboardMethods
         {
             commandDict[Keys.D7].Execute(_graphics, movementSpeed, megamanSize, interval);
         }
-        if(!megaman.isVulnerable && megaman.stoodup)
-        {
-            var Idle = new IdleMegamanCommand(megaman);
-            Idle.Execute(_graphics, movementSpeed, megamanSize, interval);
-        }
     }
 }
