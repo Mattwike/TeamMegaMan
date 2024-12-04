@@ -23,13 +23,14 @@ public class screwDriver : IEnemySprite
     public bool istouchingfloor { get; set; }
     public float gravity { get; set; }
     public bool hitWall { get; set; }
+    public bool hasProjectiles { get; set; }
     public float Gravity
     {
         set { gravity = 4.5f; }
     }
 
     // New fields for projectiles
-    private List<ScrewDriverProjectile> projectiles;
+    private List<IEnemyProjectile> projectiles;
     private bool hasShotOnThirdFrame;
     private bool hasShotOnFifthFrame;
 
@@ -39,9 +40,10 @@ public class screwDriver : IEnemySprite
         SetPosition(position);
 
         // Initialize projectiles
-        projectiles = new List<ScrewDriverProjectile>();
+        projectiles = new List<IEnemyProjectile>();
         hasShotOnThirdFrame = false;
         hasShotOnFifthFrame = false;
+        hasProjectiles = true;
     }
 
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
@@ -205,9 +207,9 @@ public class screwDriver : IEnemySprite
     public void isTouchingFloor()
     {
         //istouchingfloor = false;
-    }
+    } 
 
-    public List<ScrewDriverProjectile> GetProjectiles()
+    public List<IEnemyProjectile> GetProjectiles()
     {
         return projectiles;
     }

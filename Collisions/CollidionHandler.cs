@@ -24,7 +24,7 @@ namespace Project1.Collisions
 
 		//}
 
-		public static void HandleMegamanCollisions(Megaman megaman, List<IBlocks> blocklist, List<IEnemySprite> enemies, List<EnemyDrop> enemyDropList)
+		public static void HandleMegamanCollisions(Megaman megaman, List<IBlocks> blocklist, List<IEnemySprite> enemies, List<EnemyDrop> enemyDropList, List<IEnemyProjectile> projectiles)
 		{
 			MegamanCollisonHandler handler = new MegamanCollisonHandler(megaman);
 
@@ -40,6 +40,11 @@ namespace Project1.Collisions
             foreach (EnemyDrop enemyDrop in enemyDropList)
             {
                 handler.handleEnemyDropCollision(enemyDrop);
+            }
+
+            foreach(IEnemyProjectile projectile in projectiles)
+            {
+                handler.handleEnemyProjectiles(projectile);
             }
         }
 

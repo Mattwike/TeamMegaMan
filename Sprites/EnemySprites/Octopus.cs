@@ -28,6 +28,7 @@ public class Octopus : IEnemySprite
 
     public Rectangle hitbox;
     public int health;
+    public bool hasProjectiles { get; set; }
 
     public int y { get; set; }  // Keep as int to match interface
     public int x { get; set; }  // Keep as int to match interface
@@ -68,6 +69,7 @@ public class Octopus : IEnemySprite
         delayInterval = 2f;  // 2-second pause at edges
 
         isPaused = false;  // Initially not pausing
+        hasProjectiles = false;
     }
 
     // Initialize method to set position, screen boundaries, and other properties
@@ -193,5 +195,10 @@ public class Octopus : IEnemySprite
     public void isTouchingFloor()
     {
         //istouchingfloor = false;
+    }
+
+    public List<IEnemyProjectile> GetProjectiles()
+    {
+        return null;
     }
 }

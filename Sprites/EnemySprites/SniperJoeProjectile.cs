@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Project1.GameObjects;  // Adjust the namespace as needed
 
-public class SniperJoeProjectile : IEnemySprite
+public class SniperJoeProjectile : IEnemyProjectile
 {
     private float posX;
     private float posY;
@@ -35,12 +35,6 @@ public class SniperJoeProjectile : IEnemySprite
         get { return (int)posY; }
         set { posY = value; }
     }
-
-    public bool isFalling { get; set; }
-    public bool istouchingfloor { get; set; }
-    public bool hitWall { get; set; }
-    public float gravity { get; set; }
-    public float Gravity { set { gravity = 4.5f; } }
 
     public SniperJoeProjectile(Texture2D texture, float startX, float startY, int screenWidth)
     {
@@ -115,24 +109,9 @@ public class SniperJoeProjectile : IEnemySprite
         return hitbox;
     }
 
-    public int GetHealth()
-    {
-        return health;
-    }
-
-    public void TakeDamage(List<EnemyDrop> enemyDropList)
-    {
-        health -= 10;
-    }
-
     public void SetPosition(Vector2 position)
     {
         posX = position.X;
         posY = position.Y;
-    }
-
-    public void isTouchingFloor()
-    {
-        // Implement if necessary
     }
 }

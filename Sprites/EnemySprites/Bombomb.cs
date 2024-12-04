@@ -34,6 +34,7 @@ public class Bombomb : IEnemySprite
     public bool istouchingfloor { get; set; }
     public float gravity { get; set; }
     public bool hitWall { get; set; }
+    public bool hasProjectiles { get; set; }
     public float Gravity { set { gravity = 4.5f; } }
 
     // Updated Constructor: Removed startY parameter
@@ -61,7 +62,7 @@ public class Bombomb : IEnemySprite
         delayCounter = 0;
         delayMax = 10;
         projectiles = new List<BombombProjectile>();
-
+        hasProjectiles = false;
         health = 100;
     }
 
@@ -205,5 +206,10 @@ public class Bombomb : IEnemySprite
     public void isTouchingFloor()
     {
         // Implement if necessary
+    }
+
+    public List<IEnemyProjectile> GetProjectiles()
+    {
+        return null;
     }
 }

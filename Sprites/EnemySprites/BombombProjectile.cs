@@ -26,6 +26,7 @@ public class BombombProjectile : IEnemySprite
     public float gravity { get; set; }
     public bool hitWall { get; set; }
     public float Gravity { set { gravity = 4.5f; } }
+    public bool hasProjectiles { get; set; }
 
     private Rectangle[] projectileFrames;
     private int currentFrame;
@@ -56,7 +57,7 @@ public class BombombProjectile : IEnemySprite
         delayMax = 10;
         width = projectileFrames[currentFrame].Width;
         height = projectileFrames[currentFrame].Height;
-
+        hasProjectiles = false;
         health = 10;  // Initial health
     }
 
@@ -151,5 +152,10 @@ public class BombombProjectile : IEnemySprite
     public void isTouchingFloor()
     {
         // Implement if necessary
+    }
+
+    public List<IEnemyProjectile> GetProjectiles()
+    {
+        return null;
     }
 }

@@ -13,6 +13,8 @@ public interface IEnemySprite
     bool istouchingfloor { get; set; }
     float gravity { get; set; }
     public bool hitWall { get; set; }
+    public bool hasProjectiles { get; set; }
+
     void Update(GameTime gameTime, Camera camera, int megamanX);
 
     void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically);
@@ -26,4 +28,6 @@ public interface IEnemySprite
     public int GetHealth();
 
     public void isTouchingFloor();
+
+    public List<IEnemyProjectile> GetProjectiles();
 }

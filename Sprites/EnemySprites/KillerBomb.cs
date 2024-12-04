@@ -23,6 +23,7 @@ public class KillerBomb : IEnemySprite
 
     // Health and other properties required by IEnemySprite
     public int health { get; private set; }
+    public bool hasProjectiles { get; set; }
     public bool hitWall { get; set; }
 
     public int x
@@ -63,6 +64,7 @@ public class KillerBomb : IEnemySprite
 
         health = 100;
         isVisible = true;
+        hasProjectiles = false;
     }
 
     // Initialize method to set screen boundaries and speed
@@ -174,5 +176,10 @@ public class KillerBomb : IEnemySprite
     public void isTouchingFloor()
     {
         // Implement if necessary
+    }
+
+    public List<IEnemyProjectile> GetProjectiles()
+    {
+        return null;
     }
 }
