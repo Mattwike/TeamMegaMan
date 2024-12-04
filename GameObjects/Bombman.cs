@@ -1,11 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Project1.Interfaces;
-
 using Project1.States.MegamanState;
-using System;
-using System.Collections.Generic;
-
 
 namespace Project1.GameObjects
 {
@@ -22,7 +18,7 @@ namespace Project1.GameObjects
             Position = startPosition;
             Speed = 2.0f;
             stateMachine = new BombmanStateMachine(this);
-            currentSprite = BombmanSpriteFactory.Instance.CreateIdleBombMan(Position);
+            currentSprite = BombmanSpriteFactory.Instance.CreateIdleBombMan(startPosition);
         }
 
         public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
@@ -37,8 +33,10 @@ namespace Project1.GameObjects
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            //currentSprite.Draw(spriteBatch, false, false);
+          currentSprite.Draw(spriteBatch, false, false);
+            
         }
-
     }
 }
+
+
