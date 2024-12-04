@@ -1,7 +1,9 @@
+// Bombomb.cs
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Project1.GameObjects;
 using System.Collections.Generic;
+using Project1.GameObjects;  // Adjust the namespace as needed
 
 public class Bombomb : IEnemySprite
 {
@@ -9,19 +11,17 @@ public class Bombomb : IEnemySprite
     int totalFrame;
     int delayCounter;
     int delayMax;
-    //float x;  // x-coordinate of Bombomb
-    //float y;  // y-coordinate of Bombomb
-    float initialX;  // Store the initial x position
-    float initialY;  // Store the initial y position
-    float jumpHeight;  // Height of the jump
+    float initialX;
+    float initialY;
+    float jumpHeight;
     bool isJumping;
     bool hasExploded;
-    bool isVisible;  // Added: Visibility flag to hide the Bombomb sprite
+    bool isVisible;
 
-    private int screenHeight;  // Screen height for boundary detection
+    private int screenHeight;
 
     private Texture2D bombombSheet;
-    List<BombombProjectile> projectiles; // List of projectiles spawned after explosion
+    List<BombombProjectile> projectiles;
 
     Rectangle[] bombombFrames;
 
@@ -34,43 +34,35 @@ public class Bombomb : IEnemySprite
     public bool istouchingfloor { get; set; }
     public float gravity { get; set; }
     public bool hitWall { get; set; }
-    public float Gravity
-    {
-        set { gravity = 4.5f; }
+    public float Gravity { set { gravity = 4.5f; } }
 
-    }
-
-    public Bombomb(Texture2D texture, float startX, float startY, Vector2 position)
+    // Updated Constructor: Removed startY parameter
+    public Bombomb(Texture2D texture, float startX, Vector2 position)
     {
         bombombSheet = texture;
-        SetPosition(position);
-        //x = startX;
-        //y = startY;
-        initialX = startX;  // Save the initial position for resetting
-        initialY = startY;
-        jumpHeight = 100;  // 20px jump height
-        isJumping = true; // Start with a jumping behavior
+        initialX = startX;
+        initialY = position.Y;  // Set initialY based on position.Y
+        SetPosition(position);   // This sets x and y based on position
+
+        jumpHeight = 100;
+        isJumping = true;
         hasExploded = false;
-        isVisible = true; // Start by making Bombomb visible
+        isVisible = true;
 
-        screenHeight = 600;  // Default screen height (set to match your game screen size)
+        screenHeight = 600;
 
-        // Define animation frames for Bombomb (adjust according to your sprite sheet)
         bombombFrames = new Rectangle[]
         {
-            new Rectangle(400, 21, 16, 12), // Bombomb sprite frame
+            new Rectangle(400, 21, 16, 12),
         };
 
         currentFrame = 0;
         totalFrame = bombombFrames.Length;
         delayCounter = 0;
-        delayMax = 10;  // Adjust frame rate as needed
+        delayMax = 10;
         projectiles = new List<BombombProjectile>();
 
-        hitbox.X = (int)x;
-        hitbox.Y = (int)y;
-        //hitbox.Width = 
-
+        health = 100;
     }
 
     public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int size)
@@ -79,13 +71,87 @@ public class Bombomb : IEnemySprite
         delayCounter = 0;
         isJumping = true;
         hasExploded = false;
-        isVisible = true; // Make Bombomb visible when initialized
-        projectiles.Clear();  // Clear any existing projectiles
-
-
+        isVisible = true;
+        projectiles.Clear();
     }
 
-    public void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically)
+    public void Update(GameTime gameTime, Camera camera, int megamanX)
+    {
+        delayCounter++;
+        if (delayCounter >= delayMax)
+        {
+            currentFrame++;
+            if (currentFrame >= totalFrame)
+            {
+                currentFrame = 0;
+            }
+            delayCounter = 0;
+        }
+
+        if (isJumping && !hasExploded)
+        {
+            y -= 1;
+
+            if (initialY - y >= jumpHeight)
+            {
+                isJumping = false;
+                hasExploded = true;
+                isVisible = false;
+                Explode();
+            }
+        }
+
+        // Update all projectiles
+        for (int i = projectiles.Count - 1; i >= 0; i--)
+        {
+            projectiles[i].Update(gameTime, camera, megamanX);
+
+            if (projectiles[i].IsOffScreen(camera))
+            {
+                projectiles.RemoveAt(i);
+            }
+        }
+
+        // **Updated Reset Condition**
+        // Checks if Bombomb has exploded and all projectiles have been handled
+        if (hasExploded && projectiles.Count == 0)
+        {
+            ResetBombomb();
+        }
+
+        hitbox = new Rectangle(x, y, bombombFrames[currentFrame].Width, bombombFrames[currentFrame].Height);
+    }
+
+    private void Explode()
+    {
+        float projectileX = x;
+        float projectileY = y - bombombFrames[currentFrame].Height / 2;
+
+        projectiles.Add(new BombombProjectile(bombombSheet, projectileX - 10, projectileY, 800, -0.25f));
+        projectiles.Add(new BombombProjectile(bombombSheet, projectileX + 10, projectileY, 800, 0.25f));
+        projectiles.Add(new BombombProjectile(bombombSheet, projectileX - 50, projectileY, 800, -0.25f));
+        projectiles.Add(new BombombProjectile(bombombSheet, projectileX + 50, projectileY, 800, 0.25f));
+    }
+
+    private void ResetBombomb()
+    {
+        x = (int)initialX;
+        y = (int)initialY;
+
+        // Uncomment the following lines for debugging purposes
+        // System.Diagnostics.Debug.WriteLine($"ResetBombomb called. Position set to X={x}, Y={y}");
+
+        projectiles.Clear();
+
+        isJumping = true;
+        hasExploded = false;
+        isVisible = true;
+
+        // Uncomment for additional debugging
+        // System.Diagnostics.Debug.WriteLine("Bombomb reset: isJumping=true, hasExploded=false, isVisible=true");
+    }
+
+    public void Draw(SpriteBatch spriteBatch, bool flipHorizontally, bool flipVertically)
     {
         SpriteEffects spriteEffects = SpriteEffects.None;
 
@@ -99,113 +165,45 @@ public class Bombomb : IEnemySprite
             spriteEffects |= SpriteEffects.FlipVertically;
         }
 
-        // Only draw Bombomb if it is visible
         if (isVisible)
         {
-            Rectangle destinationRectangle = new Rectangle((int)x, (int)y, bombombFrames[currentFrame].Width, bombombFrames[currentFrame].Height);
+            Rectangle destinationRectangle = new Rectangle(x, y, bombombFrames[currentFrame].Width, bombombFrames[currentFrame].Height);
             Rectangle sourceRectangle = bombombFrames[currentFrame];
 
-            _spriteBatch.Draw(bombombSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
+            spriteBatch.Draw(bombombSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
         }
 
-        // Draw all projectiles regardless of Bombomb's visibility
         foreach (var projectile in projectiles)
         {
-            projectile.Draw(_spriteBatch, flipHorizontally, flipVertically);
+            projectile.Draw(spriteBatch, flipHorizontally, flipVertically);
         }
     }
 
-    public void Update(GameTime gameTime, Megaman megaman)
-    {
-        delayCounter++;
-        if (delayCounter >= delayMax)
-        {
-            currentFrame++;
-            if (currentFrame >= totalFrame)
-            {
-                currentFrame = 0;
-            }
-            delayCounter = 0;
-        }
-
-        // Jumping logic
-        if (isJumping && !hasExploded)
-        {
-            y -= 1;  // Move up by 1px per frame
-
-            // Check if Bombomb has reached its jump height
-            if (initialY - y >= jumpHeight)
-            {
-                // Stop jumping and explode
-                isJumping = false;
-                hasExploded = true;
-                isVisible = false;  // Hide Bombomb when it explodes
-                Explode();  // Spawn projectiles
-            }
-        }
-
-        // Update all projectiles
-        foreach (var projectile in projectiles)
-        {
-            projectile.Update(gameTime, megaman);
-        }
-
-        // Check if all projectiles are off the screen
-        if (projectiles.Count > 0 && projectiles.TrueForAll(p => p.IsOffScreen()))
-        {
-            ResetBombomb();  // Reset Bombomb position and restart animation
-        }
-
-        // Remove projectiles that go off-screen or disappear after some time
-        projectiles.RemoveAll(p => p.IsOffScreen());
-    }
-
-    private void Explode()
-    {
-        // Define explosion positions
-        float projectileX = x;
-        float projectileY = y - bombombFrames[currentFrame].Height / 2;  // Center of explosion
-
-        // Create projectiles (4 in total)
-        projectiles.Add(new BombombProjectile(bombombSheet, projectileX - 10, projectileY, 800, -0.25f));  // Left projectile
-        projectiles.Add(new BombombProjectile(bombombSheet, projectileX + 10, projectileY, 800, 0.25f));   // Right projectile
-        projectiles.Add(new BombombProjectile(bombombSheet, projectileX - 50, projectileY, 800, -0.25f));  // Another left projectile
-        projectiles.Add(new BombombProjectile(bombombSheet, projectileX + 50, projectileY, 800, 0.25f));   // Another right projectile
-    }
-
-    private void ResetBombomb()
-    {
-        // Reset Bombomb to its initial position
-        x = (int)initialX;
-        y = (int)initialY;
-
-        // Clear all projectiles
-        projectiles.Clear();
-
-        // Reset the jump and explosion state
-        isJumping = true;
-        hasExploded = false;
-        isVisible = true;  // Make Bombomb visible again
-    }
     public Rectangle getRectangle()
     {
         return hitbox;
     }
+
     public int GetHealth()
     {
         return health;
     }
+
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
     }
 
+    // Updated SetPosition method: Ensures initialY is set correctly
     public void SetPosition(Vector2 position)
     {
-        x = (int)position.X; y = (int)position.Y; initialY = y;
+        x = (int)position.X;
+        y = (int)position.Y;
+        // initialY is already set in the constructor based on position.Y
     }
+
     public void isTouchingFloor()
     {
-        //istouchingfloor = false;
+        // Implement if necessary
     }
 }

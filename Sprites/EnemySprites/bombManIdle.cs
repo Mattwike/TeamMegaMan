@@ -49,7 +49,7 @@ public class bombManIdle : IEnemySprite
         hitbox.Height = 50;
     }
 
-    public void Update(GameTime gameTime, Megaman megaman)
+    public void Update(GameTime gameTime, Camera camera, int megamanX)
     {
         delayCounter++;
         if (delayCounter >= delayMax)

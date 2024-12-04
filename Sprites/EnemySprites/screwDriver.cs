@@ -1,17 +1,16 @@
-﻿
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Project1.GameObjects;
 using System.Collections.Generic;
+using Project1.GameObjects;
+
 
 public class screwDriver : IEnemySprite
 {
-    int currentFrame;    // Make sure to use camelCase consistently
+    // Existing fields
+    int currentFrame;
     int totalFrame;
     int delayCounter;
     int delayMax;
-    //float x;
-    //float y;
     private Texture2D enemySheet;
     int enemySizeX;
     int enemySizeY;
@@ -27,14 +26,22 @@ public class screwDriver : IEnemySprite
     public float Gravity
     {
         set { gravity = 4.5f; }
-
     }
+
+    // New fields for projectiles
+    private List<ScrewDriverProjectile> projectiles;
+    private bool hasShotOnThirdFrame;
+    private bool hasShotOnFifthFrame;
 
     public screwDriver(Texture2D texture, Vector2 position)
     {
         enemySheet = texture;
         SetPosition(position);
 
+        // Initialize projectiles
+        projectiles = new List<ScrewDriverProjectile>();
+        hasShotOnThirdFrame = false;
+        hasShotOnFifthFrame = false;
     }
 
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
@@ -43,9 +50,11 @@ public class screwDriver : IEnemySprite
         totalFrame = 50;
         delayCounter = 0;
         delayMax = 5;
+
+        // Optional: Initialize other properties
     }
 
-    public void Update(GameTime gameTime, Megaman megaman)
+    public void Update(GameTime gameTime, Camera camera, int megamanX)
     {
         delayCounter++;
         if (delayCounter >= delayMax)
@@ -54,14 +63,42 @@ public class screwDriver : IEnemySprite
             if (currentFrame >= totalFrame)
             {
                 currentFrame = 0;
+                hasShotOnThirdFrame = false; // Reset shot flags
+                hasShotOnFifthFrame = false;
             }
             delayCounter = 0;
         }
+
+        // Shoot projectiles on the 3rd and 5th frames
+        if (currentFrame == 3 && !hasShotOnThirdFrame)
+        {
+            ShootProjectiles();
+            hasShotOnThirdFrame = true;
+        }
+
+        if (currentFrame == 5 && !hasShotOnFifthFrame)
+        {
+            ShootProjectiles();
+            hasShotOnFifthFrame = true;
+        }
+
+        // Update projectiles
+        for (int i = projectiles.Count - 1; i >= 0; i--)
+        {
+            projectiles[i].Update(gameTime, camera, megamanX);
+
+            if (projectiles[i].IsOffScreen(camera))
+            {
+                projectiles.RemoveAt(i);
+            }
+        }
+
+        // Update hitbox
+        hitbox = new Rectangle(x, y, 16, 16); // Adjust dimensions as necessary
     }
 
     public void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically)
     {
-
         SpriteEffects spriteEffects = SpriteEffects.None;
 
         if (flipHorizontally)
@@ -109,15 +146,52 @@ public class screwDriver : IEnemySprite
         }
 
         _spriteBatch.Draw(enemySheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
+
+        // Draw projectiles
+        foreach (var projectile in projectiles)
+        {
+            projectile.Draw(_spriteBatch, false, flipVertically);
+        }
     }
+
+    private void ShootProjectiles()
+    {
+        // Shoot bullets in specified directions
+        var directions = new Vector2[]
+        {
+            new Vector2(0, -3), // Upward
+            new Vector2(-2, -2), // Diagonally left
+            new Vector2(2, -2), // Diagonally right
+            new Vector2(-3, 0), // Directly left
+            new Vector2(3, 0) // Directly right
+        };
+
+        foreach (var direction in directions)
+        {
+            var projectile = new ScrewDriverProjectile(
+                enemySheet,
+                x + 8, // Center the projectile horizontally
+                y + 8, // Center the projectile vertically
+                800, // Example screen width
+                600 // Example screen height
+            );
+
+            projectile.speedX = direction.X;
+            projectile.speedY = direction.Y;
+            projectiles.Add(projectile);
+        }
+    }
+
     public Rectangle getRectangle()
     {
         return hitbox;
     }
+
     public int GetHealth()
     {
         return health;
     }
+
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
@@ -127,8 +201,14 @@ public class screwDriver : IEnemySprite
     {
         x = (int)position.X; y = (int)position.Y;
     }
+
     public void isTouchingFloor()
     {
         //istouchingfloor = false;
+    }
+
+    public List<ScrewDriverProjectile> GetProjectiles()
+    {
+        return projectiles;
     }
 }

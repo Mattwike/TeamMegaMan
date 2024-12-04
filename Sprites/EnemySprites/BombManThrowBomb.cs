@@ -78,7 +78,7 @@ public class BombManThrowBomb : IEnemySprite
 
     }
 
-    public void Update(GameTime gameTime, Megaman megaman)
+    public void Update(GameTime gameTime, Camera camera, int megamanX)
     {
         delayCounter++;
         if (delayCounter >= delayMax)

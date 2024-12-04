@@ -78,7 +78,7 @@ public class Gabyoall : IEnemySprite
     }
 
     // Update method to handle movement and animation logic
-    public void Update(GameTime gameTime, Megaman megaman)
+    public void Update(GameTime gameTime, Camera camera, int megamanX)
     {
         // Update frame counter for animation timing
         frameCounter++;

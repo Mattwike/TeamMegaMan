@@ -1,11 +1,11 @@
-// MambuProjectile.cs
+// ScrewDriverProjectile.cs
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Project1.GameObjects;  // Adjust this namespace if necessary
 
-public class MambuProjectile : IEnemySprite
+public class ScrewDriverProjectile : IEnemySprite
 {
     // Fields
     private Texture2D texture;
@@ -27,17 +27,24 @@ public class MambuProjectile : IEnemySprite
     public float Gravity { set { gravity = 4.5f; } }
 
     // Constructor
-    public MambuProjectile(Texture2D texture, float startX, float startY, int screenWidth, int screenHeight)
+    public ScrewDriverProjectile(Texture2D texture, float startX, float startY, int screenWidth, int screenHeight)
     {
         this.texture = texture;
         this.posX = startX;
         this.posY = startY;
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
-        this.health = 10;  // Initial health
+        this.health = 1;  // Projectiles typically have low or no health
+        this.width = 8;    // Set appropriate width for the projectile
+        this.height = 8;   // Set appropriate height for the projectile
+
+        // Initialize hitbox
+        this.x = (int)posX;
+        this.y = (int)posY;
+        hitbox = new Rectangle(x, y, width, height);
     }
 
-    // Initialize method
+    // Initialize method (optional, implement if needed)
     public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int size)
     {
         // Implement if necessary
@@ -50,7 +57,9 @@ public class MambuProjectile : IEnemySprite
         posY += speedY;
 
         // Update hitbox position
-        hitbox = new Rectangle((int)posX, (int)posY, width, height);
+        x = (int)posX;
+        y = (int)posY;
+        hitbox = new Rectangle(x, y, width, height);
     }
 
     // Draw method
@@ -65,10 +74,11 @@ public class MambuProjectile : IEnemySprite
             spriteEffects |= SpriteEffects.FlipVertically;
 
         // Define the destination rectangle where the projectile will be drawn on the screen
-        Rectangle destinationRectangle = new Rectangle((int)posX, (int)posY, width, height);
+        Rectangle destinationRectangle = new Rectangle(x, y, width, height);
 
         // Define the source rectangle for the projectile sprite (adjust based on your sprite sheet)
-        Rectangle sourceRectangle = new Rectangle(338, 182, 6, 6);  // Example values
+        // Example values; adjust to match your sprite sheet's projectile sprite
+        Rectangle sourceRectangle = new Rectangle(338, 182, 6, 6);  // Adjust as needed
 
         // Draw the projectile using its texture
         spriteBatch.Draw(texture, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
@@ -84,7 +94,7 @@ public class MambuProjectile : IEnemySprite
         }
 
         Rectangle visibleArea = camera.GetVisibleArea();
-        Rectangle projectileRectangle = new Rectangle((int)posX, (int)posY, width, height);
+        Rectangle projectileRectangle = new Rectangle(x, y, width, height);
 
         return !visibleArea.Intersects(projectileRectangle);
     }
@@ -104,11 +114,12 @@ public class MambuProjectile : IEnemySprite
     // Handle taking damage
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
-        health -= 10;
+        health -= 1;  // Projectiles typically have minimal health
         if (health <= 0)
         {
             // Handle projectile destruction if needed
             // For example, remove the projectile or trigger an animation
+            // This can be managed externally by the parent enemy class
         }
     }
 
@@ -117,6 +128,9 @@ public class MambuProjectile : IEnemySprite
     {
         posX = position.X;
         posY = position.Y;
+        x = (int)posX;
+        y = (int)posY;
+        hitbox = new Rectangle(x, y, width, height);
     }
 
     // Handle touching the floor (implement as needed)

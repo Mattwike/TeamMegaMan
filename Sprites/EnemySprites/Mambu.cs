@@ -1,33 +1,36 @@
+// Mambu.cs
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Project1.GameObjects;
 using System;
 using System.Collections.Generic;
+using Project1.GameObjects;  // Adjust this namespace if necessary
 
 public class Mambu : IEnemySprite
 {
-    private Texture2D enemyTexture;  // Texture for Mambu
-    private float positionX;  // Precise X-coordinate
-    private float initialPositionX;  // Initial X position for resetting
-    private float speedX;  // Speed for horizontal movement
-    private float originalSpeedX;  // Store original speed for resuming movement
-    private int screenWidth;  // Screen width to manage boundaries
-    private int screenHeight; // Screen height to manage boundaries
-    private int width;  // Width of the Mambu sprite
-    private int height;  // Height of the Mambu sprite
+    // Fields
+    private Texture2D enemyTexture;
+    private float positionX;
+    private float initialPositionX;
+    private float speedX;
+    private float originalSpeedX;
+    private int screenWidth;
+    private int screenHeight;
+    private int width;
+    private int height;
 
-    private int currentFrame;  // Current animation frame
-    private float frameTimer;  // Timer for switching frames
-    private bool isShooting;  // Flag to determine if Mambu is shooting
-    private bool hasShotProjectiles;  // Flag to ensure projectiles are shot only once per frame change
-    private Vector2 lockedPosition;  // Lock the position when shooting starts
+    private int currentFrame;
+    private float frameTimer;
+    private bool isShooting;
+    private bool hasShotProjectiles;
+    private Vector2 lockedPosition;
 
-    private Rectangle[] frames;  // Array of rectangles for animation frames
-    private Rectangle projectileFrame;  // Frame for projectile
-    private List<MambuProjectile> projectiles;  // List of projectiles using MambuProjectile class
+    private Rectangle[] frames;
+    private Rectangle projectileFrame;
+    private List<MambuProjectile> projectiles;
 
-    private float projectileSpeed = 2f;  // Speed of the projectiles
-    private int movementSpeed = 2;  // Movement speed for Mambu
+    private float projectileSpeed = 2f;
+    private int movementSpeed = 2;
 
     public Rectangle hitbox;
     public int health;
@@ -38,194 +41,221 @@ public class Mambu : IEnemySprite
     public bool istouchingfloor { get; set; }
     public float gravity { get; set; }
     public bool hitWall { get; set; }
-    public float Gravity
-    {
-        set { gravity = 4.5f; }
-    }
+    public float Gravity { set { gravity = 4.5f; } }
 
-    // Constructor to initialize Mambu with its texture
+    private bool isVisible;
+
+    // Constructor
     public Mambu(Texture2D texture, Vector2 position)
     {
         enemyTexture = texture;
         SetPosition(position);
-        projectiles = new List<MambuProjectile>();  // Initialize projectile list
+        projectiles = new List<MambuProjectile>();
 
-        positionX = x;  // Initialize precise position
-        initialPositionX = positionX;  // Store the initial x position for resetting
-        width = 16;  // Width of the first frame
-        height = 16;  // Height of the first frame
+        positionX = x;
+        initialPositionX = positionX;
+        width = 16;  // Initial size; will be set in Initialize
+        height = 16;
 
-        // Set up frame information for animation
-        frames = new Rectangle[2];  // Mambu has 2 frames
+        frames = new Rectangle[2];
         frames[0] = new Rectangle(301, 181, 16, 16);  // Frame 1
         frames[1] = new Rectangle(319, 176, 17, 21);  // Frame 2
 
-        // Projectile frame
-        projectileFrame = new Rectangle(338, 182, 6, 6);
+        projectileFrame = new Rectangle(338, 182, 6, 6);  // Projectile frame
 
-        currentFrame = 0;  // Start at frame 0
-        frameTimer = 0f;  // Initialize frame timer
-        isShooting = false;  // Initially not shooting
-        hasShotProjectiles = false;  // Ensure projectiles are shot only once
+        currentFrame = 0;
+        frameTimer = 0f;
+        isShooting = false;
+        hasShotProjectiles = false;
 
-        speedX = 1f;  // Horizontal movement speed
-        originalSpeedX = speedX;  // Store the original speed for resuming movement
+        speedX = 1f;  // Initial movement speed
+        originalSpeedX = speedX;
+
+        health = 100;  // Set initial health
+        isVisible = true;
     }
 
-    // Initialize method to set position, screen boundaries, and other properties
+    // Initialize method
     public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int size)
     {
-        // Removed the line that overwrote initialPositionX
-
-        screenWidth = graphics.PreferredBackBufferWidth;  // Set screen boundaries
+        screenWidth = graphics.PreferredBackBufferWidth;
         screenHeight = graphics.PreferredBackBufferHeight;
 
-        width = 24;  // Set sprite size based on the passed size
-        height = 24;  // Keep height same as width for aspect ratio
+        // Adjust size based on 'size' parameter if necessary
+        width = 20;   // Example: setting width based on size
+        height = 20;  // Example: setting height based on size
 
-        speedX = movementSpeed / 4f;  // Adjust horizontal speed based on movement speed parameter
-        originalSpeedX = speedX;  // Store the original speed for resuming
+        speedX = movementSpeed / 4f;  // Adjust speed based on movementSpeed
+        originalSpeedX = speedX;
 
         if (speedX == 0)
         {
-            speedX = 1f;  // Ensure speedX is not zero
+            speedX = 1f;  // Prevent zero speed
         }
     }
 
-    // Update method to handle movement, frame switching, and projectile shooting
-    public void Update(GameTime gameTime, Megaman megaman)
+    // Update method with Camera parameter
+    public void Update(GameTime gameTime, Camera camera, int megamanX)
     {
+        if (!isVisible)
+        {
+            return;  // Do not update if the enemy is not visible (dead)
+        }
+
         frameTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        // Switch frames and handle frame timing
+        // Frame switching logic with delay
         if (currentFrame == 0 && frameTimer >= 2f)  // 2 seconds on Frame 1
         {
-            currentFrame = 1;  // Switch to Frame 2
-            frameTimer = 0;  // Reset frame timer
-            isShooting = true;  // Trigger shooting
-            speedX = 0f;  // Stop Mambu's movement on Frame 2
-            lockedPosition = new Vector2(x, y);  // Lock Mambu's position for centralized shooting
+            currentFrame = 1;
+            frameTimer = 0f;
+            isShooting = true;
+            speedX = 0f;  // Stop movement when shooting
+            lockedPosition = new Vector2(x + width / 2, y + height / 2);  // Center position
         }
         else if (currentFrame == 1 && frameTimer >= 2f)  // 2 seconds on Frame 2
         {
-            currentFrame = 0;  // Switch back to Frame 1
-            frameTimer = 0;  // Reset frame timer
-            speedX = originalSpeedX;  // Resume Mambu's movement when returning to Frame 1
-            hasShotProjectiles = false;  // Reset the projectile shooting flag
+            currentFrame = 0;
+            frameTimer = 0f;
+            speedX = originalSpeedX;  // Resume movement
+            hasShotProjectiles = false;  // Reset shooting flag
         }
 
-        // Shoot projectiles if switching to Frame 2 and not shot already
+        // Shoot projectiles if it's time
         if (isShooting && currentFrame == 1 && !hasShotProjectiles)
         {
-            ShootProjectiles();  // Call the method to shoot projectiles
-            isShooting = false;  // Reset shooting flag after firing once
-            hasShotProjectiles = true;  // Ensure projectiles are shot only once
+            ShootProjectiles();
+            isShooting = false;
+            hasShotProjectiles = true;
         }
 
-        // Move left continuously unless speedX is zero
-        positionX -= speedX;  // Update precise position
-
-        // Update integer x position
+        // Movement
+        positionX -= speedX;  // Move left by speedX
         x = (int)positionX;
 
         // Reset position when reaching the left side of the screen
-        if (positionX < 0)
+        if (positionX < -width)  // Ensure the entire sprite moves off-screen
         {
-            positionX = initialPositionX;  // Reset to the initial position on the right side of the screen
+            positionX = initialPositionX;
             x = (int)positionX;
         }
 
         // Update all projectiles
-        foreach (var projectile in projectiles)
+        for (int i = projectiles.Count - 1; i >= 0; i--)
         {
-            projectile.Update(gameTime);
-        }
+            projectiles[i].Update(gameTime, camera, megamanX);
 
-        // Remove projectiles that are off-screen
-        projectiles.RemoveAll(p => p.IsOffScreen());
+            if (projectiles[i].IsOffScreen(camera))
+            {
+                projectiles.RemoveAt(i);
+            }
+        }
 
         // Update hitbox position
         hitbox = new Rectangle(x, y, width, height);
     }
 
-    // Draw method to render Mambu and its projectiles on the screen
+    // Draw method
     public void Draw(SpriteBatch spriteBatch, bool flipHorizontally, bool flipVertically)
     {
+        if (!isVisible)
+        {
+            return;  // Do not draw if the enemy is not visible (dead)
+        }
+
         SpriteEffects spriteEffects = SpriteEffects.None;
 
-        // Handle flipping if necessary
         if (flipHorizontally)
             spriteEffects |= SpriteEffects.FlipHorizontally;
-
         if (flipVertically)
             spriteEffects |= SpriteEffects.FlipVertically;
 
-        // Define the destination rectangle where the sprite will be drawn on the screen
+        // Define destination rectangle
         Rectangle destinationRectangle = new Rectangle(x, y, width, height);
+        Rectangle sourceRectangle = frames[currentFrame];
 
-        // Draw the sprite using its texture and current frame rectangle
-        spriteBatch.Draw(enemyTexture, destinationRectangle, frames[currentFrame], Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
+        // Draw Mambu
+        spriteBatch.Draw(enemyTexture, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
 
-        // Draw all projectiles
+        // Draw projectiles
         foreach (var projectile in projectiles)
         {
             projectile.Draw(spriteBatch, false, false);
         }
     }
 
-    // Method to shoot 8 projectiles in a circular pattern, using locked position for centralized origin
+    // Method to shoot projectiles in all directions
     private void ShootProjectiles()
     {
-        // Use locked position to ensure projectiles are centralized
-        float originX = lockedPosition.X;
-        float originY = lockedPosition.Y;
-
-        // Calculate positions and directions for 8 projectiles forming a circle
+        // Create 8 projectiles in a circular pattern
         for (int i = 0; i < 8; i++)
         {
-            // Calculate angle in radians for each projectile
-            float angle = MathHelper.ToRadians(i * 45);  // 8 projectiles, 360 degrees / 8 = 45 degrees apart
-
-            // Calculate x and y speed components based on the angle
+            float angle = MathHelper.ToRadians(i * 45);  // 45 degrees apart
             float projSpeedX = projectileSpeed * (float)Math.Cos(angle);
             float projSpeedY = projectileSpeed * (float)Math.Sin(angle);
 
-            // Create and initialize a new MambuProjectile at locked position
-            var projectile = new MambuProjectile(enemyTexture, originX, originY, screenWidth, screenHeight)
+            // Create a new projectile at Mambu's center
+            var projectile = new MambuProjectile(
+                enemyTexture,
+                x + width / 2,
+                y + height / 2,
+                screenWidth,
+                screenHeight
+            )
             {
                 speedX = projSpeedX,
                 speedY = projSpeedY,
-                width = 6,  // Width of the projectile
-                height = 6  // Height of the projectile
+                width = 6,  // Set projectile size appropriately
+                height = 6
             };
 
-            // Add the projectile to the projectiles list
             projectiles.Add(projectile);
         }
     }
 
+    // Get the rectangle for collision detection
     public Rectangle getRectangle()
     {
         return hitbox;
     }
+
+    // Get the health of the enemy
     public int GetHealth()
     {
         return health;
     }
+
+    // Handle taking damage
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
+        if (health <= 0)
+        {
+            // Handle enemy death and drops
+            EnemyDrop enemyDrop = new EnemyDrop();
+            enemyDrop.Initialize(null, x, y);  // Adjust parameters as needed
+            enemyDropList.Add(enemyDrop);
+
+            // Remove or deactivate the enemy
+            isVisible = false;
+            y += 1000;  // Move off-screen
+            hitbox = new Rectangle(hitbox.X, hitbox.Y + 1000, hitbox.Width, hitbox.Height);
+        }
     }
 
+    // Set the position of the enemy
     public void SetPosition(Vector2 position)
     {
         x = (int)position.X;
         y = (int)position.Y;
-        positionX = position.X;  // Initialize precise position
-        initialPositionX = positionX;  // Set initial position for resetting
+
+        positionX = position.X;
+        initialPositionX = positionX;
     }
+
+    // Handle touching the floor (implement as needed)
     public void isTouchingFloor()
     {
-        //istouchingfloor = false;
+        // Implement if necessary
     }
 }

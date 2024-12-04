@@ -1,126 +1,138 @@
+// SniperJoeProjectile.cs
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Project1.GameObjects;
 using System.Collections.Generic;
+using Project1.GameObjects;  // Adjust the namespace as needed
 
 public class SniperJoeProjectile : IEnemySprite
 {
-	//float x;
-	//float y;
-	float speedX;  // Horizontal speed for the projectile
-	private Texture2D projectileSheet;
-	int projectileSizeX;
-	int projectileSizeY;
-	int screenWidth;
+    private float posX;
+    private float posY;
+    private float speedX;
+    private Texture2D projectileSheet;
+    private int projectileSizeX;
+    private int projectileSizeY;
+    private int screenWidth;
 
-	Rectangle[] projectileFrames;
-	int currentFrame;
-	int totalFrame;
-	int delayCounter;
-	int delayMax;
+    private Rectangle[] projectileFrames;
+    private int currentFrame;
+    private int totalFrame;
+    private int delayCounter;
+    private int delayMax;
 
-	public Rectangle hitbox;
-	public int health;
+    public Rectangle hitbox;
+    public int health;
 
-    public int y { get; set; }
-    public int x { get; set; }
+    public int x
+    {
+        get { return (int)posX; }
+        set { posX = value; }
+    }
+
+    public int y
+    {
+        get { return (int)posY; }
+        set { posY = value; }
+    }
+
     public bool isFalling { get; set; }
     public bool istouchingfloor { get; set; }
-    public float gravity { get; set; }
     public bool hitWall { get; set; }
-    public float Gravity
-    {
-        set { gravity = 4.5f; }
+    public float gravity { get; set; }
+    public float Gravity { set { gravity = 4.5f; } }
 
-    }
     public SniperJoeProjectile(Texture2D texture, float startX, float startY, int screenWidth)
-	{
-		projectileSheet = texture;
-		x = (int)startX;
-		y = (int)startY;
-		this.screenWidth = screenWidth;
+    {
+        projectileSheet = texture;
+        posX = startX;
+        posY = startY;
+        this.screenWidth = screenWidth;
 
-		this.speedX = -5f;  // Sniper Joe projectiles always move to the left
+        speedX = -5f;
 
-		// Define source frame for the projectile (adjust based on the sprite sheet)
-		projectileFrames = new Rectangle[]
-		{
-			new Rectangle(371, 244, 6, 6),  // Projectile frame from sprite sheet (coordinates for Sniper Joe's particle)
+        projectileFrames = new Rectangle[]
+        {
+            new Rectangle(371, 244, 6, 6),
         };
 
-		currentFrame = 0;
-		totalFrame = projectileFrames.Length;
-		delayCounter = 0;
-		delayMax = 10;  // Adjust delayMax to control animation speed (if necessary)
-		projectileSizeX = projectileFrames[currentFrame].Width;
-		projectileSizeY = projectileFrames[currentFrame].Height;
-	}
+        currentFrame = 0;
+        totalFrame = projectileFrames.Length;
+        delayCounter = 0;
+        delayMax = 10;
+        projectileSizeX = projectileFrames[currentFrame].Width;
+        projectileSizeY = projectileFrames[currentFrame].Height;
 
-	public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int size)
-	{
-		currentFrame = 0;
-		delayCounter = 0;
-	}
+        health = 10;
+    }
 
-	public void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically)
-	{
-		SpriteEffects spriteEffects = SpriteEffects.None;
+    public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int size)
+    {
+        // Implement if necessary
+    }
 
-		if (flipHorizontally)
-		{
-			spriteEffects |= SpriteEffects.FlipHorizontally;
-		}
+    public void Update(GameTime gameTime, Camera camera, int megamanX)
+    {
+        posX += speedX;
 
-		if (flipVertically)
-		{
-			spriteEffects |= SpriteEffects.FlipVertically;
-		}
+        hitbox = new Rectangle((int)posX, (int)posY, projectileSizeX, projectileSizeY);
 
-		
-		hitbox = new Rectangle((int)x, (int)y, projectileSizeX, projectileSizeY);
-		Rectangle sourceRectangle = projectileFrames[currentFrame];
-		_spriteBatch.Draw(projectileSheet, hitbox, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
-		
-	}
+        delayCounter++;
+        if (delayCounter >= delayMax)
+        {
+            currentFrame++;
+            if (currentFrame >= totalFrame)
+            {
+                currentFrame = 0;
+            }
+            delayCounter = 0;
+        }
+    }
 
-	public void Update(GameTime gameTime, Megaman megaman)
-	{
-		// Move the projectile horizontally at a constant speed (to the left)
-		x += (int)speedX;
+    public bool IsOffScreen(Camera camera)
+    {
+        Rectangle visibleArea = camera.GetVisibleArea();
+        Rectangle projectileRectangle = new Rectangle((int)posX, (int)posY, projectileSizeX, projectileSizeY);
+        return !visibleArea.Intersects(projectileRectangle);
+    }
 
-		// Frame delay logic (if needed for animation)
-		delayCounter++;
-		if (delayCounter >= delayMax)
-		{
-			currentFrame++;
-			if (currentFrame >= totalFrame)
-			{
-				currentFrame = 0;
-			}
-			delayCounter = 0;
-		}
-	}
+    public void Draw(SpriteBatch spriteBatch, bool flipHorizontally, bool flipVertically)
+    {
+        SpriteEffects spriteEffects = SpriteEffects.None;
 
-	public bool IsOffScreen()
-	{
-		// Check if the projectile is off-screen based on screen width
-		return x < 0 || x > screenWidth;  // Remove the projectile when it goes off the left or right of the screen
-	}
+        if (flipHorizontally)
+            spriteEffects |= SpriteEffects.FlipHorizontally;
+        if (flipVertically)
+            spriteEffects |= SpriteEffects.FlipVertically;
+
+        Rectangle destinationRectangle = new Rectangle((int)posX, (int)posY, projectileSizeX, projectileSizeY);
+        Rectangle sourceRectangle = projectileFrames[currentFrame];
+        spriteBatch.Draw(projectileSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
+    }
 
     public Rectangle getRectangle()
     {
         return hitbox;
     }
+
     public int GetHealth()
     {
         return health;
     }
+
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
     }
+
+    public void SetPosition(Vector2 position)
+    {
+        posX = position.X;
+        posY = position.Y;
+    }
+
     public void isTouchingFloor()
     {
-        //istouchingfloor = false;
+        // Implement if necessary
     }
 }

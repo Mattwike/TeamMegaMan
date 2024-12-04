@@ -33,6 +33,7 @@ public class jumpingFlea : IEnemySprite
     public bool istouchingfloor { get; set; }
     public float gravity { get; set; }
     public bool hitWall { get; set; }
+    private Megaman megaman;
     public float Gravity
     {
         set { gravity = 4.5f; }
@@ -64,14 +65,14 @@ public class jumpingFlea : IEnemySprite
         this.graphics = graphics;
     }
 
-    public void Update(GameTime gameTime, Megaman megaman)
+    public void Update(GameTime gameTime, Camera camera, int megamanX)
     {
-        if(x - megaman.x < 0 && !facingLeft)
+        if(x - megamanX < 0 && !facingLeft)
         {
             enemySpeed = -enemySpeed;
             facingLeft = true;
         }
-        else if(x - megaman.x > 0 && facingLeft)
+        else if(x - megamanX > 0 && facingLeft)
         {
             enemySpeed = -enemySpeed;
             facingLeft = false;

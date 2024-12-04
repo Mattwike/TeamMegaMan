@@ -52,9 +52,9 @@ namespace Project1.GameObjects
             }
         }
 
-        public void Update(GameTime gameTime, Megaman megaman)
+        public void Update(GameTime gameTime, Camera camera, int megamanX)
         {
-            sprites[currentSprite].Update(gameTime, megaman);
+            sprites[currentSprite].Update(gameTime, camera, megamanX);
         }
 
         public void Draw(SpriteBatch _spriteBatch)
