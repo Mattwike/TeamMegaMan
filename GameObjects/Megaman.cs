@@ -10,6 +10,7 @@ using Project1.Collisions;
 using System.ComponentModel.Design.Serialization;
 using Project1.Levels;
 using Project1.Sprites;
+using System;
 
 namespace Project1.GameObjects
 {
@@ -84,38 +85,8 @@ namespace Project1.GameObjects
         {
             MegamanBox = new Rectangle((int)x, (int)y, 18, 24);
             State.Update(gameTime);
-
-            if (!isVulnerable)
-            {
-                invulnerabilityTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
-                if (invulnerabilityTimer >= timeInvunerable)
-                {
-                    isVulnerable = true;
-                    invulnerabilityTimer = 0;
-                }
-                if (!isVulnerable)
-                {
-                    invulnerabilityTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
-
-                    
-                    if ((int)(invulnerabilityTimer / 100) % 2 == 0)
-                    {
-                        currentColor = Color.White;
-                    }
-                    else
-                    {
-                        currentColor = Color.Blue; 
-                    }
-
-                    if (invulnerabilityTimer >= timeInvunerable * 100)
-                    {
-                        isVulnerable = true;
-                        invulnerabilityTimer = 0;
-                        currentColor = Color.Blue; 
-                       
-                    }
-                }
-            }
+            CheckVulnerability(gameTime);
+            
         }
 
         public void TakeDamage()
@@ -129,7 +100,6 @@ namespace Project1.GameObjects
             }
             is_damaged = true;
         }
-
 
         public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
         {
@@ -190,6 +160,39 @@ namespace Project1.GameObjects
         public void UpdateScore(int increase)
         {
             megamanScore += increase;
+        }
+        public void CheckVulnerability(GameTime gameTime)
+        {
+            if (!isVulnerable)
+            {
+                invulnerabilityTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (invulnerabilityTimer >= timeInvunerable)
+                {
+                    isVulnerable = true;
+                    invulnerabilityTimer = 0;
+                }
+                if (!isVulnerable)
+                {
+                    invulnerabilityTimer += gameTime.ElapsedGameTime.TotalMilliseconds;
+
+                    if ((int)(invulnerabilityTimer / 100) % 2 == 0)
+                    {
+                        currentColor = Color.White;
+                    }
+                    else
+                    {
+                        currentColor = Color.Blue;
+                    }
+
+                    if (invulnerabilityTimer >= timeInvunerable * 100)
+                    {
+                        isVulnerable = true;
+                        invulnerabilityTimer = 0;
+                        currentColor = Color.Blue;
+
+                    }
+                }
+            }
         }
     }
 }
