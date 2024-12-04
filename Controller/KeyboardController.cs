@@ -75,9 +75,9 @@ public class KeyboardController : IController
         KeyboardState keyboardState = Keyboard.GetState();
         Keys[] pressedKeys = keyboardState.GetPressedKeys();
 
-        //megaman.is_running = false;
-        //megaman.is_shooting = false;
-        //megaman.is_damaged = false;
+        megaman.is_running = false;
+        megaman.is_shooting = false;
+        megaman.is_damaged = false;
 
         if (!megaman.is_jumping && !megaman.istouchingfloor && !megaman.is_climbing)
         {

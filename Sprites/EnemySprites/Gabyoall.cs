@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Project1.GameObjects;
+using System;
 using System.Collections.Generic;
 
 public class Gabyoall : IEnemySprite
@@ -23,6 +24,9 @@ public class Gabyoall : IEnemySprite
 
     public Rectangle hitbox;
     public int health;
+
+    bool isVisible = true;
+    GraphicsDeviceManager graphics;
 
     public int y { get; set; }
     public int x { get; set; }
@@ -63,7 +67,7 @@ public class Gabyoall : IEnemySprite
     public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int size)
     {
         // Removed the line that overwrote initialPositionX
-
+        this.graphics = graphics;
         screenWidth = graphics.PreferredBackBufferWidth;  // Set screen boundaries
         screenHeight = graphics.PreferredBackBufferHeight;
 
@@ -138,6 +142,19 @@ public class Gabyoall : IEnemySprite
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
+        if (health == 0)
+        {
+            Random rnd = new Random();
+            int num = rnd.Next(1, 6);
+            if (num == 5)
+            {
+                EnemyDrop enemyDrop = new EnemyDrop();
+                enemyDrop.Initialize(graphics, (int)x, (int)y);
+                enemyDropList.Add(enemyDrop);
+            }
+            isVisible = false;
+            hitbox.Y += 1000;
+        }
     }
 
     public void SetPosition(Vector2 position)

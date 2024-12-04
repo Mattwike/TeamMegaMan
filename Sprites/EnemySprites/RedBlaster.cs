@@ -43,6 +43,7 @@ public class RedBlaster : IEnemySprite
 
     private float movementSpeed;  // Movement speed (if applicable)
     private Random random;  // Random number generator for projectile angles
+    GraphicsDeviceManager graphics;
 
     // Constructor
     public RedBlaster(Texture2D texture, Vector2 position)
@@ -85,6 +86,7 @@ public class RedBlaster : IEnemySprite
         screenWidth = graphics.PreferredBackBufferWidth;
         screenHeight = graphics.PreferredBackBufferHeight;
 
+        this.graphics = graphics;
         this.movementSpeed = Math.Abs(movementSpeed);  // Ensure movementSpeed is positive
     }
 
@@ -212,9 +214,14 @@ public class RedBlaster : IEnemySprite
         if (health <= 0)
         {
             // Handle enemy death and drops
-            EnemyDrop enemyDrop = new EnemyDrop();
-            enemyDrop.Initialize(null, x, y);  // Adjust parameters as needed
-            enemyDropList.Add(enemyDrop);
+            Random rnd = new Random();
+            int num = rnd.Next(1, 6);
+            if (num == 5)
+            {
+                EnemyDrop enemyDrop = new EnemyDrop();
+                enemyDrop.Initialize(graphics, (int)x, (int)y);
+                enemyDropList.Add(enemyDrop);
+            }
 
             // Remove or deactivate the enemy
             isVisible = false;

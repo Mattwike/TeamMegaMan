@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Project1.GameObjects;
+using System;
 
 
 public class screwDriver : IEnemySprite
@@ -16,6 +17,8 @@ public class screwDriver : IEnemySprite
     int enemySizeY;
     public Rectangle hitbox;
     public int health;
+    private GraphicsDeviceManager graphics;
+    bool isVisible = true;
 
     public int y { get; set; }
     public int x { get; set; }
@@ -50,6 +53,7 @@ public class screwDriver : IEnemySprite
         totalFrame = 50;
         delayCounter = 0;
         delayMax = 5;
+        this.graphics = _graphics;
 
         // Optional: Initialize other properties
     }
@@ -195,6 +199,20 @@ public class screwDriver : IEnemySprite
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
+        if (health <= 0)
+        {
+            Random rnd = new Random();
+            int num = rnd.Next(1, 6);
+            if (num == 5)
+            {
+                EnemyDrop enemyDrop = new EnemyDrop();
+                enemyDrop.Initialize(graphics, (int)x, (int)y);
+                enemyDropList.Add(enemyDrop);
+            }
+            isVisible = false;
+            hitbox.Y += 1000;
+            y += 1000;
+        }
     }
 
     public void SetPosition(Vector2 position)

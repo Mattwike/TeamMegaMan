@@ -3,7 +3,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using Project1.GameObjects;  // Adjust the namespace as needed
+using Project1.GameObjects;
+using System;  // Adjust the namespace as needed
 
 public class Bombomb : IEnemySprite
 {
@@ -27,6 +28,8 @@ public class Bombomb : IEnemySprite
 
     public Rectangle hitbox;
     public int health;
+
+    GraphicsDeviceManager graphics;
 
     public int y { get; set; }
     public int x { get; set; }
@@ -73,6 +76,7 @@ public class Bombomb : IEnemySprite
         hasExploded = false;
         isVisible = true;
         projectiles.Clear();
+        this.graphics = graphics;
     }
 
     public void Update(GameTime gameTime, Camera camera, int megamanX)
@@ -192,6 +196,20 @@ public class Bombomb : IEnemySprite
     public void TakeDamage(List<EnemyDrop> enemyDropList)
     {
         health -= 10;
+        if (health == 0)
+        {
+            Random rnd = new Random();
+            int num = rnd.Next(1, 6);
+            if (num == 5)
+            {
+                EnemyDrop enemyDrop = new EnemyDrop();
+                enemyDrop.Initialize(graphics, (int)x, (int)y);
+                enemyDropList.Add(enemyDrop);
+            }
+            isVisible = false;
+            hitbox.Y += 1000;
+            
+        }
     }
 
     // Updated SetPosition method: Ensures initialY is set correctly

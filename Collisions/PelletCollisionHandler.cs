@@ -45,7 +45,7 @@ namespace Project1.Collisions
             CollisionDirection Direction = collisionDirection;
             if (Direction != CollisionDirection.None)
             {
-                pellet.x = -1000;
+                pellet.y = -1000;
                 
             }
         }

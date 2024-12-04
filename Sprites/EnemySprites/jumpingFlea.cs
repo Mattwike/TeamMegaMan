@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Project1.GameObjects;
 using Project1.Interfaces;
+using System;
 using System.Collections.Generic;
 
 public class jumpingFlea : IEnemySprite
@@ -193,9 +194,14 @@ public class jumpingFlea : IEnemySprite
         health -= 10;
         if (health == 0)
         {
-            EnemyDrop enemyDrop = new EnemyDrop();
-            enemyDrop.Initialize(graphics, (int)x, (int)y);
-            enemyDropList.Add(enemyDrop);
+            Random rnd = new Random();
+            int num = rnd.Next(1, 6);
+            if (num == 5)
+            {
+                EnemyDrop enemyDrop = new EnemyDrop();
+                enemyDrop.Initialize(graphics, (int)x, (int)y);
+                enemyDropList.Add(enemyDrop);
+            }
             isVisible = false;
             hitbox.Y += 1000;
         }

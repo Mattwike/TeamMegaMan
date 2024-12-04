@@ -21,6 +21,8 @@ public class KillerBomb : IEnemySprite
     private Rectangle hitbox;  // Hitbox for collision detection
     private bool isVisible;  // Visibility flag
 
+    GraphicsDeviceManager graphics;
+
     // Health and other properties required by IEnemySprite
     public int health { get; private set; }
     public bool hitWall { get; set; }
@@ -68,6 +70,7 @@ public class KillerBomb : IEnemySprite
     // Initialize method to set screen boundaries and speed
     public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int size)
     {
+        this.graphics = graphics;
         screenWidth = graphics.PreferredBackBufferWidth;  // Set screen boundaries
         screenHeight = graphics.PreferredBackBufferHeight;
 
@@ -148,9 +151,14 @@ public class KillerBomb : IEnemySprite
         if (health <= 0)
         {
             // Handle enemy death and drops
-            EnemyDrop enemyDrop = new EnemyDrop();
-            enemyDrop.Initialize(null, x, y);  // Adjust parameters as needed
-            enemyDropList.Add(enemyDrop);
+            Random rnd = new Random();
+            int num = rnd.Next(1, 6);
+            if (num == 5)
+            {
+                EnemyDrop enemyDrop = new EnemyDrop();
+                enemyDrop.Initialize(graphics, (int)x, (int)y);
+                enemyDropList.Add(enemyDrop);
+            }
 
             // Remove or deactivate the enemy
             isVisible = false;

@@ -35,6 +35,8 @@ public class Mambu : IEnemySprite
     public Rectangle hitbox;
     public int health;
 
+    GraphicsDeviceManager graphics;
+
     public int y { get; set; }
     public int x { get; set; }
     public bool isFalling { get; set; }
@@ -78,6 +80,7 @@ public class Mambu : IEnemySprite
     // Initialize method
     public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int size)
     {
+        this.graphics = graphics;
         screenWidth = graphics.PreferredBackBufferWidth;
         screenHeight = graphics.PreferredBackBufferHeight;
 
@@ -232,9 +235,14 @@ public class Mambu : IEnemySprite
         if (health <= 0)
         {
             // Handle enemy death and drops
-            EnemyDrop enemyDrop = new EnemyDrop();
-            enemyDrop.Initialize(null, x, y);  // Adjust parameters as needed
-            enemyDropList.Add(enemyDrop);
+            Random rnd = new Random();
+            int num = rnd.Next(1, 6);
+            if (num == 5)
+            {
+                EnemyDrop enemyDrop = new EnemyDrop();
+                enemyDrop.Initialize(graphics, (int)x, (int)y);
+                enemyDropList.Add(enemyDrop);
+            }
 
             // Remove or deactivate the enemy
             isVisible = false;
