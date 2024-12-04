@@ -13,6 +13,7 @@ using Project1.GameControllers;
 using Project1.Levels;
 using System.IO;
 using System;
+using System.Threading;
 
 
 namespace Project1
@@ -40,6 +41,8 @@ namespace Project1
         //test
         private Texture2D bossSheet;
         private Bombman Bombman;
+        private Texture2D TitleScreen;
+        private bool start = false;
 
         float movementSpeed;
         private GraphicsDeviceManager _graphics;
@@ -61,6 +64,7 @@ namespace Project1
             Content.RootDirectory = "Content";
             pellets = new List<Pellet>();
             enemyDropList = new List<EnemyDrop>();
+            _graphics.ToggleFullScreen();
         }
         
 
@@ -155,6 +159,7 @@ namespace Project1
             GameOverFont = Content.Load<SpriteFont>("GameOverFont");
             BlockSpriteFactory.Instance.LoadAllTextures(Content);
             bossSheet = Content.Load<Texture2D>("bossSheet");
+            TitleScreen = Content.Load<Texture2D>("MegamanTitleScreen");
         }
 
         protected override void Update(GameTime gameTime)
@@ -162,7 +167,7 @@ namespace Project1
 
             bool paused = _keyboardController.isPaused();
             Bombman.Update(gameTime, camera, (int)megaman.x);
-            if (!_keyboardController.isPaused())
+            if (!_keyboardController.isPaused() && _keyboardController.GameStarted())
             {
                 // Use the keyboard controller to get input and update MegaMan and enemies
                 _keyboardController.Update(_graphics, movementSpeed, 40, gameTime);
@@ -230,7 +235,14 @@ namespace Project1
 
         protected override void Draw(GameTime gameTime)
         {
-            if (MegamanDied)
+            if (!(_keyboardController.GameStarted()))
+            {
+                _spriteBatch.Begin(transformMatrix: camera.GetTransform());
+                _spriteBatch.Draw(TitleScreen, new Rectangle(-250, 35, 550, 300), new Rectangle(0, 0, 1000, 1000), Color.White);
+                _spriteBatch.End();
+                
+            }
+            else if (MegamanDied)
             {
                 //int bufferNum = 1000000 / megaman.GetScore();
                 pellets.Clear();

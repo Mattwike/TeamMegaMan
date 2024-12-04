@@ -28,6 +28,7 @@ public class KeyboardController : IController
     private KeyboardState previousKeyboardState;
     KeyboardMethods keyboardMethods;
     Game1 gameInstance;
+    public bool start = false;
 
     public KeyboardController(Game1 gameInstance, Megaman megaman, GenericEnemy displayedEnemy, List<Pellet> pellets)
     {
@@ -79,6 +80,11 @@ public class KeyboardController : IController
         megaman.is_shooting = false;
         megaman.is_damaged = false;
 
+        if (pressedKeys.Contains(Keys.Enter))
+        {
+            start = true;
+        }
+
         if (!megaman.is_jumping && !megaman.istouchingfloor && !megaman.is_climbing)
         {
             megaman.y += megaman.gravity;
@@ -106,5 +112,21 @@ public class KeyboardController : IController
 
         megaman.Update(gameTime, interval);
         //displayedEnemy.Update(gameTime);
+    }
+    public bool GameStarted()
+    {
+        KeyboardState keyState = Keyboard.GetState();
+
+        if (keyState.IsKeyDown(Keys.Enter))
+        {
+
+            start = true;
+        }
+
+        previousKeyboardState = keyState;
+
+        return start;
+
+
     }
 }
