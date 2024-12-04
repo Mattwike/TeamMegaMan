@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Project1.SpriteFactories;
-using Project1.Interfaces;
 using Project1.GameObjects;
 
 namespace Project1.States.MegamanState
@@ -11,7 +9,7 @@ namespace Project1.States.MegamanState
         private float stateTimer = 0f;
         private float stateDuration = 2f;
         private Bombman bombman;
-        private enum states {jumpingLeft, throwingLeft, waitingLeft, idleLeft, jumpingRight, throwingRight, waitingRight, idleRight}
+        private enum states { jumpingLeft, throwingLeft, waitingLeft, idleLeft, jumpingRight, throwingRight, waitingRight, idleRight }
         private states CurrentState = states.idleLeft;
 
         public BombmanStateMachine(Bombman bombman)
@@ -135,7 +133,6 @@ namespace Project1.States.MegamanState
 
         public void Update()
         {
-
             Vector2 position = bombman.Position;
 
             if ((CurrentState == states.waitingLeft || CurrentState == states.waitingRight) && stateTimer >= stateDuration)
@@ -169,12 +166,36 @@ namespace Project1.States.MegamanState
                 default:
                     break;
             }
+
+            bombman.Position = position;
+
+            stateTimer += 0.016f;
+
+            UpdateSprite();
         }
 
         private void UpdateSprite()
         {
             Vector2 position = bombman.Position;
-            bombman.currentSprite = BombmanSpriteFactory.Instance.CreateIdleBombMan(position);
+
+            switch (CurrentState)
+            {
+                case states.idleLeft:
+                case states.idleRight:
+                    bombman.currentSprite = BombmanSpriteFactory.Instance.CreateIdleBombMan(position);
+                    break;
+                case states.throwingLeft:
+                case states.throwingRight:
+                    bombman.currentSprite = BombmanSpriteFactory.Instance.CreateBombManThrowBomb(position);
+                    break;
+                case states.jumpingLeft:
+                case states.jumpingRight:
+                    bombman.currentSprite = BombmanSpriteFactory.Instance.CreateBombmanJump(position);
+                    break;
+                default:
+                    bombman.currentSprite = BombmanSpriteFactory.Instance.CreateIdleBombMan(position);
+                    break;
+            }
         }
     }
 }
