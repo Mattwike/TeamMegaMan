@@ -86,7 +86,7 @@ public class BombombProjectile : IEnemySprite
         _spriteBatch.Draw(projectileSheet, destinationRectangle, sourceRectangle, Color.White, 0f, Vector2.Zero, spriteEffects, 0f);
     }
 
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime, Megaman megaman)
     {
         // Move the projectile horizontally and vertically at constant speeds
         x += (int)speedX;  // Move left or right based on speedX

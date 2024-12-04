@@ -83,7 +83,7 @@ public class SniperJoeProjectile : IEnemySprite
 		
 	}
 
-	public void Update(GameTime gameTime)
+	public void Update(GameTime gameTime, Megaman megaman)
 	{
 		// Move the projectile horizontally at a constant speed (to the left)
 		x += (int)speedX;

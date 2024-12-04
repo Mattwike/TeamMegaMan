@@ -25,6 +25,7 @@ public class jumpingFlea : IEnemySprite
     public int health;
     bool isVisible = true;
     GraphicsDeviceManager graphics;
+    private bool facingLeft;
 
     public int y { get; set; }
     public int x { get; set; }
@@ -42,12 +43,10 @@ public class jumpingFlea : IEnemySprite
     {
         enemySheet = texture;
         SetPosition(position);
-        initialY = position.Y; // Store the initial Y position
+        initialY = position.Y;
+        facingLeft = false;
 
-        // Removed hardcoded position overrides
-        // x = 350;
-        // y = 30;
-    }
+}
 
     public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int megamanSize)
     {
@@ -65,8 +64,19 @@ public class jumpingFlea : IEnemySprite
         this.graphics = graphics;
     }
 
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime, Megaman megaman)
     {
+        if(x - megaman.x < 0 && !facingLeft)
+        {
+            enemySpeed = -enemySpeed;
+            facingLeft = true;
+        }
+        else if(x - megaman.x > 0 && facingLeft)
+        {
+            enemySpeed = -enemySpeed;
+            facingLeft = false;
+        }
+
         if (!isVisible)
         {
             return;

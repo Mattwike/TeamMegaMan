@@ -45,7 +45,7 @@ public class screwDriver : IEnemySprite
         delayMax = 5;
     }
 
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime, Megaman megaman)
     {
         delayCounter++;
         if (delayCounter >= delayMax)

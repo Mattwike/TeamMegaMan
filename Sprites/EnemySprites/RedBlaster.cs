@@ -89,7 +89,7 @@ public class RedBlaster : IEnemySprite
     }
 
     // Update method
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime, Megaman megaman)
     {
         if (!isVisible)
         {
@@ -118,7 +118,7 @@ public class RedBlaster : IEnemySprite
         // Update all projectiles
         for (int i = projectiles.Count - 1; i >= 0; i--)
         {
-            projectiles[i].Update(gameTime);
+            projectiles[i].Update(gameTime, megaman);
 
             // Remove the projectile if it's off the screen
             if (((RedBlasterProjectile)projectiles[i]).IsOffScreen())
@@ -140,7 +140,10 @@ public class RedBlaster : IEnemySprite
         }
 
         // Flip the sprite horizontally to face right
-        flipHorizontally = true;
+        if (y > 700)
+        {
+            flipHorizontally = true;
+        }
 
         SpriteEffects spriteEffects = SpriteEffects.None;
 
@@ -151,6 +154,7 @@ public class RedBlaster : IEnemySprite
             spriteEffects |= SpriteEffects.FlipVertically;
 
         // Define destination rectangle
+
         Rectangle destinationRectangle = new Rectangle(x, y, blasterSizeX, blasterSizeY);
         Rectangle sourceRectangle = redBlasterFrames[currentFrame];
 

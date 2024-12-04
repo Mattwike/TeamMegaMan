@@ -115,7 +115,7 @@ public class Bombomb : IEnemySprite
         }
     }
 
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime, Megaman megaman)
     {
         delayCounter++;
         if (delayCounter >= delayMax)
@@ -147,7 +147,7 @@ public class Bombomb : IEnemySprite
         // Update all projectiles
         foreach (var projectile in projectiles)
         {
-            projectile.Update(gameTime);
+            projectile.Update(gameTime, megaman);
         }
 
         // Check if all projectiles are off the screen

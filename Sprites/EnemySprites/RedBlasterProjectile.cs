@@ -86,7 +86,7 @@ public class RedBlasterProjectile : IEnemySprite
         // Movement speed is already set in the constructor
     }
 
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime, Megaman megaman)
     {
         // Move the projectile horizontally and vertically
         positionX += speedX;

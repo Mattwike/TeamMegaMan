@@ -82,7 +82,7 @@ public class KillerBomb : IEnemySprite
     }
 
     // Update method to handle movement logic
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime, Megaman megaman)
     {
         if (!isVisible)
         {

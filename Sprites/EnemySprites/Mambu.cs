@@ -93,7 +93,7 @@ public class Mambu : IEnemySprite
     }
 
     // Update method to handle movement, frame switching, and projectile shooting
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime, Megaman megaman)
     {
         frameTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 

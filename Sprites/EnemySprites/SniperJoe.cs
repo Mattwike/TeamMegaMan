@@ -81,7 +81,7 @@ public class SniperJoe : IEnemySprite
         this.graphics = _graphics;
     }
 
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime, Megaman megaman)
     {
 
         if ((!istouchingfloor && !isJumping) || isFalling)
@@ -181,7 +181,7 @@ public class SniperJoe : IEnemySprite
         // Update each projectile
         for (int i = projectiles.Count - 1; i >= 0; i--)
         {
-            projectiles[i].Update(gameTime);
+            projectiles[i].Update(gameTime, megaman);
 
             // Remove the projectile if it's off the screen
             if (((SniperJoeProjectile)projectiles[i]).IsOffScreen())

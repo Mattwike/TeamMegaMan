@@ -159,7 +159,7 @@ namespace Project1.Levels
                     break;
 
                 case "BM":
-                    enemy = EnemySpriteFactory.Instance.CreateBombMan(position);
+                    enemy = BombmanSpriteFactory.Instance.CreateIdleBombMan(position);
                     break;
                 // Exclude Bombman-related enemies
                 // Add other enemy cases as needed

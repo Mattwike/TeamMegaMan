@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Project1.GameObjects;
 using System.Collections.Generic;
-using System.Data;
 
 public class BombManThrowBomb : IEnemySprite
 {
@@ -45,11 +44,11 @@ public class BombManThrowBomb : IEnemySprite
 
     }
 
-    public BombManThrowBomb(Texture2D texture)
+    public BombManThrowBomb(Texture2D texture, Vector2 position)
     {
         enemySheet = texture;
-        x = 100;
-        y = 200;
+        x = (int)position.X;
+        y = (int)position.Y;
     }
 
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
@@ -79,7 +78,7 @@ public class BombManThrowBomb : IEnemySprite
 
     }
 
-    public void Update(GameTime gameTime)
+    public void Update(GameTime gameTime, Megaman megaman)
     {
         delayCounter++;
         if (delayCounter >= delayMax)

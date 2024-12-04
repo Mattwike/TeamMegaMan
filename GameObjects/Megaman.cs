@@ -140,7 +140,6 @@ namespace Project1.GameObjects
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
         {
             State.Draw(_spriteBatch, movementSpeed, currentColor);
-            //floor.Draw(_spriteBatch);
         }
         
         public void Jump(Keys[] pressedKeys)
@@ -149,7 +148,7 @@ namespace Project1.GameObjects
             if (!is_jumping && !is_falling && pressedKeys.Contains(Keys.Space))
             {
                 is_jumping = true;
-                gravity = 4.5f;
+                gravity = 5f;
 
             }
 
