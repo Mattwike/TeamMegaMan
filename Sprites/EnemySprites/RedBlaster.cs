@@ -19,9 +19,10 @@ public class RedBlaster : IEnemySprite
     private int blasterSizeY;
     private bool hasShot;  // Flag to track if a projectile has been shot during the shooting frame
     private bool isVisible;  // Flag to determine if the enemy is visible (alive)
+    public bool hasProjectiles { get; set; }
 
     // List of active projectiles
-    private List<RedBlasterProjectile> projectiles;
+    private List<IEnemyProjectile> projectiles;
 
     // Define source frame dimensions for red blaster animation
     private Rectangle[] redBlasterFrames;
@@ -60,7 +61,7 @@ public class RedBlaster : IEnemySprite
         };
 
         // Initialize the list of projectiles
-        projectiles = new List<RedBlasterProjectile>();
+        projectiles = new List<IEnemyProjectile>();
 
         positionX = x;
         positionY = y;
@@ -68,6 +69,7 @@ public class RedBlaster : IEnemySprite
         health = 100;  // Set initial health
         isVisible = true;  // Enemy is visible at the start
         hasShot = false;  // Initially, no projectile has been shot
+        hasProjectiles = true;
 
         // Initialize random number generator
         random = new Random();
@@ -249,7 +251,7 @@ public class RedBlaster : IEnemySprite
     }
 
     // Provide access to the projectiles for collision handling
-    public List<RedBlasterProjectile> GetProjectiles()
+    public List<IEnemyProjectile> GetProjectiles()
     {
         return projectiles;
     }

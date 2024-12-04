@@ -18,7 +18,7 @@ namespace Project1.GameObjects
             Position = startPosition;
             Speed = 2.0f;
             stateMachine = new BombmanStateMachine(this);
-            currentSprite = BombmanSpriteFactory.Instance.CreateIdleBombMan(startPosition);
+            currentSprite = BombmanSpriteFactory.Instance.CreateBombmanJump(startPosition);
         }
 
         public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
@@ -26,9 +26,10 @@ namespace Project1.GameObjects
             currentSprite.Initialize(_graphics, movementSpeed, megamanSize);
         }
 
-        public void Update()
+        public void Update(GameTime gameTime, Camera camera, int megamanX)
         {
             stateMachine.Update();
+            currentSprite.Update(gameTime, camera, megamanX);
         }
 
         public void Draw(SpriteBatch spriteBatch)

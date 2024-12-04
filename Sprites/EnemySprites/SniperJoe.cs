@@ -20,7 +20,7 @@ public class SniperJoe : IEnemySprite
     private bool isJumping;
     private bool justLanded;
     private bool hasShot;
-    public List<SniperJoeProjectile> projectiles;
+    public List<IEnemyProjectile> projectiles;
 
     public Rectangle hitbox;
     public int health;
@@ -35,6 +35,7 @@ public class SniperJoe : IEnemySprite
     public bool istouchingfloor { get; set; }
     public float gravity { get; set; }
     public bool hitWall { get; set; }
+    public bool hasProjectiles { get; set; }
     public float Gravity { set { gravity = 4.5f; } }
 
     // Constructor
@@ -55,11 +56,12 @@ public class SniperJoe : IEnemySprite
         justLanded = false;
         hasShot = false;
         health = 100;
+        hasProjectiles = true;
 
         projectileTexture = texture;
         screenWidth = 800;
 
-        projectiles = new List<SniperJoeProjectile>();
+        projectiles = new List<IEnemyProjectile>();
     }
 
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
@@ -269,5 +271,9 @@ public class SniperJoe : IEnemySprite
     public void isTouchingFloor()
     {
         // Implement if necessary
+    }
+    public List<IEnemyProjectile> GetProjectiles()
+    {
+        return projectiles;
     }
 }

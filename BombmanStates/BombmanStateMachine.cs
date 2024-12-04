@@ -177,25 +177,25 @@ namespace Project1.States.MegamanState
         private void UpdateSprite()
         {
             Vector2 position = bombman.Position;
-
-            switch (CurrentState)
-            {
-                case states.idleLeft:
-                case states.idleRight:
-                    bombman.currentSprite = BombmanSpriteFactory.Instance.CreateIdleBombMan(position);
-                    break;
-                case states.throwingLeft:
-                case states.throwingRight:
-                    bombman.currentSprite = BombmanSpriteFactory.Instance.CreateBombManThrowBomb(position);
-                    break;
-                case states.jumpingLeft:
-                case states.jumpingRight:
-                    bombman.currentSprite = BombmanSpriteFactory.Instance.CreateBombmanJump(position);
-                    break;
-                default:
-                    bombman.currentSprite = BombmanSpriteFactory.Instance.CreateIdleBombMan(position);
-                    break;
-            }
+            bombman.currentSprite = BombmanSpriteFactory.Instance.CreateBombmanJump(position);
+            //switch (CurrentState)
+            //{
+            //    case states.idleLeft:
+            //    case states.idleRight:
+            //        bombman.currentSprite = BombmanSpriteFactory.Instance.CreateIdleBombMan(position);
+            //        break;
+            //    case states.throwingLeft:
+            //    case states.throwingRight:
+            //        bombman.currentSprite = BombmanSpriteFactory.Instance.CreateBombManThrowBomb(position);
+            //        break;
+            //    case states.jumpingLeft:
+            //    case states.jumpingRight:
+            //        bombman.currentSprite = BombmanSpriteFactory.Instance.CreateBombmanJump(position);
+            //        break;
+            //    default:
+            //        bombman.currentSprite = BombmanSpriteFactory.Instance.CreateIdleBombMan(position);
+            //        break;
+            //}
         }
     }
 }

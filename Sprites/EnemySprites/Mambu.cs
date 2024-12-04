@@ -27,7 +27,7 @@ public class Mambu : IEnemySprite
 
     private Rectangle[] frames;
     private Rectangle projectileFrame;
-    private List<MambuProjectile> projectiles;
+    private List<IEnemyProjectile> projectiles;
 
     private float projectileSpeed = 2f;
     private int movementSpeed = 2;
@@ -43,6 +43,7 @@ public class Mambu : IEnemySprite
     public bool istouchingfloor { get; set; }
     public float gravity { get; set; }
     public bool hitWall { get; set; }
+    public bool hasProjectiles { get; set; }
     public float Gravity { set { gravity = 4.5f; } }
 
     private bool isVisible;
@@ -52,7 +53,7 @@ public class Mambu : IEnemySprite
     {
         enemyTexture = texture;
         SetPosition(position);
-        projectiles = new List<MambuProjectile>();
+        projectiles = new List<IEnemyProjectile>();
 
         positionX = x;
         initialPositionX = positionX;
@@ -75,6 +76,7 @@ public class Mambu : IEnemySprite
 
         health = 100;  // Set initial health
         isVisible = true;
+        hasProjectiles = true;
     }
 
     // Initialize method
@@ -265,5 +267,10 @@ public class Mambu : IEnemySprite
     public void isTouchingFloor()
     {
         // Implement if necessary
+    }
+
+    public List<IEnemyProjectile> GetProjectiles()
+    {
+        return projectiles;
     }
 }

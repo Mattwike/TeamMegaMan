@@ -22,8 +22,10 @@ namespace Project1.Collisions
         private CollisionDetector detector;
         public IBlocks block {get; private set; }
         public IEnemySprite enemy { get; private set; }
+        public IEnemyProjectile projectile { get; private set; }
         public EnemyDrop enemyDrop { get; private set; }
         public Rectangle EnemyBox;
+        public Rectangle ProjectileBox;
         public Rectangle EnemyDropBox;
         public 
 
@@ -36,6 +38,7 @@ namespace Project1.Collisions
 
             collisionDict.Add(typeof(IBlocks), new Dictionary<CollisionDirection, IResponse>());
             collisionDict.Add(typeof(IEnemySprite), new Dictionary<CollisionDirection, IResponse>());
+            collisionDict.Add(typeof(IEnemyProjectile), new Dictionary<CollisionDirection, IResponse>());
 
             collisionDict[typeof(IBlocks)].Add(CollisionDirection.Top, new MegamanTopCollision(this));
             collisionDict[typeof(IBlocks)].Add(CollisionDirection.Right, new MegamanSideCollision(this));
@@ -45,6 +48,9 @@ namespace Project1.Collisions
 
             collisionDict[typeof(IEnemySprite)].Add(CollisionDirection.Left, new MegamanEnemyCollision(this));
             collisionDict[typeof(IEnemySprite)].Add(CollisionDirection.Right, new MegamanEnemyCollision(this));
+
+            collisionDict[typeof(IEnemyProjectile)].Add(CollisionDirection.Left, new MegamanProjectileCollision(this));
+            collisionDict[typeof(IEnemyProjectile)].Add(CollisionDirection.Right, new MegamanProjectileCollision(this));
         }
 
         public void handleBlockCollision(IBlocks Block)
@@ -84,6 +90,24 @@ namespace Project1.Collisions
                 }
             }
         }
+
+        public void handleEnemyProjectiles(IEnemyProjectile projectile)
+        {
+            this.projectile = projectile;
+
+            ProjectileBox = projectile.getRectangle();
+
+            CollisionDirection Direction = CollisionDetector.DetectCollisionType(megaman.MegamanBox, ProjectileBox);
+            if (megaman.isVulnerable)
+            {
+                if (collisionDict[typeof(IEnemyProjectile)].ContainsKey(Direction))
+                {
+                    megaman.TakeDamage();
+                    collisionDict[typeof(IEnemyProjectile)][Direction].Execute();
+                }
+            }
+        }
+
         public void handleEnemyDropCollision(EnemyDrop enemyDrop)
         {
             this.enemyDrop = enemyDrop;

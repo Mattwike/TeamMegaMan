@@ -16,6 +16,7 @@ public class KillerBomb : IEnemySprite
     private int screenHeight;  // Screen height to manage boundaries
     private int width;  // Width of the enemy sprite
     private int height;  // Height of the enemy sprite
+    private int origonalX;
 
     private Rectangle sourceRectangle;  // Source rectangle for the sprite from the sprite sheet
     private Rectangle hitbox;  // Hitbox for collision detection
@@ -25,6 +26,7 @@ public class KillerBomb : IEnemySprite
 
     // Health and other properties required by IEnemySprite
     public int health { get; private set; }
+    public bool hasProjectiles { get; set; }
     public bool hitWall { get; set; }
 
     public int x
@@ -65,6 +67,8 @@ public class KillerBomb : IEnemySprite
 
         health = 100;
         isVisible = true;
+        hasProjectiles = false;
+        origonalX = x;
     }
 
     // Initialize method to set screen boundaries and speed
@@ -87,10 +91,6 @@ public class KillerBomb : IEnemySprite
     // Update method to handle movement logic
     public void Update(GameTime gameTime, Camera camera, int megamanX)
     {
-        if (!isVisible)
-        {
-            return;  // Do not update if the enemy is not visible (dead)
-        }
 
         // Move left at a constant speed
         positionX += speedX;
@@ -113,7 +113,9 @@ public class KillerBomb : IEnemySprite
     {
         if (!isVisible)
         {
-            return;  // Do not draw if the enemy is not visible (dead)
+            positionX = origonalX;  // Do not draw if the enemy is not visible (dead)
+            positionY = originalY;
+            isVisible = true;
         }
 
         SpriteEffects spriteEffects = SpriteEffects.None;
@@ -162,7 +164,6 @@ public class KillerBomb : IEnemySprite
 
             // Remove or deactivate the enemy
             isVisible = false;
-            positionY += 1000;  // Move off-screen
 
             // Modify the hitbox by creating a new Rectangle
             hitbox = new Rectangle(hitbox.X, hitbox.Y + 1000, hitbox.Width, hitbox.Height);
@@ -175,12 +176,16 @@ public class KillerBomb : IEnemySprite
     {
         positionX = position.X;
         positionY = position.Y;
-        originalY = positionY;  // Update originalY when position changes
     }
 
     // Handle touching the floor (implement as needed)
     public void isTouchingFloor()
     {
         // Implement if necessary
+    }
+
+    public List<IEnemyProjectile> GetProjectiles()
+    {
+        return null;
     }
 }

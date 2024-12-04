@@ -23,6 +23,7 @@ public class Bomb : IEnemySprite
     public bool istouchingfloor { get; set; }
     public float gravity { get; set; }
     public bool hitWall { get; set; }
+    public bool hasProjectiles { get; set; }
     public float Gravity
     {
         set { gravity = 4.5f; }
@@ -33,6 +34,7 @@ public class Bomb : IEnemySprite
         BossSheet = texture;
         x = (int)position.X;
         y = (int)position.Y;
+        hasProjectiles = false;
     }
 
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
@@ -112,5 +114,10 @@ public class Bomb : IEnemySprite
     public void isTouchingFloor()
     {
         //istouchingfloor = false;
+    }
+
+    public List<IEnemyProjectile> GetProjectiles()
+    {
+        return null;
     }
 }

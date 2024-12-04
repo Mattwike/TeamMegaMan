@@ -1,11 +1,9 @@
-// RedBlasterProjectile.cs
-
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Project1.GameObjects;  // Adjust the namespace as needed
 
-public class RedBlasterProjectile : IEnemySprite
+public class RedBlasterProjectile : IEnemyProjectile
 {
     private float posX;
     private float posY;
@@ -37,12 +35,6 @@ public class RedBlasterProjectile : IEnemySprite
         get { return (int)posY; }
         set { posY = value; }
     }
-
-    public bool isFalling { get; set; }
-    public bool istouchingfloor { get; set; }
-    public bool hitWall { get; set; }
-    public float gravity { get; set; }
-    public float Gravity { set { gravity = 4.5f; } }
 
     public RedBlasterProjectile(Texture2D texture, float startX, float startY, int screenWidth, int screenHeight, float speedX, float speedY)
     {
@@ -120,24 +112,9 @@ public class RedBlasterProjectile : IEnemySprite
         return hitbox;
     }
 
-    public int GetHealth()
-    {
-        return health;
-    }
-
-    public void TakeDamage(List<EnemyDrop> enemyDropList)
-    {
-        health -= 10;
-    }
-
     public void SetPosition(Vector2 position)
     {
         posX = position.X;
         posY = position.Y;
-    }
-
-    public void isTouchingFloor()
-    {
-        // Implement if necessary
     }
 }

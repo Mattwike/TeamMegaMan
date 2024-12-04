@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Project1.GameObjects;  // Adjust this namespace if necessary
 
-public class MambuProjectile : IEnemySprite
+public class MambuProjectile : IEnemyProjectile
 {
     // Fields
     private Texture2D texture;
@@ -20,11 +20,6 @@ public class MambuProjectile : IEnemySprite
 
     public int x { get; set; }
     public int y { get; set; }
-    public bool isFalling { get; set; }
-    public bool istouchingfloor { get; set; }
-    public float gravity { get; set; }
-    public bool hitWall { get; set; }
-    public float Gravity { set { gravity = 4.5f; } }
 
     // Constructor
     public MambuProjectile(Texture2D texture, float startX, float startY, int screenWidth, int screenHeight)
@@ -95,23 +90,6 @@ public class MambuProjectile : IEnemySprite
         return hitbox;
     }
 
-    // Get the health of the projectile
-    public int GetHealth()
-    {
-        return health;
-    }
-
-    // Handle taking damage
-    public void TakeDamage(List<EnemyDrop> enemyDropList)
-    {
-        health -= 10;
-        if (health <= 0)
-        {
-            // Handle projectile destruction if needed
-            // For example, remove the projectile or trigger an animation
-        }
-    }
-
     // Set the position of the projectile
     public void SetPosition(Vector2 position)
     {
@@ -124,4 +102,5 @@ public class MambuProjectile : IEnemySprite
     {
         // Implement if necessary
     }
+
 }

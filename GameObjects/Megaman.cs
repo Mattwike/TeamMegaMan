@@ -24,11 +24,12 @@ namespace Project1.GameObjects
         public bool is_climbing = false;
         public bool reached_top = false;
         public bool is_climable = false;
+        public bool stoodup = true;
         private float origionalx;
         private float origionaly;
         public bool isVulnerable;
         private double invulnerabilityTimer = 0;
-        private int timeInvunerable = 20000;
+        private int timeInvunerable = 6500;
         public float gravity = 4.5f;
         public int MegamanSize;
         public Rectangle MegamanBox;
@@ -95,10 +96,10 @@ namespace Project1.GameObjects
             {
                 megamanHealth -= 20;
                 isVulnerable = false;
+                stoodup = false;
                 invulnerabilityTimer = 0;
                 currentColor = Color.White;
             }
-            is_damaged = true;
         }
 
         public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
@@ -184,6 +185,11 @@ namespace Project1.GameObjects
                         currentColor = Color.Blue;
                     }
 
+                    if(invulnerabilityTimer >= 1500)
+                    {
+                        stoodup = true;
+                    }
+
                     if (invulnerabilityTimer >= timeInvunerable * 100)
                     {
                         isVulnerable = true;
@@ -191,6 +197,10 @@ namespace Project1.GameObjects
                         currentColor = Color.Blue;
 
                     }
+                }
+                else
+                {
+                    currentColor = Color.White;
                 }
             }
         }

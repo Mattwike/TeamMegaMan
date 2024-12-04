@@ -34,6 +34,7 @@ public class jumpingFlea : IEnemySprite
     public bool istouchingfloor { get; set; }
     public float gravity { get; set; }
     public bool hitWall { get; set; }
+    public bool hasProjectiles { get; set; }
     private Megaman megaman;
     public float Gravity
     {
@@ -47,8 +48,8 @@ public class jumpingFlea : IEnemySprite
         SetPosition(position);
         initialY = position.Y;
         facingLeft = false;
-
-}
+        hasProjectiles = false;
+    }
 
     public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int megamanSize)
     {
@@ -216,5 +217,10 @@ public class jumpingFlea : IEnemySprite
     public void isTouchingFloor()
     {
         istouchingfloor = false;
+    }
+
+    public List<IEnemyProjectile> GetProjectiles()
+    {
+        return null;
     }
 }

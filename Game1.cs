@@ -36,6 +36,7 @@ namespace Project1
         private LevelParser levelParser;
         private List<IBlocks> levelBlocks;
         private List<IEnemySprite> levelEnemies;
+        private List<IEnemyProjectile> levelProjectiles;
         //test
         private Texture2D bossSheet;
         private Bombman Bombman;
@@ -132,6 +133,7 @@ namespace Project1
             // Retrieve the blocks created by the parser
             levelBlocks = levelParser.Blocks;
             levelEnemies = levelParser.Enemies;
+            levelProjectiles = new List<IEnemyProjectile>();
             ypose = (int) megaman.y - 210;
             camera.Zoom(1.85f);
 
@@ -159,7 +161,7 @@ namespace Project1
         {
 
             bool paused = _keyboardController.isPaused();
-
+            Bombman.Update(gameTime, camera, (int)megaman.x);
             if (!_keyboardController.isPaused())
             {
                 // Use the keyboard controller to get input and update MegaMan and enemies
@@ -171,7 +173,7 @@ namespace Project1
                 megaman.Update(gameTime, interval);
                 //displayedEnemy.Update(gameTime);
 
-                CollidionHandler.HandleMegamanCollisions(megaman, levelParser.Blocks, levelEnemies, enemyDropList);
+                CollidionHandler.HandleMegamanCollisions(megaman, levelParser.Blocks, levelEnemies, enemyDropList, levelProjectiles);
 
                 foreach (var pellet in pellets)
                 {
@@ -184,6 +186,13 @@ namespace Project1
                 foreach (var enemy in levelEnemies)
                 {
                     enemy.Update(gameTime, camera, (int)megaman.x);
+                    if (enemy.hasProjectiles)
+                    {
+                        if (enemy.GetProjectiles() != null)
+                        {
+                            levelProjectiles.AddRange(enemy.GetProjectiles());
+                        }
+                    }
                     CollidionHandler.HandleEnemyCollisions(enemy, levelBlocks, pellets, enemyDropList);
                 }
                 // Update level blocks if necessary
@@ -208,7 +217,7 @@ namespace Project1
                 {
                     MegamanDied = false;
                 }
-                Bombman.Update();
+                
                 base.Update(gameTime);
             }
 
