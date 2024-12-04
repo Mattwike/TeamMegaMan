@@ -225,7 +225,7 @@ public class KeyboardMethods
     }
     public void CheckIdle(Megaman megaman, GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval, Keys[] pressedKeys)
     {
-        if (!megaman.is_shooting && !megaman.is_running && !megaman.is_falling && !megaman.is_jumping && !megaman.is_climbing && !megaman.is_damaged)
+        if (!megaman.is_shooting && !megaman.is_running && !megaman.is_falling && !megaman.is_jumping && !megaman.is_climbing)
         {
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
@@ -257,9 +257,14 @@ public class KeyboardMethods
     }
     public void CheckVulnerability(Megaman megaman, GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
     {
-        if (!megaman.isVulnerable)
+        if (!megaman.isVulnerable && !megaman.stoodup)
         {
             commandDict[Keys.D7].Execute(_graphics, movementSpeed, megamanSize, interval);
+        }
+        if(!megaman.isVulnerable && megaman.stoodup)
+        {
+            var Idle = new IdleMegamanCommand(megaman);
+            Idle.Execute(_graphics, movementSpeed, megamanSize, interval);
         }
     }
 }
