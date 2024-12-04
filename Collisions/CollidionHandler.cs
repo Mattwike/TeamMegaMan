@@ -19,10 +19,6 @@ namespace Project1.Collisions
 {
 	public static class CollidionHandler
 	{
-		//public static void CollidionHandler(Megaman megaman)
-		//{
-
-		//}
 
 		public static void HandleMegamanCollisions(Megaman megaman, List<IBlocks> blocklist, List<IEnemySprite> enemies, List<EnemyDrop> enemyDropList, List<IEnemyProjectile> projectiles)
 		{
