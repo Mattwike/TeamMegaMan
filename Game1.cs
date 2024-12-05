@@ -235,11 +235,12 @@ namespace Project1
 
         protected override void Draw(GameTime gameTime)
         {
+            _spriteBatch.Begin(transformMatrix: camera.GetTransform());
             if (!(_keyboardController.GameStarted()))
             {
-                _spriteBatch.Begin(transformMatrix: camera.GetTransform());
-                _spriteBatch.Draw(TitleScreen, new Rectangle(-250, 35, 550, 300), new Rectangle(0, 0, 1000, 1000), Color.White);
-                _spriteBatch.End();
+                
+                _spriteBatch.Draw(TitleScreen, new Rectangle(-250, 0, 550, 350), new Rectangle(0, 0, 1000, 1000), Color.White);
+                
                 
             }
             else if (MegamanDied)
@@ -248,18 +249,18 @@ namespace Project1
                 pellets.Clear();
 
                 GraphicsDevice.Clear(Color.DodgerBlue);
-                _spriteBatch.Begin(transformMatrix: camera.GetTransform());
+                
                 _spriteBatch.DrawString(GameOverFont, "GAME OVER", new Vector2(scoreX-50, ypose+105), Color.White);
                 _spriteBatch.DrawString(GameOverFont, megaman.GetScore().ToString(), new Vector2(scoreX-5, ypose + 135), Color.White);
                 _spriteBatch.DrawString(GameOverFont, "PRESS R TO RESTART LEVEL", new Vector2(scoreX - 110, ypose + 210), Color.White);
-                _spriteBatch.End();
+                
             }
             else
             {
                 GraphicsDevice.Clear(Color.CornflowerBlue);  // Clear the screen
 
             
-                _spriteBatch.Begin(transformMatrix: camera.GetTransform());
+                
 
                 foreach (var block in levelBlocks)
                 {
@@ -288,9 +289,9 @@ namespace Project1
                     enemy.Draw(_spriteBatch, false, false);
                 }
                 
-                _spriteBatch.End();
+                
             }
-
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }
