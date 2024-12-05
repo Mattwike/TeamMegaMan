@@ -120,10 +120,6 @@ public class KeyboardController : IController
             start = true;
         }
 
-        previousKeyboardState = keyState;
-
         return start;
-
-
     }
 }

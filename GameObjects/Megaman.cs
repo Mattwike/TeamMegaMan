@@ -141,8 +141,11 @@ namespace Project1.GameObjects
             {
                 if (!istouchingfloor)
                 {
-
-                    gravity += .25f;
+                    if (gravity < 6.5f)
+                    {
+                        gravity += .25f;
+                    }
+                    
                 }
                 else
                 {
