@@ -62,31 +62,31 @@ namespace Project1.Sprites
             }
             else if (megaman.GetHealth() >= 120)
             {
-                multiplier = 1;
+                multiplier = 2;
             }
             else if (megaman.GetHealth() >= 100)
             {
-                multiplier = 2;
+                multiplier = 4;
             }
             else if (megaman.GetHealth() >= 80)
             {
-                multiplier = 3;
+                multiplier = 6;
             }
             else if (megaman.GetHealth() >= 60)
             {
-                multiplier = 4;
+                multiplier = 8;
             }
             else if (megaman.GetHealth() >= 40)
             {
-                multiplier = 5;
+                multiplier = 10;
             }
             else if (megaman.GetHealth() >= 20)
             {
-                multiplier = 6;
+                multiplier = 12;
             }
             else
             {
-                multiplier = 7;
+                multiplier = 14;
             }
             return multiplier;
         }

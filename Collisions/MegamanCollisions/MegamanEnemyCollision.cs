@@ -31,12 +31,12 @@ namespace Project1.CollisionEffects
 
             if (side == CollisionDirection.Left)
             {
-                Handler.megaman.x -= 30;
+                Handler.megaman.x -= 1;
                 Handler.megaman.TakeDamage();
             }
             else if (side == CollisionDirection.Right)
             {
-                Handler.megaman.x += 30;
+                Handler.megaman.x += 1;
                 Handler.megaman.TakeDamage();
             }
         }
