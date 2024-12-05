@@ -16,7 +16,6 @@ public class KeyboardController : IController
 {
     private Game1 game;
     private Megaman megaman;
-    private GenericEnemy displayedEnemy;
     Dictionary<Keys, ICommand> commandDict = new Dictionary<Keys, ICommand>();
     List<Pellet> pellets;
     Pellet pellet;
@@ -30,11 +29,10 @@ public class KeyboardController : IController
     Game1 gameInstance;
     public bool start = false;
 
-    public KeyboardController(Game1 gameInstance, Megaman megaman, GenericEnemy displayedEnemy, List<Pellet> pellets)
+    public KeyboardController(Game1 gameInstance, Megaman megaman, List<Pellet> pellets)
     {
         game = gameInstance;
         this.megaman = megaman;
-        this.displayedEnemy = displayedEnemy;
         this.pellets = pellets;
         this.gameInstance = gameInstance;
         
@@ -111,7 +109,6 @@ public class KeyboardController : IController
         previousKeyState = keyboardState;
 
         megaman.Update(gameTime, interval);
-        //displayedEnemy.Update(gameTime);
     }
     public bool GameStarted()
     {

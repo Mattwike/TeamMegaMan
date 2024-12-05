@@ -11,9 +11,9 @@ namespace Project1.Interfaces
 
 		void Update(GameTime gameTime);
 
-		public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval);
+		public void Initialize(GraphicsDeviceManager _graphics, int interval);
 
-		void Draw(SpriteBatch _spriteBatch, float movementSpeed, Color currentColor);
+		void Draw(SpriteBatch _spriteBatch, Color currentColor);
 
 		public void BeClimbingMegamanState();
 

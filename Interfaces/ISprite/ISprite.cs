@@ -10,7 +10,7 @@ public interface ISprite
 
     void Update(GameTime gameTime);
 
-    void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically, Color color);
+    void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically, Color color);
 
-    public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman megaman, int interval, bool isRight);
+    public void Initialize(GraphicsDeviceManager _graphics, Megaman megaman, int interval, bool isRight);
 }

@@ -94,15 +94,15 @@ namespace Project1.States.MegamanState
             Sprite.Update(gameTime);
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
+        public void Initialize(GraphicsDeviceManager _graphics, int interval)
         {
-            Sprite.Initialize(_graphics, movementSpeed, megamanSize, megaman, interval, false);
+            Sprite.Initialize(_graphics, megaman, interval, false);
         }
 
-        public void Draw(SpriteBatch _spriteBatch, float movementSpeed, Color currentColor)
+        public void Draw(SpriteBatch _spriteBatch, Color currentColor)
         {
             // Implement draw logic here
-            Sprite.Draw(_spriteBatch, movementSpeed, megaman.isfacingLeft, false, currentColor);
+            Sprite.Draw(_spriteBatch, megaman.isfacingLeft, false, currentColor);
         }
 
         public Rectangle getRectangle()
