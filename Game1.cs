@@ -66,7 +66,6 @@ namespace Project1
             pellets = new List<Pellet>();
             enemyDropList = new List<EnemyDrop>();
             //_graphics.ToggleFullScreen();
-            GameWorld = new GameWorld(_graphics);
         }
         
 
