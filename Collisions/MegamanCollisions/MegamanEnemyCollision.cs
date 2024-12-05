@@ -28,15 +28,15 @@ namespace Project1.CollisionEffects
 		{
             Rectangle enemyBox = Handler.EnemyBox;
             CollisionDirection side = CollisionDetector.DetectCollisionType(Handler.megaman.MegamanBox, enemyBox);
+            {
 
+            }
             if (side == CollisionDirection.Left)
             {
-                Handler.megaman.x -= 30;
                 Handler.megaman.TakeDamage();
             }
             else if (side == CollisionDirection.Right)
             {
-                Handler.megaman.x += 30;
                 Handler.megaman.TakeDamage();
             }
         }

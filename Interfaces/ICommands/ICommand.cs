@@ -6,6 +6,6 @@ namespace Project1.Interfaces
 {
     interface ICommand
     {
-        void Execute(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval);
+        void Execute(GraphicsDeviceManager _graphics, int interval);
     }
 }

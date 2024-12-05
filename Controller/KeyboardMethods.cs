@@ -52,7 +52,7 @@ public class KeyboardMethods
     {
         if (megaman.is_falling)
         {
-            commandDict[Keys.D6].Execute(_graphics, movementSpeed, megamanSize, interval);
+            commandDict[Keys.D6].Execute(_graphics, interval);
             megaman.is_running = false;
             megaman.is_shooting = false;
         }
@@ -62,7 +62,7 @@ public class KeyboardMethods
         
         if ((megaman.is_jumping || megaman.is_falling) && (Mouse.GetState().LeftButton == ButtonState.Pressed))
         {
-            commandDict[Keys.D5].Execute(_graphics, movementSpeed, megamanSize, interval);
+            commandDict[Keys.D5].Execute(_graphics, interval);
             megaman.is_running = false;
             megaman.is_shooting = true;
             if (pressedKeys.Contains(Keys.A))
@@ -92,7 +92,7 @@ public class KeyboardMethods
         }
         else if (megaman.is_falling || megaman.is_jumping)
         {
-            commandDict[Keys.D6].Execute(_graphics, movementSpeed, megamanSize, interval);
+            commandDict[Keys.D6].Execute(_graphics, interval);
             megaman.is_running = false;
             megaman.is_shooting = false;
         }
@@ -103,7 +103,7 @@ public class KeyboardMethods
         {
             megaman.is_climbing = true;
             megaman.y -= 3;
-            commandDict[Keys.OemQuestion].Execute(_graphics, movementSpeed, megamanSize, interval);
+            commandDict[Keys.OemQuestion].Execute(_graphics, interval);
             //megaman.is_climbing = true;
             megaman.is_running = false;
             megaman.is_shooting = false;
@@ -112,7 +112,7 @@ public class KeyboardMethods
         {
             megaman.is_climbing = true;
             megaman.y += 3;
-            commandDict[Keys.OemQuestion].Execute(_graphics, movementSpeed, megamanSize, interval);
+            commandDict[Keys.OemQuestion].Execute(_graphics, interval);
             megaman.is_running = false;
             megaman.is_shooting = false;
         }
@@ -132,7 +132,7 @@ public class KeyboardMethods
 
         if (megaman.is_climbing && pressedKeys.Contains(Keys.D))
         {
-            commandDict[Keys.D9].Execute(_graphics, movementSpeed, megamanSize, interval);
+            commandDict[Keys.D9].Execute(_graphics, interval);
             megaman.is_running = false;
             megaman.is_shooting = false;
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
@@ -149,7 +149,7 @@ public class KeyboardMethods
         }
         if (megaman.is_climbing && pressedKeys.Contains(Keys.A))
         {
-            commandDict[Keys.D0].Execute(_graphics, movementSpeed, megamanSize, interval);
+            commandDict[Keys.D0].Execute(_graphics, interval);
             megaman.is_running = false;
             megaman.is_shooting = false;
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
@@ -169,7 +169,7 @@ public class KeyboardMethods
     {
         if (pressedKeys.Contains(Keys.A) && Mouse.GetState().LeftButton == ButtonState.Pressed && !megaman.is_climbing && !megaman.is_jumping && !megaman.is_falling)
         {
-            commandDict[Keys.L].Execute(_graphics, movementSpeed, megamanSize, interval);
+            commandDict[Keys.L].Execute(_graphics, interval);
             megaman.x -= 3 * megaman.velocity;
             megaman.is_running = true;
             megaman.is_shooting = true;
@@ -184,7 +184,7 @@ public class KeyboardMethods
         }
         else if (pressedKeys.Contains(Keys.D) && Mouse.GetState().LeftButton == ButtonState.Pressed && !megaman.is_climbing && !megaman.is_jumping && !megaman.is_falling)
         {
-            commandDict[Keys.K].Execute(_graphics, movementSpeed, megamanSize, interval);
+            commandDict[Keys.K].Execute(_graphics, interval);
             megaman.x += 3 * megaman.velocity;
             megaman.is_running = true;
             megaman.is_shooting = true;
@@ -204,7 +204,7 @@ public class KeyboardMethods
         {
             if (!megaman.is_jumping && !megaman.is_falling)
             {
-                commandDict[Keys.A].Execute(_graphics, movementSpeed, megamanSize, interval);
+                commandDict[Keys.A].Execute(_graphics, interval);
             }
 
             megaman.x -= 3 * megaman.velocity;
@@ -215,7 +215,7 @@ public class KeyboardMethods
         {
             if (!megaman.is_jumping && !megaman.is_falling)
             {
-                commandDict[Keys.D].Execute(_graphics, movementSpeed, megamanSize, interval);
+                commandDict[Keys.D].Execute(_graphics, interval);
             }
 
             megaman.x += 3 * megaman.velocity;
@@ -245,12 +245,12 @@ public class KeyboardMethods
                     }
                 }
                 var Idle = new IdleShootingMegamanCommand(megaman);
-                Idle.Execute(_graphics, movementSpeed, megamanSize, interval);
+                Idle.Execute(_graphics, interval);
             }
             else
             {
                 var Idle = new IdleMegamanCommand(megaman);
-                Idle.Execute(_graphics, movementSpeed, megamanSize, interval);
+                Idle.Execute(_graphics, interval);
             }
 
         }
@@ -259,7 +259,7 @@ public class KeyboardMethods
     {
         if (!megaman.isVulnerable && !megaman.stoodup)
         {
-            commandDict[Keys.D7].Execute(_graphics, movementSpeed, megamanSize, interval);
+            commandDict[Keys.D7].Execute(_graphics, interval);
         }
     }
 }

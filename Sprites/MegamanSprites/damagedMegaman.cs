@@ -21,7 +21,7 @@ namespace Project1.Sprites
 
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, Megaman Megaman, int interval, bool isRight)
+        public void Initialize(GraphicsDeviceManager _graphics, Megaman Megaman, int interval, bool isRight)
         {
 
             megamanSizeX = 20 + 7;
@@ -35,7 +35,7 @@ namespace Project1.Sprites
             
         }
 
-        public void Draw(SpriteBatch _spriteBatch, float movementSpeed, bool flipHorizontally, bool flipVertically, Color currentColor)
+        public void Draw(SpriteBatch _spriteBatch, bool flipHorizontally, bool flipVertically, Color currentColor)
         {
 
             SpriteEffects spriteEffects = SpriteEffects.None;

@@ -102,15 +102,16 @@ namespace Project1.GameObjects
             }
         }
 
-        public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize, int interval)
+        public void Initialize(GraphicsDeviceManager _graphics, int interval)
         {
-            MegamanSize = megamanSize;
-            State.Initialize(_graphics, movementSpeed, megamanSize, interval);
+            State.Initialize(_graphics, interval);
+            x = 0;
+            y = 1113;
         }
 
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
         {
-            State.Draw(_spriteBatch, movementSpeed, currentColor);
+            State.Draw(_spriteBatch, currentColor);
         }
         
         public void Jump(Keys[] pressedKeys)
