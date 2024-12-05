@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Reflection.Metadata;
 using Microsoft.Xna.Framework.Media;
 using Project1.GameControllers;
+using Microsoft.Xna.Framework.Content;
 using Project1.Levels;
 using System.IO;
 using System;
@@ -47,8 +48,19 @@ namespace Project1.Level
             megaman = new Megaman();
             healthBar = new HealthBar();
         }
-        public void Initialize(List<IBlocks> blocks, List<IEnemySprite> enemies, Camera camera, SpriteFont font)
+        public void Initialize(ContentManager Content, List<IBlocks> blocks, List<IEnemySprite> enemies, Camera camera, SpriteFont font)
         {
+            megaManSpriteFactory.Instance.LoadAllTextures(Content);
+            EnemySpriteFactory.Instance.LoadAllTextures(Content);
+            BombmanSpriteFactory.Instance.LoadAllTextures(Content);
+            pelletSpriteFactory.Instance.LoadAllTextures(Content);
+            pelletSpriteFactory.Instance.CreatePellet();
+            EnemyDropSpriteFactory.Instance.LoadAllTextures(Content);
+            EnemyDropSpriteFactory.Instance.CreateEnemyDrop();
+            healthBarSpriteFactory.Instance.LoadAllTextures(Content);
+            healthBarSpriteFactory.Instance.CreateHealthBar();
+            BlockSpriteFactory.Instance.LoadAllTextures(Content);
+
             megaman.Initialize(graphics, interval);
             megaman.reachedCheckpoint();
             healthBar.Initialize(graphics, megaman);

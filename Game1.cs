@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+﻿﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Project1.SpriteFactories;
@@ -56,7 +56,7 @@ namespace Project1
         private SpriteFont GameOverFont;
         int scoreX = 10;
         bool MegamanDied = false;
-        private GameWorld gameWorld;
+        private GameWorld GameWorld;
 
 
         public Game1()
@@ -65,10 +65,10 @@ namespace Project1
             Content.RootDirectory = "Content";
             pellets = new List<Pellet>();
             enemyDropList = new List<EnemyDrop>();
-            _graphics.ToggleFullScreen();
-            gameWorld = new GameWorld(_graphics);
+            //_graphics.ToggleFullScreen();
+            GameWorld = new GameWorld(_graphics);
         }
-
+        
 
         protected override void Initialize()
         {
@@ -93,13 +93,9 @@ namespace Project1
             EnemyDropSpriteFactory.Instance.CreateEnemyDrop();
             healthBarSpriteFactory.Instance.LoadAllTextures(Content);
             healthBarSpriteFactory.Instance.CreateHealthBar();
-            Bombman.Initialize(_graphics, 12, 10);
+            Bombman.Initialize(_graphics, 12, 10);  
             //load Block Textures
             BlockSpriteFactory.Instance.LoadAllTextures(Content);
-
-
-
-            // Initialize the displayed enemy
 
             // Initialize the MegaMan character
             megaman = new Megaman();
@@ -171,7 +167,6 @@ namespace Project1
 
                 // Update Bombomb directly
                 megaman.Update(gameTime, interval);
-                //displayedEnemy.Update(gameTime);
 
                 CollidionHandler.HandleMegamanCollisions(megaman, levelParser.Blocks, levelEnemies, enemyDropList, levelProjectiles);
 
@@ -206,7 +201,7 @@ namespace Project1
 
                 if (!megaman.is_jumping && !megaman.is_falling)
                 {
-                    ypose = (int)megaman.y - 210;
+                    ypose = (int) megaman.y - 210;
                 }
 
                 if (megaman.GetHealth() <= 0 || megaman.y > 1200)
@@ -217,7 +212,7 @@ namespace Project1
                 {
                     MegamanDied = false;
                 }
-
+                
                 base.Update(gameTime);
             }
 
@@ -235,7 +230,7 @@ namespace Project1
                 _spriteBatch.Begin(transformMatrix: camera.GetTransform());
                 _spriteBatch.Draw(TitleScreen, new Rectangle(-250, 35, 550, 300), new Rectangle(0, 0, 1000, 1000), Color.White);
                 _spriteBatch.End();
-
+                
             }
             else if (MegamanDied)
             {
@@ -244,8 +239,8 @@ namespace Project1
 
                 GraphicsDevice.Clear(Color.DodgerBlue);
                 _spriteBatch.Begin(transformMatrix: camera.GetTransform());
-                _spriteBatch.DrawString(GameOverFont, "GAME OVER", new Vector2(scoreX - 50, ypose + 105), Color.White);
-                _spriteBatch.DrawString(GameOverFont, megaman.GetScore().ToString(), new Vector2(scoreX - 5, ypose + 135), Color.White);
+                _spriteBatch.DrawString(GameOverFont, "GAME OVER", new Vector2(scoreX-50, ypose+105), Color.White);
+                _spriteBatch.DrawString(GameOverFont, megaman.GetScore().ToString(), new Vector2(scoreX-5, ypose + 135), Color.White);
                 _spriteBatch.DrawString(GameOverFont, "PRESS R TO RESTART LEVEL", new Vector2(scoreX - 110, ypose + 210), Color.White);
                 _spriteBatch.End();
             }
@@ -253,7 +248,7 @@ namespace Project1
             {
                 GraphicsDevice.Clear(Color.CornflowerBlue);  // Clear the screen
 
-
+            
                 _spriteBatch.Begin(transformMatrix: camera.GetTransform());
 
                 foreach (var block in levelBlocks)
@@ -261,10 +256,11 @@ namespace Project1
                     block.Draw(_spriteBatch);
                 }
 
+                // Draw MegaMan and displayed enemy as before
                 Bombman.Draw(_spriteBatch);
                 megaman.Draw(_spriteBatch, movementSpeed);
-                _spriteBatch.DrawString(font, megaman.GetHealth().ToString(), new Vector2(scoreX - 150, ypose - 50), Color.White);
-                _spriteBatch.DrawString(font, megaman.GetScore().ToString(), new Vector2(scoreX, ypose + 30), Color.White);
+                _spriteBatch.DrawString(font, megaman.GetHealth().ToString(), new Vector2(scoreX-150, ypose-50), Color.White);
+                _spriteBatch.DrawString(font, megaman.GetScore().ToString(), new Vector2(scoreX, ypose+30), Color.White);
 
                 healthBar.Draw(_spriteBatch);
 
@@ -280,9 +276,8 @@ namespace Project1
                 {
                     enemy.Draw(_spriteBatch, false, false);
                 }
+                
                 _spriteBatch.End();
-
-                //gameWorld.Draw(_spriteBatch);
             }
 
             base.Draw(gameTime);
