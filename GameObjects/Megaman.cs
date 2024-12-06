@@ -107,6 +107,8 @@ namespace Project1.GameObjects
             State.Initialize(_graphics, interval);
             x = 0;
             y = 1113;
+            x = 4700;
+            y = 80;
         }
 
         public void Draw(SpriteBatch _spriteBatch, float movementSpeed)
