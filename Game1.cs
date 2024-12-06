@@ -65,7 +65,7 @@ namespace Project1
             Content.RootDirectory = "Content";
             pellets = new List<Pellet>();
             enemyDropList = new List<EnemyDrop>();
-            //_graphics.ToggleFullScreen();
+            _graphics.ToggleFullScreen();
         }
         
 
