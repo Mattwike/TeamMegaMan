@@ -49,6 +49,7 @@ public class screwDriver : IEnemySprite
         hasShotOnFifthFrame = false;
         hasProjectiles = true;
         IgnoresFloors = false;
+        health = 20;
 }
 
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
@@ -217,6 +218,13 @@ public class screwDriver : IEnemySprite
             isVisible = false;
             hitbox.Y += 1000;
             y += 1000;
+            foreach (var projectile in projectiles)
+            {
+                projectile.y += 1000;
+                Rectangle updatedhitbox = projectile.hitbox;
+                updatedhitbox.Y += 1000;
+                projectile.hitbox = updatedhitbox;
+            }
         }
     }
 

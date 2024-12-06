@@ -11,6 +11,8 @@ public interface IEnemyProjectile
 
     public int x { get; set; }
 
+    public Rectangle hitbox { get; set; }
+
     public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int size);
 
     public void Update(GameTime gameTime, Camera camera, int megamanX);

@@ -3,7 +3,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using Project1.GameObjects;  // Adjust this namespace if necessary
+using Project1.GameObjects;
 
 public class MambuProjectile : IEnemyProjectile
 {
@@ -15,7 +15,7 @@ public class MambuProjectile : IEnemyProjectile
     public int height { get; set; }
     private int screenWidth, screenHeight;
 
-    public Rectangle hitbox;
+    public Rectangle hitbox { get; set; }
     public int health;
 
     public int x { get; set; }

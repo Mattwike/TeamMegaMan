@@ -21,7 +21,7 @@ public class RedBlasterProjectile : IEnemyProjectile
     private int delayCounter;
     private int delayMax;
 
-    public Rectangle hitbox;
+    public Rectangle hitbox { get; set; }
     public int health;
 
     public int x

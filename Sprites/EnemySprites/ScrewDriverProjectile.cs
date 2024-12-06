@@ -15,7 +15,7 @@ public class ScrewDriverProjectile : IEnemyProjectile
     public int height { get; set; }
     private int screenWidth, screenHeight;
 
-    public Rectangle hitbox;
+    public Rectangle hitbox { get; set; }
     public int health;
 
     public int x { get; set; }

@@ -3,7 +3,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using Project1.GameObjects;  // Adjust the namespace as needed
+using Project1.GameObjects;
 
 public class SniperJoeProjectile : IEnemyProjectile
 {
@@ -21,7 +21,7 @@ public class SniperJoeProjectile : IEnemyProjectile
     private int delayCounter;
     private int delayMax;
 
-    public Rectangle hitbox;
+    public Rectangle hitbox { get; set; }
     public int health;
 
     public int x
