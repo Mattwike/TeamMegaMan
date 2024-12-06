@@ -22,6 +22,7 @@ public class Bombomb : IEnemySprite
     private int screenHeight;
 
     private Texture2D bombombSheet;
+    private Texture2D bombSheet;
     List<BombombProjectile> projectiles;
 
     Rectangle[] bombombFrames;
@@ -30,6 +31,7 @@ public class Bombomb : IEnemySprite
     public int health;
 
     GraphicsDeviceManager graphics;
+    private Megaman megaman;
 
     public int y { get; set; }
     public int x { get; set; }
@@ -38,15 +40,19 @@ public class Bombomb : IEnemySprite
     public float gravity { get; set; }
     public bool hitWall { get; set; }
     public bool hasProjectiles { get; set; }
+    public bool IgnoresFloors { get; set; }
     public float Gravity { set { gravity = 4.5f; } }
 
     // Updated Constructor: Removed startY parameter
-    public Bombomb(Texture2D texture, float startX, Vector2 position)
+    public Bombomb(Texture2D texture, float startX, Vector2 position, Texture2D Bomb, Megaman megaman)
     {
         bombombSheet = texture;
+        bombSheet = Bomb;
         initialX = startX;
         initialY = position.Y;  // Set initialY based on position.Y
         SetPosition(position);   // This sets x and y based on position
+        this.megaman = megaman;
+        IgnoresFloors = false;
 
         jumpHeight = 100;
         isJumping = true;
@@ -131,10 +137,10 @@ public class Bombomb : IEnemySprite
         float projectileX = x;
         float projectileY = y - bombombFrames[currentFrame].Height / 2;
 
-        projectiles.Add(new BombombProjectile(bombombSheet, projectileX - 10, projectileY, 800, -0.25f));
-        projectiles.Add(new BombombProjectile(bombombSheet, projectileX + 10, projectileY, 800, 0.25f));
-        projectiles.Add(new BombombProjectile(bombombSheet, projectileX - 50, projectileY, 800, -0.25f));
-        projectiles.Add(new BombombProjectile(bombombSheet, projectileX + 50, projectileY, 800, 0.25f));
+        projectiles.Add(new BombombProjectile(bombombSheet, bombSheet, projectileX - 10, projectileY, 800, -0.25f, 1, megaman));
+        projectiles.Add(new BombombProjectile(bombombSheet, bombSheet, projectileX + 10, projectileY, 800, 0.25f, 2, megaman));
+        projectiles.Add(new BombombProjectile(bombombSheet, bombSheet, projectileX - 50, projectileY, 800, -0.25f, 3, megaman));
+        projectiles.Add(new BombombProjectile(bombombSheet, bombSheet, projectileX + 50, projectileY, 800, 0.25f, 4, megaman));
     }
 
     private void ResetBombomb()
@@ -142,17 +148,12 @@ public class Bombomb : IEnemySprite
         x = (int)initialX;
         y = (int)initialY;
 
-        // Uncomment the following lines for debugging purposes
-        // System.Diagnostics.Debug.WriteLine($"ResetBombomb called. Position set to X={x}, Y={y}");
-
         projectiles.Clear();
 
         isJumping = true;
         hasExploded = false;
         isVisible = true;
 
-        // Uncomment for additional debugging
-        // System.Diagnostics.Debug.WriteLine("Bombomb reset: isJumping=true, hasExploded=false, isVisible=true");
     }
 
     public void Draw(SpriteBatch spriteBatch, bool flipHorizontally, bool flipVertically)

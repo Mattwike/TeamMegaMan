@@ -17,9 +17,11 @@ public class RedBlaster : IEnemySprite
     private Texture2D blasterSheet;
     private int blasterSizeX;
     private int blasterSizeY;
+    private bool flipped;
     private bool hasShot;  // Flag to track if a projectile has been shot during the shooting frame
     private bool isVisible;  // Flag to determine if the enemy is visible (alive)
     public bool hasProjectiles { get; set; }
+    public bool IgnoresFloors { get; set; }
 
     // List of active projectiles
     private List<IEnemyProjectile> projectiles;
@@ -62,15 +64,15 @@ public class RedBlaster : IEnemySprite
 
         // Initialize the list of projectiles
         projectiles = new List<IEnemyProjectile>();
-
+        IgnoresFloors = false;
         positionX = x;
         positionY = y;
 
-        health = 100;  // Set initial health
+        health = 20;  // Set initial health
         isVisible = true;  // Enemy is visible at the start
         hasShot = false;  // Initially, no projectile has been shot
         hasProjectiles = true;
-
+        flipped = true;
         // Initialize random number generator
         random = new Random();
     }
@@ -144,6 +146,7 @@ public class RedBlaster : IEnemySprite
         if (y > 700)
         {
             flipHorizontally = true;
+            flipped = false;
         }
 
         SpriteEffects spriteEffects = SpriteEffects.None;
@@ -190,7 +193,8 @@ public class RedBlaster : IEnemySprite
             screenWidth,
             screenHeight,
             projectileSpeedX,
-            selectedSpeedY
+            selectedSpeedY,
+            flipped
         );
 
         projectile.Initialize(null, projectileSpeedX, 12);  // Adjust size as needed

@@ -32,6 +32,11 @@ namespace Project1.CollisionEffects
                 return;
             }
 
+            if (Handler.enemy.IgnoresFloors)
+            {
+                return;
+            }
+
             Handler.enemy.isFalling = true;
 			Handler.enemy.y = Handler.block.boundingBox.Y + Handler.block.boundingBox.Height + 2;
         }

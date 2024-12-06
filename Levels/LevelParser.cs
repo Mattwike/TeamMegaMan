@@ -15,14 +15,16 @@ namespace Project1.Levels
         private int blockWidth = 16;
         private int blockHeight = 16;
         private int maxTokenLength;
+        Megaman megaman;
 
         public List<IBlocks> Blocks { get; private set; }
         public List<IEnemySprite> Enemies { get; private set; }
 
-        public LevelParser()
+        public LevelParser(Megaman megaman)
         {
             Blocks = new List<IBlocks>();
             Enemies = new List<IEnemySprite>();
+            this.megaman = megaman;
 
             tileActions = new Dictionary<string, Action<int, int>>()
             {
@@ -37,7 +39,17 @@ namespace Project1.Levels
                 { "3", (x, y) => CreateFloorBlock(x, y, BlockType.BrickEndLeft2) },
                 { "4", (x, y) => CreateFloorBlock(x, y, BlockType.BrickEndRight2) },
                 { "C", (x, y) => CreateFloorBlock(x, y, BlockType.LadderBlock) },
+                { "(", (x, y) => CreateFloorBlock(x -1, y, BlockType.LadderBlock) },
+                { ")", (x, y) => CreateFloorBlock(x +1, y, BlockType.LadderBlock) },
                 { "8", (x, y) => CreateFloorBlock(x, y, BlockType.BossRoom) },
+                { "!", (x, y) => CreateFloorBlock(x -1, y, BlockType.BossRoom) },
+                { "$", (x, y) => CreateFloorBlock(x +1, y, BlockType.BossRoom) },
+                { "/", (x, y) => CreateFloorBlock(x -1, y, BlockType.BrickMiddle2) },
+                { "'", (x, y) => CreateFloorBlock(x -1, y, BlockType.BrickEndLeft2) },
+                { ";", (x, y) => CreateFloorBlock(x -1, y, BlockType.BrickEndRight2) },
+                { "&", (x, y) => CreateFloorBlock(x +1, y, BlockType.BrickMiddle2) },
+                { "%", (x, y) => CreateFloorBlock(x +1, y, BlockType.BrickEndLeft2) },
+                { "^", (x, y) => CreateFloorBlock(x +1, y, BlockType.BrickEndRight2) },
                 { "T", (x, y) => CreateFloorBlock(x, y, BlockType.BossRoomTop) },
                 { "6", (x, y) => CreateFloorBlock(x, y, BlockType.ElectricConnector) },
                 { "7", (x, y) => CreateFloorBlock(x, y, BlockType.Electric) },
@@ -50,7 +62,8 @@ namespace Project1.Levels
                 { "JF", (x, y) => CreateEnemy("JF", x, y) }, // Jumping Flea
                 { "SD", (x, y) => CreateEnemy("SD", x, y) }, // Screw Driver
                 { "BB", (x, y) => CreateEnemy("BB", x, y) }, // Bombomb
-                { "OC", (x, y) => CreateEnemy("OC", x, y) }, // Octopus
+                { "OC", (x, y) => CreateEnemy("OC", x - 1, y) }, // Octopus
+                { "O2", (x, y) => CreateEnemy("OC", x, y) }, // Octopus
                 { "GA", (x, y) => CreateEnemy("GA", x, y) }, // Gabyoall
                 { "MA", (x, y) => CreateEnemy("MA", x, y) }, // Mambu
                 { "SJ", (x, y) => CreateEnemy("SJ", x, y) }, // Sniper Joe
@@ -135,7 +148,7 @@ namespace Project1.Levels
                     enemy = EnemySpriteFactory.Instance.CreateScrewDriver(position);
                     break;
                 case "BB":
-                    enemy = EnemySpriteFactory.Instance.CreateBombomb(position);
+                    enemy = EnemySpriteFactory.Instance.CreateBombomb(position, megaman);
                     break;
                 case "OC":
                     enemy = EnemySpriteFactory.Instance.CreateOctopus(position);
@@ -155,7 +168,7 @@ namespace Project1.Levels
                     break;
 
                 case "KB":
-                    enemy = EnemySpriteFactory.Instance.CreateKillerBomb(position);
+                    enemy = EnemySpriteFactory.Instance.CreateKillerBomb(position, megaman);
                     break;
 
                 case "BM":

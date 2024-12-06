@@ -35,6 +35,7 @@ public class Gabyoall : IEnemySprite
     public bool hitWall { get; set; }
     public float gravity { get; set; }
     public bool hasProjectiles { get; set; }
+    public bool IgnoresFloors { get; set; }
     public float Gravity
     {
         set { gravity = 4.5f; }
@@ -63,6 +64,7 @@ public class Gabyoall : IEnemySprite
         speedX = 0.5f;  // Movement speed (adjust as necessary)
         movementRange = 50;  // Movement range of 50 pixels back and forth
         hasProjectiles = false;
+        IgnoresFloors = false;
     }
 
     // Initialize method to set position, screen boundaries, and other properties

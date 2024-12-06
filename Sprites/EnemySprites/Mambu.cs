@@ -31,6 +31,7 @@ public class Mambu : IEnemySprite
 
     private float projectileSpeed = 2f;
     private int movementSpeed = 2;
+    public bool IgnoresFloors { get; set; }
 
     public Rectangle hitbox;
     public int health;
@@ -77,6 +78,7 @@ public class Mambu : IEnemySprite
         health = 100;  // Set initial health
         isVisible = true;
         hasProjectiles = true;
+        IgnoresFloors = false;
     }
 
     // Initialize method

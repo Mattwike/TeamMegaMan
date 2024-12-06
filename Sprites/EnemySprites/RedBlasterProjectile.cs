@@ -36,7 +36,7 @@ public class RedBlasterProjectile : IEnemyProjectile
         set { posY = value; }
     }
 
-    public RedBlasterProjectile(Texture2D texture, float startX, float startY, int screenWidth, int screenHeight, float speedX, float speedY)
+    public RedBlasterProjectile(Texture2D texture, float startX, float startY, int screenWidth, int screenHeight, float speedX, float speedY, bool flipped)
     {
         projectileSheet = texture;
         posX = startX;
@@ -58,7 +58,11 @@ public class RedBlasterProjectile : IEnemyProjectile
         delayMax = 10;
         projectileSizeX = projectileFrames[currentFrame].Width;
         projectileSizeY = projectileFrames[currentFrame].Height;
-
+        if (flipped)
+        {
+            this.speedX = -speedX;
+            this.speedY = -speedY;
+        }
         health = 10;
     }
 

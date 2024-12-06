@@ -32,6 +32,11 @@ namespace Project1.CollisionEffects
                 return;
             }
 
+			if (Handler.enemy.IgnoresFloors)
+			{
+				return;
+			}
+
             CollisionDirection side = CollisionDetector.DetectCollisionType(Handler.enemy.getRectangle(), Handler.block.boundingBox);
 
             if (side == CollisionDirection.Left)

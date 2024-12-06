@@ -65,8 +65,7 @@ namespace Project1
             Content.RootDirectory = "Content";
             pellets = new List<Pellet>();
             enemyDropList = new List<EnemyDrop>();
-            //_graphics.ToggleFullScreen();
-            GameWorld = new GameWorld(_graphics);
+            _graphics.ToggleFullScreen();
         }
         
 
@@ -115,7 +114,7 @@ namespace Project1
 
             // Initialize the level loader and parser
             levelLoader = new LevelLoader();
-            levelParser = new LevelParser();
+            levelParser = new LevelParser(megaman);
 
             string levelPath = Path.Combine("Levels", "Level1.txt");
 
@@ -176,11 +175,14 @@ namespace Project1
                 }
                 foreach (var enemyDrop in enemyDropList)
                 {
-                    enemyDrop.Update(gameTime);
+                        enemyDrop.Update(gameTime);
                 }
                 foreach (var enemy in levelEnemies)
                 {
-                    enemy.Update(gameTime, camera, (int)megaman.x);
+                    if(Math.Sqrt(Math.Pow(megaman.x - enemy.x, 2) + Math.Pow(megaman.y - enemy.y, 2)) <= 500){
+                        enemy.Update(gameTime, camera, (int)megaman.x);
+                    }
+
                     if (enemy.hasProjectiles)
                     {
                         if (enemy.GetProjectiles() != null)

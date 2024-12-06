@@ -36,6 +36,7 @@ public class SniperJoe : IEnemySprite
     public float gravity { get; set; }
     public bool hitWall { get; set; }
     public bool hasProjectiles { get; set; }
+    public bool IgnoresFloors { get; set; }
     public float Gravity { set { gravity = 4.5f; } }
 
     // Constructor
@@ -62,6 +63,7 @@ public class SniperJoe : IEnemySprite
         screenWidth = 800;
 
         projectiles = new List<IEnemyProjectile>();
+        IgnoresFloors = false;
     }
 
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)
