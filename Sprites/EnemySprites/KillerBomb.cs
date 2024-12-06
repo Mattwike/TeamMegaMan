@@ -21,6 +21,7 @@ public class KillerBomb : IEnemySprite
     private Rectangle sourceRectangle;  // Source rectangle for the sprite from the sprite sheet
     private Rectangle hitbox;  // Hitbox for collision detection
     private bool isVisible;  // Visibility flag
+    private Megaman megaman;
 
     GraphicsDeviceManager graphics;
 
@@ -28,6 +29,7 @@ public class KillerBomb : IEnemySprite
     public int health { get; private set; }
     public bool hasProjectiles { get; set; }
     public bool hitWall { get; set; }
+    public bool IgnoresFloors { get; set; }
 
     public int x
     {
@@ -50,7 +52,7 @@ public class KillerBomb : IEnemySprite
     }
 
     // Constructor to initialize the texture
-    public KillerBomb(Texture2D texture, Vector2 position)
+    public KillerBomb(Texture2D texture, Vector2 position, Megaman megaman)
     {
         enemyTexture = texture;
         SetPosition(position);
@@ -69,6 +71,8 @@ public class KillerBomb : IEnemySprite
         isVisible = true;
         hasProjectiles = false;
         origonalX = x;
+        IgnoresFloors = true;
+        this.megaman = megaman;
     }
 
     // Initialize method to set screen boundaries and speed
@@ -102,8 +106,10 @@ public class KillerBomb : IEnemySprite
         hitbox = new Rectangle((int)positionX, (int)positionY, width, height);
 
         // Remove or deactivate the enemy if it goes off-screen to the left
-        if (positionX + width < 0)
+        if (positionX + width < 0 || positionX < megaman.x - 300)
         {
+            positionX = megaman.x + 300;
+            positionY = originalY;
             isVisible = false;
         }
     }
@@ -113,9 +119,17 @@ public class KillerBomb : IEnemySprite
     {
         if (!isVisible)
         {
-            positionX = origonalX;  // Do not draw if the enemy is not visible (dead)
-            positionY = originalY;
-            isVisible = true;
+            if (Math.Abs(megaman.x - positionX) <= 300)
+            {
+                positionX = megaman.x + 300;
+                isVisible = true;
+            }
+            else
+            {
+                positionX = origonalX;  // Do not draw if the enemy is not visible (dead)
+                positionY = originalY;
+                isVisible = true;
+            }
         }
 
         SpriteEffects spriteEffects = SpriteEffects.None;

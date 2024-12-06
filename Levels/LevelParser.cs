@@ -15,14 +15,16 @@ namespace Project1.Levels
         private int blockWidth = 16;
         private int blockHeight = 16;
         private int maxTokenLength;
+        Megaman megaman;
 
         public List<IBlocks> Blocks { get; private set; }
         public List<IEnemySprite> Enemies { get; private set; }
 
-        public LevelParser()
+        public LevelParser(Megaman megaman)
         {
             Blocks = new List<IBlocks>();
             Enemies = new List<IEnemySprite>();
+            this.megaman = megaman;
 
             tileActions = new Dictionary<string, Action<int, int>>()
             {
@@ -135,7 +137,7 @@ namespace Project1.Levels
                     enemy = EnemySpriteFactory.Instance.CreateScrewDriver(position);
                     break;
                 case "BB":
-                    enemy = EnemySpriteFactory.Instance.CreateBombomb(position);
+                    enemy = EnemySpriteFactory.Instance.CreateBombomb(position, megaman);
                     break;
                 case "OC":
                     enemy = EnemySpriteFactory.Instance.CreateOctopus(position);
@@ -155,7 +157,7 @@ namespace Project1.Levels
                     break;
 
                 case "KB":
-                    enemy = EnemySpriteFactory.Instance.CreateKillerBomb(position);
+                    enemy = EnemySpriteFactory.Instance.CreateKillerBomb(position, megaman);
                     break;
 
                 case "BM":

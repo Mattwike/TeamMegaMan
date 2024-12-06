@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Project1.GameObjects;
 
 public class EnemySpriteFactory
 {
@@ -18,6 +19,7 @@ public class EnemySpriteFactory
 
     private EnemySpriteFactory()
     {
+
     }
 
     public void LoadAllTextures(ContentManager content)
@@ -36,9 +38,9 @@ public class EnemySpriteFactory
         return new screwDriver(enemySheet, position);
     }
 
-    public IEnemySprite CreateBombomb(Vector2 position)
+    public IEnemySprite CreateBombomb(Vector2 position, Megaman megaman)
     {
-        return new Bombomb(enemySheet, position.X, position);
+        return new Bombomb(enemySheet, position.X, position, bossSheet, megaman);
     }
 
     public IEnemySprite CreateOctopus(Vector2 position)
@@ -66,8 +68,8 @@ public class EnemySpriteFactory
         return new RedBlaster(enemySheet, position);
     }
 
-    public IEnemySprite CreateKillerBomb(Vector2 position)
+    public IEnemySprite CreateKillerBomb(Vector2 position, Megaman megaman)
     {
-        return new KillerBomb(enemySheet, position);
+        return new KillerBomb(enemySheet, position, megaman);
     }
 }

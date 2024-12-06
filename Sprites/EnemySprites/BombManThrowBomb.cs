@@ -39,6 +39,7 @@ public class BombManThrowBomb : IEnemySprite
     public float gravity { get; set; }
     public bool hitWall { get; set; }
     public bool hasProjectiles { get; set; }
+    public bool IgnoresFloors { get; set; }
     public float Gravity
     {
         set { gravity = 4.5f; }
@@ -51,6 +52,7 @@ public class BombManThrowBomb : IEnemySprite
         x = (int)position.X;
         y = (int)position.Y;
         hasProjectiles = false;
+        IgnoresFloors = false;
     }
 
     public void Initialize(GraphicsDeviceManager _graphics, float movementSpeed, int megamanSize)

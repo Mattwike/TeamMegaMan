@@ -27,7 +27,7 @@ public class jumpingFlea : IEnemySprite
     bool isVisible = true;
     GraphicsDeviceManager graphics;
     private bool facingLeft;
-
+    public bool IgnoresFloors { get; set; }
     public int y { get; set; }
     public int x { get; set; }
     public bool isFalling { get; set; }
@@ -49,6 +49,7 @@ public class jumpingFlea : IEnemySprite
         initialY = position.Y;
         facingLeft = false;
         hasProjectiles = false;
+        IgnoresFloors = false;
     }
 
     public void Initialize(GraphicsDeviceManager graphics, float movementSpeed, int megamanSize)

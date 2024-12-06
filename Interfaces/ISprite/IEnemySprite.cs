@@ -14,6 +14,7 @@ public interface IEnemySprite
     float gravity { get; set; }
     public bool hitWall { get; set; }
     public bool hasProjectiles { get; set; }
+    public bool IgnoresFloors { get; set; }
 
     void Update(GameTime gameTime, Camera camera, int megamanX);
 

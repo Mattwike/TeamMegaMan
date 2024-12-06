@@ -29,6 +29,7 @@ public class Octopus : IEnemySprite
     public Rectangle hitbox;
     public int health;
     public bool hasProjectiles { get; set; }
+    private bool hasChangedDirection = false;
 
     public int y { get; set; }  // Keep as int to match interface
     public int x { get; set; }  // Keep as int to match interface
@@ -36,6 +37,7 @@ public class Octopus : IEnemySprite
     public bool istouchingfloor { get; set; }
     public bool hitWall { get; set; }
     public float gravity { get; set; }
+    public bool IgnoresFloors { get; set; }
     public float Gravity
     {
         set { gravity = 4.5f; }
@@ -70,6 +72,7 @@ public class Octopus : IEnemySprite
 
         isPaused = false;  // Initially not pausing
         hasProjectiles = false;
+        IgnoresFloors = false;
     }
 
     // Initialize method to set position, screen boundaries, and other properties
@@ -124,14 +127,19 @@ public class Octopus : IEnemySprite
             }
 
             // Check if Octopus reached either side of the range
-            if (hitWall)
+            if (hitWall && !hasChangedDirection)
             {
-                // Reverse horizontal direction and pause at the edge
-                speedX = -speedX;
-                hitWall = false;
-                isPaused = true;  // Trigger the pause at the edge
-                currentFrame = 0;  // Switch to frame 1 when reaching the edge
-               
+                speedX *= -1;           
+                positionX += speedX * 2; 
+                x = (int)positionX;      
+                hitWall = false;    
+                isPaused = true;   
+                currentFrame = 0; 
+                hasChangedDirection = true;
+            }
+            else if (!hitWall)
+            {
+                hasChangedDirection = false;  
             }
 
             // Update animation frame only when not paused
