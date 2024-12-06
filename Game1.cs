@@ -55,6 +55,7 @@ namespace Project1
         private SpriteFont GameOverFont;
         int scoreX = 10;
         bool MegamanDied = false;
+        bool megamanWin = false;
         private GameWorld GameWorld;
 
 
@@ -210,6 +211,8 @@ namespace Project1
                 {
                     MegamanDied = false;
                 }
+
+               
                 
                 base.Update(gameTime);
             }
@@ -242,6 +245,14 @@ namespace Project1
                 _spriteBatch.DrawString(GameOverFont, megaman.GetScore().ToString(), new Vector2(scoreX-5, ypose + 135), Color.White);
                 _spriteBatch.DrawString(GameOverFont, "PRESS R TO RESTART LEVEL", new Vector2(scoreX - 110, ypose + 210), Color.White);
                 
+
+            }
+            else if (megaman.win)
+            {
+                GraphicsDevice.Clear(Color.DodgerBlue);
+                _spriteBatch.DrawString(GameOverFont, "YOU WIN", new Vector2(scoreX - 35, ypose + 105), Color.White);
+                _spriteBatch.DrawString(GameOverFont, megaman.GetScore().ToString(), new Vector2(scoreX - 5, ypose + 135), Color.White);
+                _spriteBatch.DrawString(GameOverFont, "PRESS R TO RESTART LEVEL", new Vector2(scoreX - 110, ypose + 210), Color.White);
             }
             else
             {
