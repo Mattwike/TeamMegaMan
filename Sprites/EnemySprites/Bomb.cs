@@ -109,7 +109,7 @@ public class Bomb : IEnemySprite
     {
         return health;
     }
-    public void TakeDamage(List<EnemyDrop> enemyDropList)
+    public void TakeDamage(List<EnemyDrop> enemyDropList, Megaman megaman)
     {
         health -= 10;
     }

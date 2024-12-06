@@ -24,7 +24,7 @@ public interface IEnemySprite
 
     public Rectangle getRectangle();
 
-    public void TakeDamage(List<EnemyDrop> enemyDropList);
+    public void TakeDamage(List<EnemyDrop> enemyDropList, Megaman megaman);
 
     public int GetHealth();
 

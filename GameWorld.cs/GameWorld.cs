@@ -99,7 +99,7 @@ namespace Project1.Level
                         levelProjectiles.AddRange(enemy.GetProjectiles());
                     }
                 }
-                CollidionHandler.HandleEnemyCollisions(enemy, levelBlocks, pellets, enemyDropList);
+                CollidionHandler.HandleEnemyCollisions(enemy, levelBlocks, pellets, enemyDropList, megaman);
             }
             foreach (var block in levelBlocks)
             {

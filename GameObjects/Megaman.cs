@@ -46,15 +46,16 @@ namespace Project1.GameObjects
         public bool isfacingLeft { get; set; }
         private LevelParser levelparser;
 
-
+        public int megamanScore {  get; set; }
+        //public int megamanHealth = 140;
         public int megamanHealth = 140;
-        public int megamanScore = 0;
 
         public Megaman()
         {
             State = new IdleMegamanState(this);
             isVulnerable = true;
             is_damaged = false;
+            megamanScore = 0;
         }
 
         public void SetDirection(bool isFacingLeft)

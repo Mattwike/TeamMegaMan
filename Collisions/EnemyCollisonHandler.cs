@@ -54,7 +54,7 @@ namespace Project1.Collisions
             }
 
         }
-        public void handlePelletCollision(Pellet pellet, List<EnemyDrop> enemyDropList)
+        public void handlePelletCollision(Pellet pellet, List<EnemyDrop> enemyDropList, Megaman megaman)
         {
             
             CollisionDirection collisionDirection = CollisionDetector.DetectCollisionType(pellet.getRectangle(), enemy.getRectangle());
@@ -62,7 +62,7 @@ namespace Project1.Collisions
             if (Direction != CollisionDirection.None)
             {
                 pellet.removePellet(); 
-                enemy.TakeDamage(enemyDropList);
+                enemy.TakeDamage(enemyDropList, megaman);
 
             }
         }

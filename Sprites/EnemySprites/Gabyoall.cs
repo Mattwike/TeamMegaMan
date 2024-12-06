@@ -143,11 +143,12 @@ public class Gabyoall : IEnemySprite
     {
         return health;
     }
-    public void TakeDamage(List<EnemyDrop> enemyDropList)
+    public void TakeDamage(List<EnemyDrop> enemyDropList, Megaman megaman)
     {
         health -= 10;
         if (health == 0)
         {
+            megaman.megamanScore += 100;
             Random rnd = new Random();
             int num = rnd.Next(1, 6);
             if (num == 5)

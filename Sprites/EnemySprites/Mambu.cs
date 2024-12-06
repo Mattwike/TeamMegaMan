@@ -233,11 +233,12 @@ public class Mambu : IEnemySprite
     }
 
     // Handle taking damage
-    public void TakeDamage(List<EnemyDrop> enemyDropList)
+    public void TakeDamage(List<EnemyDrop> enemyDropList, Megaman megaman)
     {
         health -= 10;
-        if (health <= 0)
+        if (health == 0)
         {
+            megaman.megamanScore += 100;
             // Handle enemy death and drops
             Random rnd = new Random();
             int num = rnd.Next(1, 6);
