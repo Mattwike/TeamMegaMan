@@ -40,7 +40,6 @@ namespace Project1
         private List<IEnemyProjectile> levelProjectiles;
         //test
         private Texture2D bossSheet;
-        private Bombman Bombman;
         private Texture2D TitleScreen;
         private bool start = false;
 
@@ -81,7 +80,6 @@ namespace Project1
             height = _graphics.PreferredBackBufferHeight / 2;
             _mouseController = new MouseController();
             Vector2 position = new Vector2(10f, 1113f);
-            Bombman = new Bombman(bossSheet, position);
             // Load all textures for MegaMan and Enemies
             megaManSpriteFactory.Instance.LoadAllTextures(Content);
             EnemySpriteFactory.Instance.LoadAllTextures(Content);
@@ -92,7 +90,6 @@ namespace Project1
             EnemyDropSpriteFactory.Instance.CreateEnemyDrop();
             healthBarSpriteFactory.Instance.LoadAllTextures(Content);
             healthBarSpriteFactory.Instance.CreateHealthBar();
-            Bombman.Initialize(_graphics, 12, 10);  
             //load Block Textures
             BlockSpriteFactory.Instance.LoadAllTextures(Content);
 
@@ -156,7 +153,6 @@ namespace Project1
         {
 
             bool paused = _keyboardController.isPaused();
-            Bombman.Update(gameTime, camera, (int)megaman.x);
             if (!_keyboardController.isPaused() && _keyboardController.GameStarted())
             {
                 // Use the keyboard controller to get input and update MegaMan and enemies
@@ -260,7 +256,6 @@ namespace Project1
                 }
 
                 // Draw MegaMan and displayed enemy as before
-                Bombman.Draw(_spriteBatch);
                 megaman.Draw(_spriteBatch, movementSpeed);
                 _spriteBatch.DrawString(font, megaman.GetHealth().ToString(), new Vector2(scoreX-150, ypose-50), Color.White);
                 _spriteBatch.DrawString(font, megaman.GetScore().ToString(), new Vector2(scoreX, ypose+30), Color.White);
