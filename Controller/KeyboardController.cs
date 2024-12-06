@@ -107,6 +107,10 @@ public class KeyboardController : IController
         {
             megaman.reset();
         }
+        if (pressedKeys.Contains(Keys.M))
+        {
+            megaman.win = true;
+        }
 
         // Check each megaman state
         megaman.Jump(pressedKeys);
