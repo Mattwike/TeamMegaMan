@@ -119,7 +119,7 @@ namespace Project1.Collisions
             if (Direction != CollisionDirection.None)
             {
                 enemyDrop.removeEnemyDrop();
-                megaman.UpdateScore(100);
+                megaman.UpdateScore(500);
                 
             }
             
