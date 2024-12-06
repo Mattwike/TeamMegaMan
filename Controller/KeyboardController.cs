@@ -83,6 +83,18 @@ public class KeyboardController : IController
             start = true;
         }
 
+        if (pressedKeys.Contains(Keys.L))
+        {
+            megaman.x = 3450;
+            megaman.y = 175;
+        }
+
+        if (pressedKeys.Contains(Keys.J))
+        {
+            megaman.x = 5000;
+            megaman.y = 900;
+        }
+
         if (!megaman.is_jumping && !megaman.istouchingfloor && !megaman.is_climbing)
         {
             megaman.y += megaman.gravity;
